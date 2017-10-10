@@ -1,0 +1,22 @@
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\Inovatec process tracker.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\Java.Interop.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\Mono.Android.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.Core.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.Xml.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\mscorlib.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.Runtime.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.ComponentModel.Composition.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.Threading.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.Collections.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.Collections.Concurrent.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.Reflection.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.Diagnostics.Debug.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.Linq.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.Runtime.InteropServices.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.Runtime.Extensions.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.Reflection.Extensions.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.Net.Http.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.Runtime.Serialization.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\System.ServiceModel.Internals.dll
+D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\Mono.Security.dll
