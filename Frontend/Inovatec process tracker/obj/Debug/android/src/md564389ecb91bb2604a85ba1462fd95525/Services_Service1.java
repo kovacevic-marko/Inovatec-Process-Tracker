@@ -16,7 +16,7 @@ public class Services_Service1
 	}
 
 
-	public Services_Service1 () throws java.lang.Throwable
+	public Services_Service1 ()
 	{
 		super ();
 		if (getClass () == Services_Service1.class)
