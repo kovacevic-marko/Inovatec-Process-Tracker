@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InovatecDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tb_application">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ipv4" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_application_log">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="application_id" Type="int" Nullable="false" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="status" Type="xml" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_service">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ipv4" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_service_log">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="service_id" Type="int" Nullable="false" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="status" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'InovatecDB.dbo.Test' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Test">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="ipv4" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ipv4" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_tb_application_log_tb_application">
+    <End Role="tb_application" Type="Self.tb_application" Multiplicity="1" />
+    <End Role="tb_application_log" Type="Self.tb_application_log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_application">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tb_application_log">
+        <PropertyRef Name="application_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_service_log_tb_service">
+    <End Role="tb_service" Type="Self.tb_service" Multiplicity="1" />
+    <End Role="tb_service_log" Type="Self.tb_service_log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_service">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tb_service_log">
+        <PropertyRef Name="service_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="TestProcedura" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="InovatecDBModelStoreContainer">
+    <EntitySet Name="tb_application" EntityType="Self.tb_application" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_application_log" EntityType="Self.tb_application_log" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_service" EntityType="Self.tb_service" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_service_log" EntityType="Self.tb_service_log" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Test" EntityType="Self.Test" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Test].[id] AS [id], 
+    [Test].[name] AS [name], 
+    [Test].[ipv4] AS [ipv4]
+    FROM [dbo].[Test] AS [Test]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_tb_application_log_tb_application" Association="Self.FK_tb_application_log_tb_application">
+      <End Role="tb_application" EntitySet="tb_application" />
+      <End Role="tb_application_log" EntitySet="tb_application_log" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_service_log_tb_service" Association="Self.FK_tb_service_log_tb_service">
+      <End Role="tb_service" EntitySet="tb_service" />
+      <End Role="tb_service_log" EntitySet="tb_service_log" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

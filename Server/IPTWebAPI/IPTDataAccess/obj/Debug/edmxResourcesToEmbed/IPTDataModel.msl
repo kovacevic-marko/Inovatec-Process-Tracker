@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="InovatecDBModelStoreContainer" CdmEntityContainer="InovatecDBEntities">
+    <EntitySetMapping Name="tb_application">
+      <EntityTypeMapping TypeName="InovatecDBModel.tb_application">
+        <MappingFragment StoreEntitySet="tb_application">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="ipv4" ColumnName="ipv4" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_application_log">
+      <EntityTypeMapping TypeName="InovatecDBModel.tb_application_log">
+        <MappingFragment StoreEntitySet="tb_application_log">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="application_id" ColumnName="application_id" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_service">
+      <EntityTypeMapping TypeName="InovatecDBModel.tb_service">
+        <MappingFragment StoreEntitySet="tb_service">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="ipv4" ColumnName="ipv4" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_service_log">
+      <EntityTypeMapping TypeName="InovatecDBModel.tb_service_log">
+        <MappingFragment StoreEntitySet="tb_service_log">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="service_id" ColumnName="service_id" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tests">
+      <EntityTypeMapping TypeName="InovatecDBModel.Test">
+        <MappingFragment StoreEntitySet="Test">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="ipv4" ColumnName="ipv4" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="TestProcedura" FunctionName="InovatecDBModel.Store.TestProcedura">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="InovatecDBModel.TestProcedura_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="ipv4" ColumnName="ipv4" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>
