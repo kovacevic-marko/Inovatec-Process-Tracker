@@ -1,2 +1,0 @@
-android.app.Application
-Inovatec_process_tracker.Inovatec_process_tracker
