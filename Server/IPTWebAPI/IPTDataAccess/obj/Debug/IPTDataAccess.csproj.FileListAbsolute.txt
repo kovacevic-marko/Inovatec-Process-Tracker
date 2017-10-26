@@ -9,3 +9,14 @@ C:\Users\Inovatec-Laptop-03\Desktop\Inovatec-Process-Tracker\Server\IPTWebAPI\IP
 C:\Users\Inovatec-Laptop-03\Desktop\Inovatec-Process-Tracker\Server\IPTWebAPI\IPTDataAccess\obj\Debug\IPTDataAccess.csproj.CoreCompileInputs.cache
 C:\Users\Inovatec-Laptop-03\Desktop\Inovatec-Process-Tracker\Server\IPTWebAPI\IPTDataAccess\obj\Debug\IPTDataAccess.dll
 C:\Users\Inovatec-Laptop-03\Desktop\Inovatec-Process-Tracker\Server\IPTWebAPI\IPTDataAccess\obj\Debug\IPTDataAccess.pdb
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTWebAPI\IPTDataAccess\bin\Debug\IPTDataAccess.dll.config
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTWebAPI\IPTDataAccess\bin\Debug\IPTDataAccess.dll
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTWebAPI\IPTDataAccess\bin\Debug\IPTDataAccess.pdb
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTWebAPI\IPTDataAccess\bin\Debug\EntityFramework.dll
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTWebAPI\IPTDataAccess\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTWebAPI\IPTDataAccess\bin\Debug\EntityFramework.xml
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTWebAPI\IPTDataAccess\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTWebAPI\IPTDataAccess\obj\Debug\IPTDataAccess.csprojResolveAssemblyReference.cache
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTWebAPI\IPTDataAccess\obj\Debug\IPTDataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTWebAPI\IPTDataAccess\obj\Debug\IPTDataAccess.dll
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTWebAPI\IPTDataAccess\obj\Debug\IPTDataAccess.pdb

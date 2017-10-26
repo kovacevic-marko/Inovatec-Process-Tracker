@@ -15,7 +15,6 @@ namespace IPTSakupljac
         private int interval;
         private Timer timer;
         private InovatecDBEntities entities;
-        private List<tb_service> servisi;
 
         public Sakupljanje(int interval = 10000)
         {
@@ -27,7 +26,6 @@ namespace IPTSakupljac
         {
             timer = new Timer(interval);
             entities = new InovatecDBEntities();
-            servisi = new List<tb_service>();
             timer.Start();
             timer.Elapsed += ProveraStanjaSvihServisa;
         }
@@ -66,25 +64,24 @@ namespace IPTSakupljac
             return answer;
         }
 
-        void UcitavanjeServisaIzBaze()
-        {
-            // TODO
-        }
-
         // Hendler koji se pokrece pri okidanju tajmera
         public void ProveraStanjaSvihServisa(object sender, ElapsedEventArgs e)
-        {
-            // TODO
-
-            // Console.WriteLine(IsActive("http://localhost:54231/api/test_service").ToString());
+        {          
+            foreach (var servis in entities.tb_service.ToList())
+            {
+                bool status = IsActive(servis.ipv4);
+                UpisStanja(servis.id, status, DateTime.Now);
+            }
         }
 
         void UpisStanja(int service_id, bool status, DateTime date)
         {
-            tb_service_log novi_log = new tb_service_log();
-            novi_log.service_id = service_id;
-            novi_log.status = status;
-            novi_log.date = date;
+            tb_service_log novi_log = new tb_service_log
+            {
+                service_id = service_id,
+                status = status,
+                date = date
+            };
             entities.tb_service_log.Add(novi_log);
             entities.SaveChanges();
         }

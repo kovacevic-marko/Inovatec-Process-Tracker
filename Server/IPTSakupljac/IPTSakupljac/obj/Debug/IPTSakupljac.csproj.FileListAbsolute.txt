@@ -1,0 +1,14 @@
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTSakupljac\IPTSakupljac\bin\Debug\IPTSakupljac.exe.config
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTSakupljac\IPTSakupljac\bin\Debug\IPTSakupljac.exe
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTSakupljac\IPTSakupljac\bin\Debug\IPTSakupljac.pdb
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTSakupljac\IPTSakupljac\bin\Debug\EntityFramework.dll
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTSakupljac\IPTSakupljac\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTSakupljac\IPTSakupljac\bin\Debug\IPTDataAccess.dll
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTSakupljac\IPTSakupljac\bin\Debug\IPTDataAccess.pdb
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTSakupljac\IPTSakupljac\bin\Debug\IPTDataAccess.dll.config
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTSakupljac\IPTSakupljac\bin\Debug\EntityFramework.xml
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTSakupljac\IPTSakupljac\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTSakupljac\IPTSakupljac\obj\Debug\IPTSakupljac.csprojResolveAssemblyReference.cache
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTSakupljac\IPTSakupljac\obj\Debug\IPTSakupljac.csproj.CoreCompileInputs.cache
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTSakupljac\IPTSakupljac\obj\Debug\IPTSakupljac.exe
+C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTSakupljac\IPTSakupljac\obj\Debug\IPTSakupljac.pdb
