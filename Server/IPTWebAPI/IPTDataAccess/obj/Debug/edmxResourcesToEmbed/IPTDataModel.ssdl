@@ -70,6 +70,9 @@ warning 6002: The table/view 'InovatecDB.dbo.Test' does not have a primary key d
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="GetLatestServiceLogByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
   <Function Name="TestProcedura" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="InovatecDBModelStoreContainer">
     <EntitySet Name="tb_application" EntityType="Self.tb_application" Schema="dbo" store:Type="Tables" />

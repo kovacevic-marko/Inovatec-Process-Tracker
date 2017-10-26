@@ -37,5 +37,14 @@ namespace IPTDataAccess
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TestProcedura_Result>("TestProcedura");
         }
+    
+        public virtual ObjectResult<Nullable<bool>> GetLatestServiceLogByID(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("GetLatestServiceLogByID", idParameter);
+        }
     }
 }

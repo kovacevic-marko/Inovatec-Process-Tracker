@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="InovatecDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="InovatecDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tb_application">
           <Key>
             <PropertyRef Name="id" />
@@ -75,6 +75,9 @@ warning 6002: The table/view 'InovatecDB.dbo.Test' does not have a primary key d
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetLatestServiceLogByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
         <Function Name="TestProcedura" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="InovatecDBModelStoreContainer">
           <EntitySet Name="tb_application" EntityType="Self.tb_application" Schema="dbo" store:Type="Tables" />
@@ -97,8 +100,7 @@ warning 6002: The table/view 'InovatecDB.dbo.Test' does not have a primary key d
             <End Role="tb_service_log" EntitySet="tb_service_log" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InovatecDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -189,6 +191,9 @@ warning 6002: The table/view 'InovatecDB.dbo.Test' does not have a primary key d
             <End Role="tb_service_log" EntitySet="tb_service_log" />
           </AssociationSet>
           <FunctionImport Name="TestProcedura" ReturnType="Collection(InovatecDBModel.TestProcedura_Result)" />
+          <FunctionImport Name="GetLatestServiceLogByID" ReturnType="Collection(Boolean)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="TestProcedura_Result">
           <Property Type="Int32" Name="id" Nullable="false" />
@@ -257,6 +262,7 @@ warning 6002: The table/view 'InovatecDB.dbo.Test' does not have a primary key d
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetLatestServiceLogByID" FunctionName="InovatecDBModel.Store.GetLatestServiceLogByID" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -57,5 +57,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetLatestServiceLogByID" FunctionName="InovatecDBModel.Store.GetLatestServiceLogByID" />
   </EntityContainerMapping>
 </Mapping>
