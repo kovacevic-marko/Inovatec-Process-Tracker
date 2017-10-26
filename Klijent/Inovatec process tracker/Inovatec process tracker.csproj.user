@@ -3,5 +3,6 @@
   <PropertyGroup>
     <SelectedDevice>HMD Global TA-1053</SelectedDevice>
     <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
+    <DefaultDevice>Android_ARM_Nougat</DefaultDevice>
   </PropertyGroup>
 </Project>

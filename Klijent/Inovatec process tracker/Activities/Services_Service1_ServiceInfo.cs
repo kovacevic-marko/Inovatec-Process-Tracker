@@ -18,6 +18,7 @@ namespace Inovatec_process_tracker.Activities
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            ActionBar.Title = "Select date to display informations";
             SetContentView(Resource.Layout.Services_Service1_ServiceInfo);
 
             FindViewById<DatePicker>(Resource.Id.Services_Service1_ServiceInfo_datePicker).MinDate = 1507154400000; //ovo je 5. oktobar konvertovan u milisekunde

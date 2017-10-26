@@ -16,3 +16,20 @@ D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\uploadflag
 D:\CSharp\Inovatec process tracker\Inovatec process tracker\bin\Debug\Inovatec process tracker.dll.mdb
 D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\android\assets\Inovatec process tracker.dll.mdb
 D:\CSharp\Inovatec process tracker\Inovatec process tracker\obj\Debug\res\layout\services_service1_serviceinfo.xml
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\bin\Debug\Inovatec process tracker.dll
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\bin\Debug\Inovatec process tracker.pdb
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\bin\Debug\Inovatec_process_tracker.Inovatec_process_tracker.apk
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\bin\Debug\Inovatec_process_tracker.Inovatec_process_tracker-Signed.apk
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\obj\Debug\Inovatec process tracker.csprojResolveAssemblyReference.cache
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\obj\Debug\Inovatec process tracker.csproj.CoreCompileInputs.cache
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\obj\Debug\Inovatec process tracker.dll
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\obj\Debug\Inovatec process tracker.pdb
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\obj\Debug\android\bin\Inovatec_process_tracker.Inovatec_process_tracker.apk
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\obj\Debug\res\layout\services_service1.xml
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\obj\Debug\res\layout\services_service1_serviceinfo.xml
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\obj\Debug\res\layout\main.xml
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\obj\Debug\res\values\strings.xml
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\obj\Debug\R.cs.flag
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\obj\Debug\uploadflags.txt
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\bin\Debug\Inovatec process tracker.dll.mdb
+D:\CSharp\Inovatec-Process-Tracker\Klijent\Inovatec process tracker\obj\Debug\android\assets\Inovatec process tracker.dll.mdb

@@ -4,7 +4,7 @@ using Android.OS;
 
 namespace Inovatec_process_tracker
 {
-    [Activity(Label = "Inovatec_process_tracker", MainLauncher = true)]
+    [Activity(Label = "Inovatec Process Tracker", MainLauncher = true)]
     public class MainActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -12,12 +12,16 @@ namespace Inovatec_process_tracker
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Main);
 
+
             FindViewById<Button>(Resource.Id.Main_btnServices).Click += (o, e) =>
             {
                 StartActivity(typeof(Activities.Services));
             };
 
-            
+            FindViewById<Button>(Resource.Id.Main_btnApplications).Click += (o, e) =>
+            {
+                StartActivity(typeof(Activities.Applications));
+            };
         }
     }
 }

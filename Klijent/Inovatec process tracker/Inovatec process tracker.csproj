@@ -49,11 +49,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Json" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\Applications.cs" />
     <Compile Include="Activities\Services.cs" />
     <Compile Include="Activities\Services_Service1.cs" />
     <Compile Include="Activities\Services_Service1_ServiceInfo.cs" />
@@ -63,12 +65,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="GettingStarted.Xamarin" />
+    <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
-    <AndroidResource Include="Resources\layout\Services.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
     <AndroidResource Include="Resources\layout\Services_Service1.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
