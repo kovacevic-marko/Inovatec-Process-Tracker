@@ -31,11 +31,8 @@ namespace IPTDataAccess
         public virtual DbSet<tb_application_log> tb_application_log { get; set; }
         public virtual DbSet<tb_service> tb_service { get; set; }
         public virtual DbSet<tb_service_log> tb_service_log { get; set; }
-    
-        public virtual ObjectResult<TestProcedura_Result> TestProcedura()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TestProcedura_Result>("TestProcedura");
-        }
+        public virtual DbSet<ServicesInfo> ServicesInfoes { get; set; }
+        public virtual DbSet<ServicesInfoPom> ServicesInfoPoms { get; set; }
     
         public virtual ObjectResult<Nullable<bool>> GetLatestServiceLogByID(Nullable<int> id)
         {

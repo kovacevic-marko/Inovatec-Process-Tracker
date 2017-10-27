@@ -40,5 +40,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ServicesInfoes">
+      <EntityTypeMapping TypeName="InovatecDBModel.ServicesInfo">
+        <MappingFragment StoreEntitySet="ServicesInfo">
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ServicesInfoPoms">
+      <EntityTypeMapping TypeName="InovatecDBModel.ServicesInfoPom">
+        <MappingFragment StoreEntitySet="ServicesInfoPom">
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="service_id" ColumnName="service_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetLatestServiceLogByID" FunctionName="InovatecDBModel.Store.GetLatestServiceLogByID" />
   </EntityContainerMapping>
 </Mapping>

@@ -10,12 +10,12 @@ namespace IPTWebAPI.Controllers
 {
     public class ServicesController : ApiController
     {
-        public IEnumerable<tb_service> Get()
+        public IEnumerable<ServicesInfo> Get()
         { 
             using(InovatecDBEntities entities=new InovatecDBEntities())
             {
                 entities.Configuration.ProxyCreationEnabled = false;
-                return entities.tb_service.ToList();
+                return entities.ServicesInfoes.ToList();
             }
         }
     }

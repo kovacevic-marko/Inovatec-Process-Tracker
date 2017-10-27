@@ -65,6 +65,12 @@
       <DependentUpon>IPTDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServicesInfo.cs">
+      <DependentUpon>IPTDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServicesInfoPom.cs">
+      <DependentUpon>IPTDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tb_application.cs">
       <DependentUpon>IPTDataModel.tt</DependentUpon>
     </Compile>
@@ -75,9 +81,6 @@
       <DependentUpon>IPTDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_service_log.cs">
-      <DependentUpon>IPTDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TestProcedura_Result.cs">
       <DependentUpon>IPTDataModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>

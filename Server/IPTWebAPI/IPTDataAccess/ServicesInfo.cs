@@ -10,11 +10,13 @@
 namespace IPTDataAccess
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class TestProcedura_Result
+    public partial class ServicesInfo
     {
         public int id { get; set; }
         public string name { get; set; }
-        public string ipv4 { get; set; }
+        public Nullable<bool> status { get; set; }
+        public Nullable<System.DateTime> date { get; set; }
     }
 }

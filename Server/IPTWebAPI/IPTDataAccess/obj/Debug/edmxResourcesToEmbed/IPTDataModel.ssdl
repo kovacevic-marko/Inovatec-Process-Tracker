@@ -35,6 +35,32 @@
     <Property Name="date" Type="datetime" Nullable="false" />
     <Property Name="status" Type="bit" Nullable="false" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'InovatecDB.dbo.ServicesInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ServicesInfo">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="status" Type="bit" />
+    <Property Name="date" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'InovatecDB.dbo.ServicesInfoPom' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ServicesInfoPom">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="service_id" />
+      <PropertyRef Name="date" />
+      <PropertyRef Name="status" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="service_id" Type="int" Nullable="false" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="status" Type="bit" Nullable="false" />
+  </EntityType>
   <Association Name="FK_tb_application_log_tb_application">
     <End Role="tb_application" Type="Self.tb_application" Multiplicity="1" />
     <End Role="tb_application_log" Type="Self.tb_application_log" Multiplicity="*" />
@@ -59,11 +85,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="GetLatestServiceLogByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="InovatecDBModelStoreContainer">
     <EntitySet Name="tb_application" EntityType="Self.tb_application" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_application_log" EntityType="Self.tb_application_log" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_service" EntityType="Self.tb_service" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_service_log" EntityType="Self.tb_service_log" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ServicesInfo" EntityType="Self.ServicesInfo" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ServicesInfo].[id] AS [id], 
+    [ServicesInfo].[name] AS [name], 
+    [ServicesInfo].[status] AS [status], 
+    [ServicesInfo].[date] AS [date]
+    FROM [dbo].[ServicesInfo] AS [ServicesInfo]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="ServicesInfoPom" EntityType="Self.ServicesInfoPom" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ServicesInfoPom].[id] AS [id], 
+    [ServicesInfoPom].[service_id] AS [service_id], 
+    [ServicesInfoPom].[date] AS [date], 
+    [ServicesInfoPom].[status] AS [status]
+    FROM [dbo].[ServicesInfoPom] AS [ServicesInfoPom]</DefiningQuery>
+    </EntitySet>
     <AssociationSet Name="FK_tb_application_log_tb_application" Association="Self.FK_tb_application_log_tb_application">
       <End Role="tb_application" EntitySet="tb_application" />
       <End Role="tb_application_log" EntitySet="tb_application_log" />

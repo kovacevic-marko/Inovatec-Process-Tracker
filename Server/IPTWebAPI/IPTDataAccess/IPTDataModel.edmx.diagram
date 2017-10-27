@@ -9,6 +9,8 @@
         <EntityTypeShape EntityType="InovatecDBModel.tb_application_log" Width="1.5" PointX="3" PointY="3.875" />
         <EntityTypeShape EntityType="InovatecDBModel.tb_service" Width="1.5" PointX="0.75" PointY="1" />
         <EntityTypeShape EntityType="InovatecDBModel.tb_service_log" Width="1.5" PointX="3" PointY="0.875" />
+        <EntityTypeShape EntityType="InovatecDBModel.ServicesInfo" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="InovatecDBModel.ServicesInfoPom" Width="1.5" PointX="5.75" PointY="3.75" />
         <AssociationConnector Association="InovatecDBModel.FK_tb_application_log_tb_application" />
         <AssociationConnector Association="InovatecDBModel.FK_tb_service_log_tb_service" />
       </Diagram>
