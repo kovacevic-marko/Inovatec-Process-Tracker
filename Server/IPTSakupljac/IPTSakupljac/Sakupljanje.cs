@@ -28,6 +28,7 @@ namespace IPTSakupljac
             entities = new InovatecDBEntities();
             timer.Start();
             timer.Elapsed += ProveraStanjaSvihServisa;
+            timer.Elapsed += ProveraStanjaSvihAplikacija;
         }
 
         /************************************************************************
@@ -66,15 +67,15 @@ namespace IPTSakupljac
 
         // Hendler koji se pokrece pri okidanju tajmera
         public void ProveraStanjaSvihServisa(object sender, ElapsedEventArgs e)
-        {          
+        {
             foreach (var servis in entities.tb_service.ToList())
             {
                 bool status = IsActive(servis.ipv4);
-                UpisStanja(servis.id, status, DateTime.Now);
+                UpisStanjaServisa(servis.id, status, DateTime.Now);
             }
         }
 
-        void UpisStanja(int service_id, bool status, DateTime date)
+        void UpisStanjaServisa(int service_id, bool status, DateTime date)
         {
             tb_service_log novi_log = new tb_service_log
             {
@@ -83,6 +84,31 @@ namespace IPTSakupljac
                 date = date
             };
             entities.tb_service_log.Add(novi_log);
+            entities.SaveChanges();
+        }
+        public void ProveraStanjaSvihAplikacija(object sender, ElapsedEventArgs e)
+        {
+            foreach (var aplikacija in entities.tb_application.ToList())
+            {
+                bool aplikacija_aktivna = IsActive(aplikacija.ipv4);
+                string status = "";
+
+                //TODO 
+
+                //Iplementirati Xml u string
+
+                UpisStanjaAplikacije(aplikacija.id, status, DateTime.Now);
+            }
+        }
+        void UpisStanjaAplikacije(int application_id, string status, DateTime date)
+        {
+            tb_application_log novi_log = new tb_application_log
+            {
+                application_id = application_id,
+                status = status,
+                date = date
+            };
+            entities.tb_application_log.Add(novi_log);
             entities.SaveChanges();
         }
     }
