@@ -1,12 +1,11 @@
 ﻿using IPTDataAccess;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace IPTSakupljac
 {
@@ -37,13 +36,13 @@ namespace IPTSakupljac
          * Potrebno je da GET hendler sa zadate adrese vrati "true" kao odgovor,
          * odnosno samo u tom slucaju ce servis biti posmatran kao aktivan.
          ************************************************************************/
-        bool IsActive(string adresa)
+        bool IsActive(string address)
         {
             bool answer = false;
             try
             {
                 // kreiranje objekata za http komunikaciju
-                WebRequest request = WebRequest.Create(adresa);
+                WebRequest request = WebRequest.Create(address);
                 WebResponse response = request.GetResponse();
                 // pretvaranje odgovora u string
                 Stream dataStream = response.GetResponseStream();
@@ -70,7 +69,7 @@ namespace IPTSakupljac
         {
             foreach (var servis in entities.tb_service.ToList())
             {
-                bool status = IsActive(servis.ipv4);
+                bool status = IsActive(servis.address);
                 UpisStanjaServisa(servis.id, status, DateTime.Now);
             }
         }
@@ -90,23 +89,33 @@ namespace IPTSakupljac
         {
             foreach (var aplikacija in entities.tb_application.ToList())
             {
-                bool aplikacija_aktivna = IsActive(aplikacija.ipv4);
-                string status = "";
+                bool status = IsActive(aplikacija.address);
+                string info = "";
 
-                //TODO 
+                // Zahtev za informacije o aplikaciji (XML)
+                if (status)
+                {
+                    bool flagSlash = (aplikacija.address.LastOrDefault() == '/') ? true : false;
+                    string uri = aplikacija.address;
+                    if (!flagSlash)
+                        uri += '/';
+                    uri += "info";
+                    XDocument doc = XDocument.Load(uri);
+                    info += doc.ToString();
+                }
 
-                //Iplementirati Xml u string
-
-                UpisStanjaAplikacije(aplikacija.id, status, DateTime.Now);
+                UpisStanjaAplikacije(aplikacija.id, status, info, DateTime.Now);
             }
         }
-        void UpisStanjaAplikacije(int application_id, string status, DateTime date)
+
+        void UpisStanjaAplikacije(int application_id, bool status, string info, DateTime date)
         {
             tb_application_log novi_log = new tb_application_log
             {
                 application_id = application_id,
                 status = status,
-                date = date
+                date = date,
+                info = info
             };
             entities.tb_application_log.Add(novi_log);
             entities.SaveChanges();

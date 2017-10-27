@@ -17,7 +17,8 @@ namespace IPTDataAccess
         public int id { get; set; }
         public int application_id { get; set; }
         public System.DateTime date { get; set; }
-        public string status { get; set; }
+        public bool status { get; set; }
+        public string info { get; set; }
     
         public virtual tb_application tb_application { get; set; }
     }

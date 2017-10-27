@@ -11,7 +11,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ipv4" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="tb_application_log">
           <Key>
@@ -20,7 +20,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="application_id" Type="int" Nullable="false" />
           <Property Name="date" Type="datetime" Nullable="false" />
-          <Property Name="status" Type="xml" Nullable="false" />
+          <Property Name="status" Type="bit" Nullable="false" />
+          <Property Name="info" Type="xml" Nullable="false" />
         </EntityType>
         <EntityType Name="tb_service">
           <Key>
@@ -28,7 +29,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ipv4" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="tb_service_log">
           <Key>
@@ -38,18 +39,6 @@
           <Property Name="service_id" Type="int" Nullable="false" />
           <Property Name="date" Type="datetime" Nullable="false" />
           <Property Name="status" Type="bit" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'InovatecDB.dbo.Test' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Test">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="name" />
-            <PropertyRef Name="ipv4" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ipv4" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_tb_application_log_tb_application">
           <End Role="tb_application" Type="Self.tb_application" Multiplicity="1" />
@@ -75,22 +64,11 @@ warning 6002: The table/view 'InovatecDB.dbo.Test' does not have a primary key d
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="GetLatestServiceLogByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="TestProcedura" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="InovatecDBModelStoreContainer">
           <EntitySet Name="tb_application" EntityType="Self.tb_application" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_application_log" EntityType="Self.tb_application_log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_service" EntityType="Self.tb_service" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_service_log" EntityType="Self.tb_service_log" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Test" EntityType="Self.Test" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Test].[id] AS [id], 
-    [Test].[name] AS [name], 
-    [Test].[ipv4] AS [ipv4]
-    FROM [dbo].[Test] AS [Test]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_tb_application_log_tb_application" Association="Self.FK_tb_application_log_tb_application">
             <End Role="tb_application" EntitySet="tb_application" />
             <End Role="tb_application_log" EntitySet="tb_application_log" />
@@ -104,14 +82,37 @@ warning 6002: The table/view 'InovatecDB.dbo.Test' does not have a primary key d
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InovatecDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="InovatecDBEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="TestProcedura" ReturnType="Collection(InovatecDBModel.TestProcedura_Result)" />
+          <FunctionImport Name="GetLatestServiceLogByID" ReturnType="Collection(Boolean)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="tb_application" EntityType="InovatecDBModel.tb_application" />
+          <EntitySet Name="tb_application_log" EntityType="InovatecDBModel.tb_application_log" />
+          <EntitySet Name="tb_service" EntityType="InovatecDBModel.tb_service" />
+          <EntitySet Name="tb_service_log" EntityType="InovatecDBModel.tb_service_log" />
+          <AssociationSet Name="FK_tb_application_log_tb_application" Association="InovatecDBModel.FK_tb_application_log_tb_application">
+            <End Role="tb_application" EntitySet="tb_application" />
+            <End Role="tb_application_log" EntitySet="tb_application_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_service_log_tb_service" Association="InovatecDBModel.FK_tb_service_log_tb_service">
+            <End Role="tb_service" EntitySet="tb_service" />
+            <End Role="tb_service_log" EntitySet="tb_service_log" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="TestProcedura_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ipv4" Nullable="false" MaxLength="50" />
+        </ComplexType>
         <EntityType Name="tb_application">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ipv4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="tb_application_log" Relationship="Self.FK_tb_application_log_tb_application" FromRole="tb_application" ToRole="tb_application_log" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tb_application_log" Relationship="InovatecDBModel.FK_tb_application_log_tb_application" FromRole="tb_application" ToRole="tb_application_log" />
         </EntityType>
         <EntityType Name="tb_application_log">
           <Key>
@@ -120,17 +121,18 @@ warning 6002: The table/view 'InovatecDB.dbo.Test' does not have a primary key d
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="application_id" Type="Int32" Nullable="false" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="tb_application" Relationship="Self.FK_tb_application_log_tb_application" FromRole="tb_application_log" ToRole="tb_application" />
+          <Property Name="status" Type="Boolean" Nullable="false" />
+          <Property Name="info" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tb_application" Relationship="InovatecDBModel.FK_tb_application_log_tb_application" FromRole="tb_application_log" ToRole="tb_application" />
         </EntityType>
         <EntityType Name="tb_service">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ipv4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="tb_service_log" Relationship="Self.FK_tb_service_log_tb_service" FromRole="tb_service" ToRole="tb_service_log" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tb_service_log" Relationship="InovatecDBModel.FK_tb_service_log_tb_service" FromRole="tb_service" ToRole="tb_service_log" />
         </EntityType>
         <EntityType Name="tb_service_log">
           <Key>
@@ -140,21 +142,11 @@ warning 6002: The table/view 'InovatecDB.dbo.Test' does not have a primary key d
           <Property Name="service_id" Type="Int32" Nullable="false" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="status" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="tb_service" Relationship="Self.FK_tb_service_log_tb_service" FromRole="tb_service_log" ToRole="tb_service" />
-        </EntityType>
-        <EntityType Name="Test">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="name" />
-            <PropertyRef Name="ipv4" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ipv4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tb_service" Relationship="InovatecDBModel.FK_tb_service_log_tb_service" FromRole="tb_service_log" ToRole="tb_service" />
         </EntityType>
         <Association Name="FK_tb_application_log_tb_application">
-          <End Role="tb_application" Type="Self.tb_application" Multiplicity="1" />
-          <End Role="tb_application_log" Type="Self.tb_application_log" Multiplicity="*" />
+          <End Type="InovatecDBModel.tb_application" Role="tb_application" Multiplicity="1" />
+          <End Type="InovatecDBModel.tb_application_log" Role="tb_application_log" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tb_application">
               <PropertyRef Name="id" />
@@ -165,8 +157,8 @@ warning 6002: The table/view 'InovatecDB.dbo.Test' does not have a primary key d
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tb_service_log_tb_service">
-          <End Role="tb_service" Type="Self.tb_service" Multiplicity="1" />
-          <End Role="tb_service_log" Type="Self.tb_service_log" Multiplicity="*" />
+          <End Type="InovatecDBModel.tb_service" Role="tb_service" Multiplicity="1" />
+          <End Type="InovatecDBModel.tb_service_log" Role="tb_service_log" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tb_service">
               <PropertyRef Name="id" />
@@ -176,31 +168,7 @@ warning 6002: The table/view 'InovatecDB.dbo.Test' does not have a primary key d
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="InovatecDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tb_application" EntityType="Self.tb_application" />
-          <EntitySet Name="tb_application_log" EntityType="Self.tb_application_log" />
-          <EntitySet Name="tb_service" EntityType="Self.tb_service" />
-          <EntitySet Name="tb_service_log" EntityType="Self.tb_service_log" />
-          <EntitySet Name="Tests" EntityType="Self.Test" />
-          <AssociationSet Name="FK_tb_application_log_tb_application" Association="Self.FK_tb_application_log_tb_application">
-            <End Role="tb_application" EntitySet="tb_application" />
-            <End Role="tb_application_log" EntitySet="tb_application_log" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tb_service_log_tb_service" Association="Self.FK_tb_service_log_tb_service">
-            <End Role="tb_service" EntitySet="tb_service" />
-            <End Role="tb_service_log" EntitySet="tb_service_log" />
-          </AssociationSet>
-          <FunctionImport Name="TestProcedura" ReturnType="Collection(InovatecDBModel.TestProcedura_Result)" />
-          <FunctionImport Name="GetLatestServiceLogByID" ReturnType="Collection(Boolean)">
-            <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
-        </EntityContainer>
-        <ComplexType Name="TestProcedura_Result">
-          <Property Type="Int32" Name="id" Nullable="false" />
-          <Property Type="String" Name="name" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="ipv4" Nullable="false" MaxLength="50" />
-        </ComplexType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -209,60 +177,42 @@ warning 6002: The table/view 'InovatecDB.dbo.Test' does not have a primary key d
           <EntitySetMapping Name="tb_application">
             <EntityTypeMapping TypeName="InovatecDBModel.tb_application">
               <MappingFragment StoreEntitySet="tb_application">
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="ipv4" ColumnName="ipv4" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tb_application_log">
             <EntityTypeMapping TypeName="InovatecDBModel.tb_application_log">
               <MappingFragment StoreEntitySet="tb_application_log">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="application_id" ColumnName="application_id" />
-                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="info" ColumnName="info" />
                 <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="application_id" ColumnName="application_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tb_service">
             <EntityTypeMapping TypeName="InovatecDBModel.tb_service">
               <MappingFragment StoreEntitySet="tb_service">
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="ipv4" ColumnName="ipv4" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tb_service_log">
             <EntityTypeMapping TypeName="InovatecDBModel.tb_service_log">
               <MappingFragment StoreEntitySet="tb_service_log">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="service_id" ColumnName="service_id" />
-                <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="service_id" ColumnName="service_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tests">
-            <EntityTypeMapping TypeName="InovatecDBModel.Test">
-              <MappingFragment StoreEntitySet="Test">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="ipv4" ColumnName="ipv4" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="TestProcedura" FunctionName="InovatecDBModel.Store.TestProcedura">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="InovatecDBModel.TestProcedura_Result">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="ipv4" ColumnName="ipv4" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetLatestServiceLogByID" FunctionName="InovatecDBModel.Store.GetLatestServiceLogByID" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -31,7 +31,6 @@ namespace IPTDataAccess
         public virtual DbSet<tb_application_log> tb_application_log { get; set; }
         public virtual DbSet<tb_service> tb_service { get; set; }
         public virtual DbSet<tb_service_log> tb_service_log { get; set; }
-        public virtual DbSet<Test> Tests { get; set; }
     
         public virtual ObjectResult<TestProcedura_Result> TestProcedura()
         {

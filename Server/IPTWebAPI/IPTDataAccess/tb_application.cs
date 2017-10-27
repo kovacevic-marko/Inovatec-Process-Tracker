@@ -22,7 +22,7 @@ namespace IPTDataAccess
     
         public int id { get; set; }
         public string name { get; set; }
-        public string ipv4 { get; set; }
+        public string address { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_application_log> tb_application_log { get; set; }

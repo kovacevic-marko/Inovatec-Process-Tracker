@@ -77,9 +77,6 @@
     <Compile Include="tb_service_log.cs">
       <DependentUpon>IPTDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Test.cs">
-      <DependentUpon>IPTDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="TestProcedura_Result.cs">
       <DependentUpon>IPTDataModel.tt</DependentUpon>
     </Compile>
