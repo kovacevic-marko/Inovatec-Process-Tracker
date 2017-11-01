@@ -15,6 +15,7 @@
     <activity android:label="ServicesActivity" android:name="md564389ecb91bb2604a85ba1462fd95525.Services" />
     <activity android:label="Services_Service1Activity" android:name="md564389ecb91bb2604a85ba1462fd95525.Services_Service1" />
     <activity android:label="Services_Service1_ServiceInfo" android:name="md564389ecb91bb2604a85ba1462fd95525.Services_Service1_ServiceInfo" />
+    <activity android:label="Services_Service1_ServiceInfo_Chart" android:name="md564389ecb91bb2604a85ba1462fd95525.Services_Service1_ServiceInfo_Chart" />
     <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="2147483647" android:authorities="Inovatec_process_tracker.Inovatec_process_tracker.mono.MonoRuntimeProvider.__mono_init__" />
     <!--suppress ExportedReceiver-->
     <receiver android:name="mono.android.Seppuku">

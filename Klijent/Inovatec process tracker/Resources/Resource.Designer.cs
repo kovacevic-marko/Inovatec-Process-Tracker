@@ -26,6 +26,7 @@ namespace Inovatec_process_tracker
 		
 		public static void UpdateIdValues()
 		{
+			global::Microcharts.Droid.Resource.String.library_name = global::Inovatec_process_tracker.Resource.String.library_name;
 		}
 		
 		public partial class Attribute
@@ -71,6 +72,9 @@ namespace Inovatec_process_tracker
 			// aapt resource value: 0x7f040004
 			public const int Services_Service1_txtTitle = 2130968580;
 			
+			// aapt resource value: 0x7f04000c
+			public const int chartView = 2130968588;
+			
 			// aapt resource value: 0x7f040009
 			public const int linearLayout1 = 2130968585;
 			
@@ -102,6 +106,9 @@ namespace Inovatec_process_tracker
 			// aapt resource value: 0x7f020002
 			public const int Services_Service1_ServiceInfo = 2130837506;
 			
+			// aapt resource value: 0x7f020003
+			public const int Services_Service1_ServiceInfo_Chart = 2130837507;
+			
 			static Layout()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -115,8 +122,11 @@ namespace Inovatec_process_tracker
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f030001
+			public const int app_name = 2130903041;
+			
 			// aapt resource value: 0x7f030000
-			public const int app_name = 2130903040;
+			public const int library_name = 2130903040;
 			
 			static String()
 			{

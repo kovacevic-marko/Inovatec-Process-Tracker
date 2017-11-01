@@ -20,6 +20,7 @@ public final class R {
         public static final int Services_Service1_btnServiceInfo=0x7f040007;
         public static final int Services_Service1_txtStatus=0x7f040005;
         public static final int Services_Service1_txtTitle=0x7f040004;
+        public static final int chartView=0x7f04000c;
         public static final int linearLayout1=0x7f040009;
         public static final int txtChooseAction=0x7f040001;
         public static final int txtMainWelcome=0x7f040000;
@@ -28,8 +29,10 @@ public final class R {
         public static final int main=0x7f020000;
         public static final int services_service1=0x7f020001;
         public static final int services_service1_serviceinfo=0x7f020002;
+        public static final int services_service1_serviceinfo_chart=0x7f020003;
     }
     public static final class string {
-        public static final int app_name=0x7f030000;
+        public static final int app_name=0x7f030001;
+        public static final int library_name=0x7f030000;
     }
 }
