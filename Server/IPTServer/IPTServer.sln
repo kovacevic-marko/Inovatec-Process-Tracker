@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPTWebAPI", "IPTWebAPI\IPTWebAPI.csproj", "{3AD784C7-A9A2-42E6-918A-313765DDF0F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPTDataAccess", "IPTDataAccess\IPTDataAccess.csproj", "{132DF534-FBC7-4C10-A932-97955E191863}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPTSakupljac", "IPTSakupljac\IPTSakupljac.csproj", "{F955380B-BF35-4800-8096-18FB57E764B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{3AD784C7-A9A2-42E6-918A-313765DDF0F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AD784C7-A9A2-42E6-918A-313765DDF0F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AD784C7-A9A2-42E6-918A-313765DDF0F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{132DF534-FBC7-4C10-A932-97955E191863}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{132DF534-FBC7-4C10-A932-97955E191863}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{132DF534-FBC7-4C10-A932-97955E191863}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{132DF534-FBC7-4C10-A932-97955E191863}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F955380B-BF35-4800-8096-18FB57E764B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F955380B-BF35-4800-8096-18FB57E764B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F955380B-BF35-4800-8096-18FB57E764B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F955380B-BF35-4800-8096-18FB57E764B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
