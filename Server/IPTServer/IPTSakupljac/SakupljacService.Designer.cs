@@ -1,6 +1,6 @@
 ﻿namespace IPTSakupljac
 {
-    partial class Service1
+    partial class SakupljacService
     {
         /// <summary> 
         /// Required designer variable.

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{132DF534-FBC7-4C10-A932-97955E191863}</ProjectGuid>
+    <ProjectGuid>{B69E4DFC-9AC6-4B8C-B129-DE7B8B833683}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>IPTDataAccess</RootNamespace>
@@ -49,10 +49,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client.cs">
+      <DependentUpon>IPTDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClientService.cs">
+      <DependentUpon>IPTDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="IPTDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IPTDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IPTDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IPTDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="IPTDataModel.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -60,6 +71,12 @@
       <DependentUpon>IPTDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service.cs">
+      <DependentUpon>IPTDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceLog.cs">
+      <DependentUpon>IPTDataModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="IPTDataModel.edmx">
@@ -78,6 +95,12 @@
     <Content Include="IPTDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IPTDataModel.Context.cs</LastGenOutput>
+      <DependentUpon>IPTDataModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="IPTDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>IPTDataModel.edmx</DependentUpon>
+      <LastGenOutput>IPTDataModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
