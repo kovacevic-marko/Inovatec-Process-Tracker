@@ -12,6 +12,8 @@ namespace IPTDataAccess
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class IPTDBEntities : DbContext
     {
@@ -29,5 +31,14 @@ namespace IPTDataAccess
         public virtual DbSet<ClientService> ClientServices { get; set; }
         public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<ServiceLog> ServiceLogs { get; set; }
+    
+        public virtual ObjectResult<GetServicesForClientID_Result> GetServicesForClientID(Nullable<int> clientID)
+        {
+            var clientIDParameter = clientID.HasValue ?
+                new ObjectParameter("ClientID", clientID) :
+                new ObjectParameter("ClientID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetServicesForClientID_Result>("GetServicesForClientID", clientIDParameter);
+        }
     }
 }
