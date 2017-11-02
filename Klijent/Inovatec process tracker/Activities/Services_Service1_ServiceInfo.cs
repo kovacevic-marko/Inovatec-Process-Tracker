@@ -26,7 +26,7 @@ namespace Inovatec_process_tracker.Activities
 
             FindViewById<Button>(Resource.Id.Services_Service1_ServiceInfo_btnOk).Click += (o, e) =>
             {
-                //ovde ide redirekt za stranu za prikazivanje informacija o izabranom datumu
+                StartActivity(typeof(Activities.Services_Service1_ServiceInfo_Chart));
             };
             FindViewById<Button>(Resource.Id.Services_Service1_ServiceInfo_btnCancel).Click += (o, e) =>
             {
