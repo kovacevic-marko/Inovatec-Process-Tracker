@@ -26,16 +26,7 @@ namespace IPTSakupljac
             timer.Start();
             timer.Elapsed += ProveraStanjaSvihServisa;
         }
-
-        /************************************************************************
-         * Funkcija koja proverava da li je servis na zadatoj adresi aktivan
-         * ili ne i vraca true ili false, respektivno.
-         * Potrebno je da GET hendler sa zadate adrese vrati "true" kao odgovor,
-         * odnosno samo u tom slucaju ce servis biti posmatran kao aktivan.
-         ************************************************************************/
-
-
-        // Hendler koji se pokrece pri okidanju tajmera
+        
         public void ProveraStanjaSvihServisa(object sender, ElapsedEventArgs e)
         {
             foreach (var ClientService in entities.ClientServices.ToList())
