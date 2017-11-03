@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace IPTSakupljac
 {
-    public partial class SakupljacService : ServiceBase
+    public partial class IPTSakupljacService : ServiceBase
     {
-        public SakupljacService()
+        public IPTSakupljacService()
         {
             InitializeComponent();
         }
 
         protected override void OnStart(string[] args)
         {
-            new Sakupljanje(1000);
+            new Sakupljanje();
         }
 
         protected override void OnStop()

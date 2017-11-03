@@ -1,6 +1,6 @@
 ﻿namespace IPTSakupljac
 {
-    partial class SakupljacService
+    partial class IPTSakupljacService
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.ServiceName = "Service1";
+            // 
+            // IPTSakupljacService
+            // 
+            this.ServiceName = "IPTSakupljacService";
+
         }
 
         #endregion

@@ -17,7 +17,7 @@ namespace IPTSakupljac
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new SakupljacService()
+                new IPTSakupljacService()
             };
             ServiceBase.Run(ServicesToRun);
         }

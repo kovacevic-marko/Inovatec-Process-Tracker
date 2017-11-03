@@ -1,5 +1,6 @@
 ﻿using IPTDataAccess;
 using System;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Timers;
@@ -13,9 +14,9 @@ namespace IPTSakupljac
         private Timer timer;
         private IPTDBEntities entities;
 
-        public Sakupljanje(int interval = 10000)
+        public Sakupljanje()
         {
-            this.interval = interval;
+            this.interval = Int32.Parse(ConfigurationManager.AppSettings["TimerInterval"]);
             Init();
         }
 
