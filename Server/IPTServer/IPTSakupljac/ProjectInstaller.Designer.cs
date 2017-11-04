@@ -39,12 +39,13 @@
             // serviceInstaller1
             // 
             this.serviceInstaller1.ServiceName = "IPTSakupljacService";
+            this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
             // 
             this.Installers.AddRange(new System.Configuration.Install.Installer[] {
-            this.serviceProcessInstaller1,
-            this.serviceInstaller1});
+            this.serviceInstaller1,
+            this.serviceProcessInstaller1});
 
         }
 

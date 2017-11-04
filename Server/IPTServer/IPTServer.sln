@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPTWebAPI", "IPTWebAPI\IPTWebAPI.csproj", "{3AD784C7-A9A2-42E6-918A-313765DDF0F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPTSakupljac", "IPTSakupljac\IPTSakupljac.csproj", "{F955380B-BF35-4800-8096-18FB57E764B4}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPTDataAccess", "IPTDataAccess\IPTDataAccess.csproj", "{B69E4DFC-9AC6-4B8C-B129-DE7B8B833683}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPTCommon", "IPTCommon\IPTCommon.csproj", "{F8737E90-8023-4249-A983-8FF0CAC9BC93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPTSakupljac", "IPTSakupljac\IPTSakupljac.csproj", "{0628A5B2-A317-4BB2-B5EF-C5EF8DFE1F5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		{3AD784C7-A9A2-42E6-918A-313765DDF0F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AD784C7-A9A2-42E6-918A-313765DDF0F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AD784C7-A9A2-42E6-918A-313765DDF0F6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F955380B-BF35-4800-8096-18FB57E764B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F955380B-BF35-4800-8096-18FB57E764B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F955380B-BF35-4800-8096-18FB57E764B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F955380B-BF35-4800-8096-18FB57E764B4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B69E4DFC-9AC6-4B8C-B129-DE7B8B833683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B69E4DFC-9AC6-4B8C-B129-DE7B8B833683}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B69E4DFC-9AC6-4B8C-B129-DE7B8B833683}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{F8737E90-8023-4249-A983-8FF0CAC9BC93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8737E90-8023-4249-A983-8FF0CAC9BC93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8737E90-8023-4249-A983-8FF0CAC9BC93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0628A5B2-A317-4BB2-B5EF-C5EF8DFE1F5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0628A5B2-A317-4BB2-B5EF-C5EF8DFE1F5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0628A5B2-A317-4BB2-B5EF-C5EF8DFE1F5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0628A5B2-A317-4BB2-B5EF-C5EF8DFE1F5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
