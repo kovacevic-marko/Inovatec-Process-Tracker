@@ -45,6 +45,7 @@
       <DependentUpon>Client.xaml</DependentUpon>
     </Compile>
     <Compile Include="ClientModel.cs" />
+    <Compile Include="JsonFunctions.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -55,6 +56,7 @@
     <Compile Include="ServiceInfo.xaml.cs">
       <DependentUpon>ServiceInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ServiceModel.cs" />
     <Compile Include="Services.xaml.cs">
       <DependentUpon>Services.xaml</DependentUpon>
     </Compile>

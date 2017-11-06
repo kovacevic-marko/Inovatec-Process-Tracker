@@ -22,7 +22,7 @@ namespace IPTXamarinForms
         public async void init()
         {
             string url = "http://172.24.2.136:5000/api/clients";
-            string jsonString = await GetJson(url);
+            string jsonString = await JsonFunctions.GetJson(url);
             List<ClientModel> clients = JsonConvert.DeserializeObject<List<ClientModel>>(jsonString);
             
             var stackLayoutVertical = new StackLayout()
@@ -38,7 +38,7 @@ namespace IPTXamarinForms
                     FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
                     HorizontalOptions = LayoutOptions.Center,
                 };
-                btn.Clicked += (sender, args) => { Navigation.PushAsync(new Client(btn.Text)); };
+                btn.Clicked += (sender, args) => { Navigation.PushAsync(new Client(client.ClientID, client.ClientName)); };
 
                 stackLayoutVertical.Children.Add(btn);
             }
@@ -47,26 +47,6 @@ namespace IPTXamarinForms
 
             // Build the page.
             this.Content = new ScrollView { Content = stackLayoutVertical };
-        }
-        // Uzima informaciju da li je servis aktivan ili nije preko Web API
-        private async Task<string> GetJson(string url)
-        {
-            //Pravi HTTP zahtev koristeci zadati url
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(url));
-            request.ContentType = "application/json";
-            request.Method = "GET";
-
-            // Salje zahtev serveru i ceka odgovor
-            using (WebResponse response = await request.GetResponseAsync())
-            {
-                using (Stream stream = response.GetResponseStream())
-                {
-                    //JsonValue jsonDoc = await Task.Run(() => JsonObject.Load(stream));
-                    string json = new StreamReader(stream).ReadToEnd();
-                    // Vraca JSON string:
-                    return json;
-                }
-            }
         }
 
     }

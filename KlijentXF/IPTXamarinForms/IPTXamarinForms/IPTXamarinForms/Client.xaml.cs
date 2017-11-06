@@ -12,9 +12,13 @@ namespace IPTXamarinForms
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Client : ContentPage
     {
-        public Client(String nazivKlijenta)
+        public int ClientID { get; private set; }
+        public string ClientName { get; set; }
+
+        public Client(int ClientID, string ClientName)
         {
-            string nazivKlijentaProsledjivac = nazivKlijenta;
+            this.ClientID = ClientID;
+            this.ClientName = ClientName;
             //InitializeComponent();
 
             var stackLayoutVertical = new StackLayout()
@@ -28,20 +32,22 @@ namespace IPTXamarinForms
                 FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
                 HorizontalOptions = LayoutOptions.Center,
             };
-            btnServices.Clicked += (sender, args) => { Navigation.PushAsync(new Services(nazivKlijentaProsledjivac)); };
+            btnServices.Clicked += (sender, args) => { Navigation.PushAsync(new Services(ClientID)); };
 
-            Button btnApplications = new Button
-            {
-                Text = "Applications",
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                HorizontalOptions = LayoutOptions.Center,
-            };
-            btnApplications.Clicked += (sender, args) => { Navigation.PushAsync(new Applications(nazivKlijentaProsledjivac)); };
+            //Button btnApplications = new Button
+            //{
+            //    Text = "Applications",
+            //    FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
+            //    HorizontalOptions = LayoutOptions.Center,
+            //};
+            //btnApplications.Clicked += (sender, args) => { Navigation.PushAsync(new Applications(nazivKlijentaProsledjivac)); };
 
             stackLayoutVertical.Children.Add(btnServices);
-            stackLayoutVertical.Children.Add(btnApplications);
+            //stackLayoutVertical.Children.Add(btnApplications);
 
             this.Content = new ScrollView { Content = stackLayoutVertical };
         }
+
+        
     }
 }

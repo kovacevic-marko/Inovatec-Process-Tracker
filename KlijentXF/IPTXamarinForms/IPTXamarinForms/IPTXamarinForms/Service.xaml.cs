@@ -18,7 +18,7 @@ namespace IPTXamarinForms
         Label lblStatusServisa;
         Button btnRefresh;
 
-        public Service(string nazivServisa, string statusServisa)
+        public Service(string nazivServisa, int statusServisa)
         {
             //InitializeComponent();
 

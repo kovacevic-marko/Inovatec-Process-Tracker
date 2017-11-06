@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Json;
@@ -15,89 +16,79 @@ namespace IPTXamarinForms
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Services : ContentPage
     {
-        public Services(string nazivKlijenta)
+        public Services(int ClientID)
         {
-            ServicesAsync(nazivKlijenta);
+            ServicesAsync(ClientID);
         }
 
-        public async void ServicesAsync(string nazivKlijenta)
+        public async void ServicesAsync(int ClientID)
         {
-            int brojServisa;
-
-            switch (nazivKlijenta)
-            {
-                case "Client 1":
-                    brojServisa = 3;
-                    break;
-                case "Client 2":
-                    brojServisa = 5;
-                    break;
-                case "Client 3":
-                    brojServisa = 7;
-                    break;
-                case "Client 4":
-                    brojServisa = 10;
-                    break;
-                case "Client 5":
-                    brojServisa = 25;
-                    break;
-                default:
-                    brojServisa = 0;
-                    break;
-            }
-
             //InitializeComponent();
 
+
+            string url = "http://172.24.2.136:5000/api/clientservice?ClientID=" + ClientID;
+            string jsonString = await JsonFunctions.GetJson(url);
+            List<ServiceModel> services = JsonConvert.DeserializeObject<List<ServiceModel>>(jsonString);
 
             var stackLayoutVertical = new StackLayout()
             {
                 Orientation = StackOrientation.Vertical, 
             };
-            string url = "https://kovacevicm.com/api/";
-            JsonValue StartingJsonValue = await FetchServiceStatus(url);
-            string status = StartingJsonValue["status"];
-
-            for (int i = 1; i <= brojServisa; i++)
+            
+            foreach (var service in services)
             {
-                var stackLayoutHorizontal = new StackLayout()
+                Button btn = new Button
                 {
-                    Orientation = StackOrientation.Horizontal,
-                    HorizontalOptions = LayoutOptions.Center,
-                    Spacing = 60
-                };
-
-                Button btnService = new Button
-                {
-                    Text = "Service " + i,
+                    Text = service.ClientServiceID + " " + service.ServiceName + " " + service.ServiceStatus,
                     FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                    HorizontalOptions = LayoutOptions.Center
+                    HorizontalOptions = LayoutOptions.Center,
                 };
-                btnService.Clicked += (sender, args) => { Navigation.PushAsync(new Service(btnService.Text, status)); };
-                stackLayoutHorizontal.Children.Add(btnService);
+                btn.Clicked += (sender, args) => { Navigation.PushAsync(new Service(service.ServiceName, service.ServiceStatus)); };
 
-                Label lblServiceStatus = new Label();
-
-                if (status.Equals("ok"))
-                {
-                    lblServiceStatus.Text = "Active";
-                    lblServiceStatus.BackgroundColor = Color.FromHex("#00ff00");  //zelena                      
-                    lblServiceStatus.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
-                    lblServiceStatus.HorizontalOptions = LayoutOptions.Center;
-                    lblServiceStatus.MinimumWidthRequest = 50;
-                }
-                else
-                {
-                    lblServiceStatus.Text = "Not Active";
-                    lblServiceStatus.BackgroundColor = Color.FromHex("#00ff00");  //zelena                      
-                    lblServiceStatus.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
-                    lblServiceStatus.HorizontalOptions = LayoutOptions.Center;
-                    lblServiceStatus.MinimumWidthRequest = 50;
-                }
-
-                stackLayoutHorizontal.Children.Add(lblServiceStatus);
-
-                stackLayoutVertical.Children.Add(stackLayoutHorizontal);
+                stackLayoutVertical.Children.Add(btn);
             }
+
+            //for (int i = 1; i <= brojServisa; i++)
+            //{
+            //    var stackLayoutHorizontal = new StackLayout()
+            //    {
+            //        Orientation = StackOrientation.Horizontal,
+            //        HorizontalOptions = LayoutOptions.Center,
+            //        Spacing = 60
+            //    };
+
+            //    Button btnService = new Button
+            //    {
+            //        Text = "Service " + i,
+            //        FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
+            //        HorizontalOptions = LayoutOptions.Center
+            //    };
+            //    btnService.Clicked += (sender, args) => { Navigation.PushAsync(new Service(btnService.Text, status)); };
+            //    stackLayoutHorizontal.Children.Add(btnService);
+
+            //    Label lblServiceStatus = new Label();
+
+            //    if (status.Equals("ok"))
+            //    {
+            //        lblServiceStatus.Text = "Active";
+            //        lblServiceStatus.BackgroundColor = Color.FromHex("#00ff00");  //zelena                      
+            //        lblServiceStatus.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            //        lblServiceStatus.HorizontalOptions = LayoutOptions.Center;
+            //        lblServiceStatus.MinimumWidthRequest = 50;
+            //    }
+            //    else
+            //    {
+            //        lblServiceStatus.Text = "Not Active";
+            //        lblServiceStatus.BackgroundColor = Color.FromHex("#00ff00");  //zelena                      
+            //        lblServiceStatus.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            //        lblServiceStatus.HorizontalOptions = LayoutOptions.Center;
+            //        lblServiceStatus.MinimumWidthRequest = 50;
+            //    }
+
+            //    stackLayoutHorizontal.Children.Add(lblServiceStatus);
+
+            //    stackLayoutVertical.Children.Add(stackLayoutHorizontal);
+            //}
 
 
             // Accomodate iPhone status bar.
@@ -106,29 +97,5 @@ namespace IPTXamarinForms
             // Build the page.
             this.Content = new ScrollView { Content = stackLayoutVertical };
         }
-        
-        // Uzima informaciju da li je servis aktivan ili nije preko Web API
-        private async Task<JsonValue> FetchServiceStatus(string url)
-        {
-            //Pravi HTTP zahtev koristeci zadati url
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(url));
-            request.ContentType = "application/json";
-            request.Method = "GET";
-
-            // Salje zahtev serveru i ceka odgovor
-            using (WebResponse response = await request.GetResponseAsync())
-            {
-                using (Stream stream = response.GetResponseStream())
-                {
-                    // Ovde pravi JSON dokument:
-                    JsonValue jsonDoc = await Task.Run(() => JsonObject.Load(stream));
-
-
-                    // Vraca JSON dokument:
-                    return jsonDoc;
-                }
-            }
-        }
-
     }
 }
