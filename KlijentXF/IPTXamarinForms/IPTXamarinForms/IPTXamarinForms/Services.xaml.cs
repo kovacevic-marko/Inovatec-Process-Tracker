@@ -46,17 +46,13 @@ namespace IPTXamarinForms
                     break;
             }
 
-            InitializeComponent();
+            //InitializeComponent();
 
 
             var stackLayoutVertical = new StackLayout()
             {
                 Orientation = StackOrientation.Vertical, 
             };
-            
-            
-
-
             string url = "https://kovacevicm.com/api/";
             JsonValue StartingJsonValue = await FetchServiceStatus(url);
             string status = StartingJsonValue["status"];
@@ -110,10 +106,7 @@ namespace IPTXamarinForms
             // Build the page.
             this.Content = new ScrollView { Content = stackLayoutVertical };
         }
-
-
-
-
+        
         // Uzima informaciju da li je servis aktivan ili nije preko Web API
         private async Task<JsonValue> FetchServiceStatus(string url)
         {

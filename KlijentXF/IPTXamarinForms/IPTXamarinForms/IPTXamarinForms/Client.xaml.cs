@@ -15,7 +15,7 @@ namespace IPTXamarinForms
         public Client(String nazivKlijenta)
         {
             string nazivKlijentaProsledjivac = nazivKlijenta;
-            InitializeComponent();
+            //InitializeComponent();
 
             var stackLayoutVertical = new StackLayout()
             {

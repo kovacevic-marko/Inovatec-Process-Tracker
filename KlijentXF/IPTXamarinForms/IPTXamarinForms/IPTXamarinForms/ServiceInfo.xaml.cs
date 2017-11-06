@@ -18,7 +18,7 @@ namespace IPTXamarinForms
 
         public ServiceInfo(string nazivServisa)
         {
-            InitializeComponent();
+            //InitializeComponent();
         }
 
 
