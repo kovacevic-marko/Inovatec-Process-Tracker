@@ -28,11 +28,24 @@ namespace IPTWebAPI.Controllers
                     foreach (var s in pom)
                     {
                         ClientService pom1 = new ClientService();
-                        pom1.ClientID = s.ClientID;
+                       // pom1.ClientID = s.ClientID;
                         pom1.ServiceID = s.ServiceID;
-                        pom1.ServiceName = s.ServiceName;
+                       // pom1.ServiceName = s.ServiceName;
                         pom1.URL = s.URL;
+
+
+                        //var pom2 = new
+                        //{
+                        //    s.ClientID,
+                        //    s.ServiceID,
+                        //    s.ServiceName,
+                        //    s.URL
+                        //};
+
+
                         item.ClientServices.Add(pom1);
+
+                       
                     }
                 }
                 return temp;

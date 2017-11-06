@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b4646d4155b042509a634ddffc136ef5" Name="Diagram1">
+      <Diagram DiagramId="fa884ae8280149d8aa52cac09b10b1ca" Name="Diagram1">
         <EntityTypeShape EntityType="IPTDBModel.Client" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="IPTDBModel.ClientService" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="IPTDBModel.Service" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />

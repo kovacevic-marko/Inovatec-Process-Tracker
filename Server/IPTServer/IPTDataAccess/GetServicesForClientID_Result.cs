@@ -13,7 +13,7 @@ namespace IPTDataAccess
     
     public partial class GetServicesForClientID_Result
     {
-        public int ClientID { get; set; }
+        public int ID { get; set; }
         public int ServiceID { get; set; }
         public string URL { get; set; }
         public string ServiceName { get; set; }
