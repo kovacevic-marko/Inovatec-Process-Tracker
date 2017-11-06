@@ -70,35 +70,35 @@ namespace IPTXamarinForms
                     Spacing = 60
                 };
 
-                stackLayoutHorizontal.Children.Add(new Button
+                Button btnService = new Button
                 {
                     Text = "Service " + i,
                     FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
                     HorizontalOptions = LayoutOptions.Center
-                });
+                };
+                btnService.Clicked += (sender, args) => { Navigation.PushAsync(new Service(btnService.Text, status)); };
+                stackLayoutHorizontal.Children.Add(btnService);
 
+                Label lblServiceStatus = new Label();
 
                 if (status.Equals("ok"))
                 {
-                    stackLayoutHorizontal.Children.Add(new Label
-                    {
-                        Text = "Active",
-                        BackgroundColor = Color.FromHex("#00ff00"),  //zelena                      
-                        FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                        HorizontalOptions = LayoutOptions.Center
-                    });
+                    lblServiceStatus.Text = "Active";
+                    lblServiceStatus.BackgroundColor = Color.FromHex("#00ff00");  //zelena                      
+                    lblServiceStatus.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+                    lblServiceStatus.HorizontalOptions = LayoutOptions.Center;
+                    lblServiceStatus.MinimumWidthRequest = 50;
                 }
                 else
                 {
-                    stackLayoutHorizontal.Children.Add(new Label
-                    {
-                        Text = "Not Active",
-                        BackgroundColor = Color.FromHex("#ff0000"),  //crvena
-                        MinimumWidthRequest = 50,
-                        FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                        HorizontalOptions = LayoutOptions.Center
-                    });
+                    lblServiceStatus.Text = "Not Active";
+                    lblServiceStatus.BackgroundColor = Color.FromHex("#00ff00");  //zelena                      
+                    lblServiceStatus.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+                    lblServiceStatus.HorizontalOptions = LayoutOptions.Center;
+                    lblServiceStatus.MinimumWidthRequest = 50;
                 }
+
+                stackLayoutHorizontal.Children.Add(lblServiceStatus);
 
                 stackLayoutVertical.Children.Add(stackLayoutHorizontal);
             }
