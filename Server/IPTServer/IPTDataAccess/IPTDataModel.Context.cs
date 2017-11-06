@@ -20,6 +20,7 @@ namespace IPTDataAccess
         public IPTDBEntities()
             : base("name=IPTDBEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -176,7 +176,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="IPTDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="IPTDBEntities" annotation:LazyLoadingEnabled="false">
           <EntitySet Name="Clients" EntityType="Self.Client" />
           <EntitySet Name="ClientServices" EntityType="Self.ClientService" />
           <EntitySet Name="Services" EntityType="Self.Service" />

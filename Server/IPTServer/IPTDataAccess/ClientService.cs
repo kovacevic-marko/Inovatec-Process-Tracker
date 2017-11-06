@@ -24,8 +24,7 @@ namespace IPTDataAccess
         public int ClientID { get; set; }
         public int ServiceID { get; set; }
         public string URL { get; set; }
-        public string ServiceName { get; set; }
-
+    
         public virtual Client Client { get; set; }
         public virtual Service Service { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
