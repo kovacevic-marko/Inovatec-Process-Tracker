@@ -183,8 +183,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="ClientServicesModel.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
-    <Compile Include="Controllers\ClientServicesController.cs" />
+    <Compile Include="Controllers\ClientServiceController.cs" />
     <Compile Include="Controllers\ClientServicesListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -263,8 +264,12 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IPTCommon\IPTCommon.csproj">
+      <Project>{f8737e90-8023-4249-a983-8ff0cac9bc93}</Project>
+      <Name>IPTCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IPTDataAccess\IPTDataAccess.csproj">
-      <Project>{b69e4dfc-9ac6-4b8c-b129-de7b8b833683}</Project>
+      <Project>{9008cc08-5911-48b7-b89c-17491023a8da}</Project>
       <Name>IPTDataAccess</Name>
     </ProjectReference>
   </ItemGroup>

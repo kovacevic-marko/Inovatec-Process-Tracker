@@ -85,18 +85,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IPTDataAccess\IPTDataAccess.csproj">
-      <Project>{b69e4dfc-9ac6-4b8c-b129-de7b8b833683}</Project>
-      <Name>IPTDataAccess</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="IPTSakupljacService.resx">
       <DependentUpon>IPTSakupljacService.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IPTDataAccess\IPTDataAccess.csproj">
+      <Project>{9008cc08-5911-48b7-b89c-17491023a8da}</Project>
+      <Name>IPTDataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
