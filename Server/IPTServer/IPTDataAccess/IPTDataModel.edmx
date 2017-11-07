@@ -75,6 +75,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetServiceLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetServicesForClientID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ClientID" Type="int" Mode="In" />
         </Function>
@@ -200,6 +203,9 @@
           <Parameter Name="ClientID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetServiceUrl" ReturnType="Collection(String)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetServiceLog" ReturnType="Collection(IPTDBModel.GetServiceLog_Result)">
             <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
@@ -208,6 +214,14 @@
           <Property Type="Int32" Name="ServiceID" Nullable="false" />
           <Property Type="String" Name="URL" Nullable="false" MaxLength="1000" />
           <Property Type="String" Name="ServiceName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetServiceLog_Result">
+          <Property Type="Int32" Name="LogID" Nullable="false" />
+          <Property Type="Int32" Name="ClientServiceID" Nullable="false" />
+          <Property Type="DateTime" Name="LogDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="StatusCode" Nullable="true" />
+          <Property Type="String" Name="StatusDescription" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Error" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -264,6 +278,18 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetServiceUrl" FunctionName="IPTDBModel.Store.GetServiceUrl" />
+          <FunctionImportMapping FunctionImportName="GetServiceLog" FunctionName="IPTDBModel.Store.GetServiceLog">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IPTDBModel.GetServiceLog_Result">
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="ClientServiceID" ColumnName="ClientServiceID" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
+                <ScalarProperty Name="Error" ColumnName="Error" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

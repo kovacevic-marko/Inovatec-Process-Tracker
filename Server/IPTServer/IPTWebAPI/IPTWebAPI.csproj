@@ -188,6 +188,7 @@
     <Compile Include="Controllers\ClientServiceController.cs" />
     <Compile Include="Controllers\ClientServicesListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ServiceLogController.cs" />
     <Compile Include="Controllers\ServiceStatusController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">

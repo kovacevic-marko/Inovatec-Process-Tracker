@@ -55,6 +55,9 @@
     <Compile Include="ClientService.cs">
       <DependentUpon>IPTDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetServiceLog_Result.cs">
+      <DependentUpon>IPTDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetServicesForClientID_Result.cs">
       <DependentUpon>IPTDataModel.tt</DependentUpon>
     </Compile>
