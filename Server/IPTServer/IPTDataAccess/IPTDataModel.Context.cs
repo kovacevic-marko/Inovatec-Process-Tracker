@@ -40,5 +40,14 @@ namespace IPTDataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetServicesForClientID_Result>("GetServicesForClientID", clientIDParameter);
         }
+    
+        public virtual ObjectResult<string> GetServiceUrl(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetServiceUrl", idParameter);
+        }
     }
 }
