@@ -37,13 +37,13 @@ namespace IPTXamarinForms
 
             lblStatusServisa = new Label
             {
-                Text = "Unknown",
+                Text = "Unknown" + statusServisa,
                 FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
                 HorizontalOptions = LayoutOptions.Center,
                 MinimumWidthRequest = 50
             };
 
-            if (statusServisa.Equals("ok"))
+            if (statusServisa==200)
             {
                 lblStatusServisa.Text = "Active";
                 lblStatusServisa.BackgroundColor = Color.FromHex("#00ff00");  //zelena    

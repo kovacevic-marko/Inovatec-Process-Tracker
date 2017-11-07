@@ -35,13 +35,14 @@ namespace IPTXamarinForms
             };
 
             List<Task> tasks = new List<Task>();
+       
             foreach (var service in services)
             {
-                tasks.Add(Task.Factory.StartNew( async () => 
-                {
-                    url = "http://172.24.2.136:5000/api/servicestatus?id=" + service.ClientServiceID;
-                    jsonString = await JsonFunctions.GetJson(url);
-                    ServiceModel serviceModel = JsonConvert.DeserializeObject<ServiceModel>(jsonString);
+               // tasks.Add(Task.Factory.StartNew( async () => 
+                //{
+                    //url = "http://172.24.2.136:5000/api/servicestatus?id=" + service.ClientServiceID;
+                    //jsonString = await JsonFunctions.GetJson(url);
+                    //ServiceModel serviceModel = JsonConvert.DeserializeObject<ServiceModel>(jsonString);
                     Button btn = new Button
                     {
                         Text = service.ClientServiceID + " " + service.ServiceName + " " + service.ServiceStatus,
@@ -51,7 +52,8 @@ namespace IPTXamarinForms
                     btn.Clicked += (sender, args) => { Navigation.PushAsync(new Service(service.ServiceName, service.ServiceStatus)); };
 
                     stackLayoutVertical.Children.Add(btn);
-                } ));
+                //} 
+               // ));
             }
 
             //Task.WaitAll(tasks.ToArray());

@@ -17,7 +17,10 @@ namespace IPTXamarinForms
 
         public Client(int ClientID, string ClientName)
         {
-            this.ClientID = ClientID;
+            int ClientIDprosledjivac = ClientID;
+          
+
+            //this.ClientID = ClientID;
             this.ClientName = ClientName;
             InitializeComponent();
 
@@ -32,7 +35,7 @@ namespace IPTXamarinForms
                 FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
                 HorizontalOptions = LayoutOptions.Center,
             };
-            btnServices.Clicked += (sender, args) => { Navigation.PushAsync(new Services(ClientID)); };
+            btnServices.Clicked += (sender, args) => { Navigation.PushAsync(new Services(ClientIDprosledjivac)); };
 
             //Button btnApplications = new Button
             //{
