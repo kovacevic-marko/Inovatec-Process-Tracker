@@ -15,13 +15,9 @@ namespace IPTXamarinForms
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ServiceInfo : ContentPage
     {
-
         public ServiceInfo(string nazivServisa)
         {
-            //InitializeComponent();
+            InitializeComponent();
         }
-
-
-        
     }
 }

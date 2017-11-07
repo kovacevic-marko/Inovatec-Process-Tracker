@@ -9,6 +9,7 @@
                 FontSize="20"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <ActivityIndicator IsRunning="True"></ActivityIndicator>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

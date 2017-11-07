@@ -14,7 +14,7 @@ namespace IPTXamarinForms
     {
         public Applications(String nazivKlijenta)
         {
-            //InitializeComponent();
+            InitializeComponent();
         }
     }
 }

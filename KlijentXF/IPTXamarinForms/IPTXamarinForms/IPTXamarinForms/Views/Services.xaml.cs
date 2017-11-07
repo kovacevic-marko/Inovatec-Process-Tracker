@@ -23,8 +23,7 @@ namespace IPTXamarinForms
 
         public async void ServicesAsync(int ClientID)
         {
-            //InitializeComponent();
-
+            InitializeComponent();
 
             string url = "http://172.24.2.136:5000/api/clientservice?ClientID=" + ClientID;
             string jsonString = await JsonFunctions.GetJson(url);
@@ -34,20 +33,28 @@ namespace IPTXamarinForms
             {
                 Orientation = StackOrientation.Vertical, 
             };
-            
+
+            List<Task> tasks = new List<Task>();
             foreach (var service in services)
             {
-                Button btn = new Button
+                tasks.Add(Task.Factory.StartNew( async () => 
                 {
-                    Text = service.ClientServiceID + " " + service.ServiceName + " " + service.ServiceStatus,
-                    FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                    HorizontalOptions = LayoutOptions.Center,
-                };
-                btn.Clicked += (sender, args) => { Navigation.PushAsync(new Service(service.ServiceName, service.ServiceStatus)); };
+                    url = "http://172.24.2.136:5000/api/servicestatus?id=" + service.ClientServiceID;
+                    jsonString = await JsonFunctions.GetJson(url);
+                    ServiceModel serviceModel = JsonConvert.DeserializeObject<ServiceModel>(jsonString);
+                    Button btn = new Button
+                    {
+                        Text = service.ClientServiceID + " " + service.ServiceName + " " + service.ServiceStatus,
+                        FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
+                        HorizontalOptions = LayoutOptions.Center,
+                    };
+                    btn.Clicked += (sender, args) => { Navigation.PushAsync(new Service(service.ServiceName, service.ServiceStatus)); };
 
-                stackLayoutVertical.Children.Add(btn);
+                    stackLayoutVertical.Children.Add(btn);
+                } ));
             }
 
+            //Task.WaitAll(tasks.ToArray());
             //for (int i = 1; i <= brojServisa; i++)
             //{
             //    var stackLayoutHorizontal = new StackLayout()

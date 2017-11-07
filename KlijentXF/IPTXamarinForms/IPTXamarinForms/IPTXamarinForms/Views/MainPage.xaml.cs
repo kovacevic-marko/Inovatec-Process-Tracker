@@ -15,7 +15,7 @@ namespace IPTXamarinForms
     {
         public MainPage()
         {
-            ////InitializeComponent();
+            InitializeComponent();
             init();
         }
 

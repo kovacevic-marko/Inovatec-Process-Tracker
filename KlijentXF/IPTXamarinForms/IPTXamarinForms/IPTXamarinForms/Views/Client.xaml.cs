@@ -19,7 +19,7 @@ namespace IPTXamarinForms
         {
             this.ClientID = ClientID;
             this.ClientName = ClientName;
-            //InitializeComponent();
+            InitializeComponent();
 
             var stackLayoutVertical = new StackLayout()
             {
@@ -47,7 +47,5 @@ namespace IPTXamarinForms
 
             this.Content = new ScrollView { Content = stackLayoutVertical };
         }
-
-        
     }
 }

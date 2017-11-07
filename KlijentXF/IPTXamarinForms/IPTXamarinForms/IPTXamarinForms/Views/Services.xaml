@@ -4,10 +4,11 @@
              x:Class="IPTXamarinForms.Services">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Services status loading..."
+            <Label Text="Services list loading..."
                 FontSize="24"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <ActivityIndicator IsRunning="True"></ActivityIndicator>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

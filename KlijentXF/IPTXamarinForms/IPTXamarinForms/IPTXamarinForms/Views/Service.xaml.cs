@@ -20,7 +20,7 @@ namespace IPTXamarinForms
 
         public Service(string nazivServisa, int statusServisa)
         {
-            //InitializeComponent();
+            InitializeComponent();
 
             var stackLayoutVertical = new StackLayout()
             {
