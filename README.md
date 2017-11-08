@@ -1,5 +1,9 @@
 # Inovatec-Process-Tracker
 
+Spoljna adresa SQL servera: 82.117.213.126,1434
+Spoljna adresa WepApi-a: 82.117.213.126:8081
+Unutrasnja adresa: 172.24.2.51
+
 Svi Activity su smesteni u root/Activities osim Main Activity-ja koji je smesten u root folderu
 Gledajte da vam Activities i Layouts budu istog naziva zbog preglednosti.
 Kada pravite Activity i Layout neka vam u nazivu fajla bude putanja koja se odvaja sa donjom crtom posto folder layouts ne sme
