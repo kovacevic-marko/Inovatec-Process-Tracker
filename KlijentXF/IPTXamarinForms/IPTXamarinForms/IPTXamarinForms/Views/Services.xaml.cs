@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Json;
 using System.Linq;
@@ -14,16 +15,105 @@ using Xamarin.Forms.Xaml;
 namespace IPTXamarinForms
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Services : ContentPage
+    public partial class Services : ContentPage, INotifyPropertyChanged
     {
+        private ListView lwServices = new ListView();
+        private List<ServiceModel> listServices = new List<ServiceModel>();
+        private int ClientID;
+
+        private bool busy = false;
+
+        public new bool IsBusy
+        {
+            get { return busy; }
+            set
+            {
+                if (busy == value)
+                    return;
+
+                busy = value;
+                OnPropertyChanged("IsBusy");
+            }
+        }
+
         public Services(int ClientID)
         {
-            ServicesAsync(ClientID);
+            InitializeComponent();
+
+            this.ClientID = ClientID;
+            LoadServices(ClientID);
+        }
+
+        private async void LoadServices(int ClientID)
+        {
+            IsBusy = true;
+            activityIndicatorProveraServisa.IsRunning = IsBusy;
+            activityIndicatorProveraServisa.IsVisible = IsBusy;
+            lblStatus.Text = "Getting list of client's services...";
+
+            // Povlacenje liste servisa zadatog klijenta
+            string url = "http://172.24.2.136:5000/api/clientservice?ClientID=" + ClientID;
+            string jsonString = await JsonFunctions.GetJson(url);
+            listServices = JsonConvert.DeserializeObject<List<ServiceModel>>(jsonString);
+
+            RefreshServices();
+
+            lblStatus.Text = "Statusi servisa ucitani";
+            IsBusy = false;
+            activityIndicatorProveraServisa.IsRunning = IsBusy;
+            activityIndicatorProveraServisa.IsVisible = IsBusy;
+        }
+
+        private void RefreshServices()
+        {
+            IsBusy = true;
+            activityIndicatorProveraServisa.IsRunning = IsBusy;
+            activityIndicatorProveraServisa.IsVisible = IsBusy;
+
+
+            lblStatus.Text = "Getting status for each service...";
+            foreach (var service in listServices)
+            {
+                // Ovde umesto nove labele treba dodati novi ListView (ili slicno) item.
+                var lbl = new Label
+                {
+                    Text = service.ServiceName,
+                    FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                };
+                lytStackLayout.Children.Add(lbl);
+
+                // Povlacenje statusa pojedinacnog servisa
+                Task.Run(async () => {
+                    string serviceUrl = "http://172.24.2.136:5000/api/ServiceStatus?ID=" + service.ClientServiceID;
+                    string jsonServiceStatus = await JsonFunctions.GetJson(serviceUrl);
+                    
+                    Device.BeginInvokeOnMainThread(() => {
+                        // Promena teksta i boje
+                        switch (jsonServiceStatus[0])
+                        {
+                            case '2':
+                                lbl.BackgroundColor = Color.LightGreen;
+                                break;
+                            default:
+                                lbl.BackgroundColor = Color.Red;
+                                break;
+                        }
+                        lbl.Text = $"{service.ServiceName} - Service status: {jsonServiceStatus}";
+                    });
+                });
+            }
+
+            lblStatus.Text = "Servisi";
+            IsBusy = false;
+            activityIndicatorProveraServisa.IsRunning = IsBusy;
+            activityIndicatorProveraServisa.IsVisible = IsBusy;
         }
 
         public async void ServicesAsync(int ClientID)
         {
-            InitializeComponent();
+            
 
             string url = "http://172.24.2.136:5000/api/clientservice?ClientID=" + ClientID;
             string jsonString = await JsonFunctions.GetJson(url);
@@ -105,6 +195,11 @@ namespace IPTXamarinForms
 
             // Build the page.
             this.Content = new ScrollView { Content = stackLayoutVertical };
+        }
+
+        private void btnRefresh_Clicked(object sender, EventArgs e)
+        {
+            RefreshServices();
         }
     }
 }
