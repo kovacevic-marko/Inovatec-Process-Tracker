@@ -21,7 +21,7 @@ namespace IPTXamarinForms
 
         public async void init()
         {
-            string url = "http://172.24.2.136:5000/api/clients";
+            string url = "http://172.24.2.51:5000/api/clients";
             string jsonString = await JsonFunctions.GetJson(url);
             List<ClientModel> clients = JsonConvert.DeserializeObject<List<ClientModel>>(jsonString);
             

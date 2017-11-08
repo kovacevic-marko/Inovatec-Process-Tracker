@@ -52,7 +52,7 @@ namespace IPTXamarinForms
             lblStatus.Text = "Getting list of client's services...";
 
             // Povlacenje liste servisa zadatog klijenta
-            string url = "http://172.24.2.136:5000/api/clientservice?ClientID=" + ClientID;
+            string url = "http://172.24.2.51:5000/api/clientservice?ClientID=" + ClientID;
             string jsonString = await JsonFunctions.GetJson(url);
             listServices = JsonConvert.DeserializeObject<List<ServiceModel>>(jsonString);
 
@@ -75,18 +75,19 @@ namespace IPTXamarinForms
             foreach (var service in listServices)
             {
                 // Ovde umesto nove labele treba dodati novi ListView (ili slicno) item.
-                var lbl = new Label
+                var btn = new Button
                 {
                     Text = service.ServiceName,
                     FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                     VerticalOptions = LayoutOptions.CenterAndExpand,
                     HorizontalOptions = LayoutOptions.CenterAndExpand,
                 };
-                lytStackLayout.Children.Add(lbl);
+                btn.Clicked += (sender, args) => { Navigation.PushAsync(new Service(service.ClientServiceID, service.ServiceName, service.ServiceStatus)); };
+                lytStackLayout.Children.Add(btn);
 
                 // Povlacenje statusa pojedinacnog servisa
                 Task.Run(async () => {
-                    string serviceUrl = "http://172.24.2.136:5000/api/ServiceStatus?ID=" + service.ClientServiceID;
+                    string serviceUrl = "http://172.24.2.51:5000/api/ServiceStatus?ID=" + service.ClientServiceID;
                     string jsonServiceStatus = await JsonFunctions.GetJson(serviceUrl);
                     
                     Device.BeginInvokeOnMainThread(() => {
@@ -94,13 +95,13 @@ namespace IPTXamarinForms
                         switch (jsonServiceStatus[0])
                         {
                             case '2':
-                                lbl.BackgroundColor = Color.LightGreen;
+                                btn.BackgroundColor = Color.LightGreen;
                                 break;
                             default:
-                                lbl.BackgroundColor = Color.Red;
+                                btn.BackgroundColor = Color.Red;
                                 break;
                         }
-                        lbl.Text = $"{service.ServiceName} - Service status: {jsonServiceStatus}";
+                        btn.Text = $"{service.ServiceName} - Service status: {jsonServiceStatus}";
                     });
                 });
             }
@@ -115,7 +116,7 @@ namespace IPTXamarinForms
         {
             
 
-            string url = "http://172.24.2.136:5000/api/clientservice?ClientID=" + ClientID;
+            string url = "http://172.24.2.51:5000/api/clientservice?ClientID=" + ClientID;
             string jsonString = await JsonFunctions.GetJson(url);
             List<ServiceModel> services = JsonConvert.DeserializeObject<List<ServiceModel>>(jsonString);
 
@@ -130,7 +131,7 @@ namespace IPTXamarinForms
             {
                // tasks.Add(Task.Factory.StartNew( async () => 
                 //{
-                    //url = "http://172.24.2.136:5000/api/servicestatus?id=" + service.ClientServiceID;
+                    //url = "http://172.24.2.51:5000/api/servicestatus?id=" + service.ClientServiceID;
                     //jsonString = await JsonFunctions.GetJson(url);
                     //ServiceModel serviceModel = JsonConvert.DeserializeObject<ServiceModel>(jsonString);
                     Button btn = new Button
@@ -139,7 +140,7 @@ namespace IPTXamarinForms
                         FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
                         HorizontalOptions = LayoutOptions.Center,
                     };
-                    btn.Clicked += (sender, args) => { Navigation.PushAsync(new Service(service.ServiceName, service.ServiceStatus)); };
+                    btn.Clicked += (sender, args) => { Navigation.PushAsync(new Service(service.ClientServiceID ,service.ServiceName, service.ServiceStatus)); };
 
                     stackLayoutVertical.Children.Add(btn);
                 //} 

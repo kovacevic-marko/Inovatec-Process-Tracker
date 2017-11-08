@@ -38,6 +38,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ServiceLogModel.cs" />
     <Compile Include="Views\Applications.xaml.cs">
       <DependentUpon>Applications.xaml</DependentUpon>
     </Compile>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IPTXamarinForms.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Json;
@@ -15,43 +17,53 @@ namespace IPTXamarinForms
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Service : ContentPage
     {
-        Label lblStatusServisa;
+        //Label lblStatusServisa;
         Button btnRefresh;
+        StackLayout stackLayoutVertical;
+        StackLayout tabelaZaLog;
+        Label lblNazivServisa;
+        ScrollView scrollTabelaLog;
 
-        public Service(string nazivServisa, int statusServisa)
+        int idServisaProsledjivacZaMetoduRefresh;
+
+        public Service(int idServisa, string nazivServisa, int statusServisa)
         {
+            idServisaProsledjivacZaMetoduRefresh = idServisa;
+            string statusServisaProsledjivac = statusServisa.ToString();
+            char statusServisaPrvaCifra = statusServisaProsledjivac[0];
+
             InitializeComponent();
 
-            var stackLayoutVertical = new StackLayout()
+            stackLayoutVertical = new StackLayout()
             {
                 Orientation = StackOrientation.Vertical,
             };
 
 
-            Label lblNazivServisa = new Label
+            lblNazivServisa = new Label
             {
                 Text = nazivServisa,
                 FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
                 HorizontalOptions = LayoutOptions.Center
             };
 
-            lblStatusServisa = new Label
-            {
-                Text = "Unknown" + statusServisa,
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                HorizontalOptions = LayoutOptions.Center,
-                MinimumWidthRequest = 50
-            };
+            //lblStatusServisa = new Label
+            //{
+            //    Text = "Unknown",
+            //    FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
+            //    HorizontalOptions = LayoutOptions.Center,
+            //    MinimumWidthRequest = 50
+            //};
 
-            if (statusServisa==200)
+            if (statusServisaPrvaCifra.Equals('2'))
             {
-                lblStatusServisa.Text = "Active";
-                lblStatusServisa.BackgroundColor = Color.FromHex("#00ff00");  //zelena    
+                //lblStatusServisa.Text = "Active";
+                lblNazivServisa.BackgroundColor = Color.FromHex("#00ff00");  //zelena    
             }
             else
             {
-                lblStatusServisa.Text = "Not Active";
-                lblStatusServisa.BackgroundColor = Color.FromHex("#ff0000");  //crvena
+                //lblStatusServisa.Text = "Not Active";
+                lblNazivServisa.BackgroundColor = Color.FromHex("#ff0000");  //crvena
             }
 
 
@@ -63,54 +75,103 @@ namespace IPTXamarinForms
             };
             btnRefresh.Clicked += (sender, args) => { refreshServiceStatus(); };
 
-            Button btnServiceInfo = new Button
+            Label lblLogInfo = new Label
             {
-                Text = "Service info",
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
+                Text = "Log Informations",
+                FontSize = 25,
+                Margin = new Thickness(20),
                 HorizontalOptions = LayoutOptions.Center
             };
 
-            DatePicker datePicker = new DatePicker
+
+
+
+            //TABELA
+            Label lblVremeNASLOV = new Label
             {
-                Format = "D",
-                VerticalOptions = LayoutOptions.CenterAndExpand,
-                IsEnabled = false
+                Text = "Vreme",
+                WidthRequest = 120,
+                FontAttributes = FontAttributes.Bold
+            };
+            Label lblGreskaOpisNASLOV = new Label
+            {
+                Text = "Opis",
+                WidthRequest = 280,
+                FontAttributes = FontAttributes.Bold
+            };
+            Label lblGreskaErrorNASLOV = new Label
+            {
+                Text = "Error",
+                WidthRequest = 280,
+                FontAttributes = FontAttributes.Bold
             };
 
-            datePicker.DateSelected += (sender, args) => { Navigation.PushAsync(new ServiceInfo(nazivServisa)); };
+            StackLayout naziviKolonaKontejner = new StackLayout()
+            {
+                Orientation = StackOrientation.Horizontal,
+            };
+            naziviKolonaKontejner.Children.Add(lblVremeNASLOV);
+            naziviKolonaKontejner.Children.Add(lblGreskaOpisNASLOV);
+            naziviKolonaKontejner.Children.Add(lblGreskaErrorNASLOV);
 
-            btnServiceInfo.Clicked += (sender, args) => { datePicker.Focus(); };
+            
+
+            tabelaZaLog = new StackLayout()
+            {
+                Orientation = StackOrientation.Vertical,
+            };
+           // tabelaZaLog.Children.Add(naziviKolonaKontejner);
 
 
-            stackLayoutVertical.Children.Add(lblNazivServisa);
-            stackLayoutVertical.Children.Add(lblStatusServisa);
-            stackLayoutVertical.Children.Add(btnRefresh);
-            stackLayoutVertical.Children.Add(btnServiceInfo);
-            stackLayoutVertical.Children.Add(datePicker);
+            //Pozivanje metode koja ce popuniti i postaviti tabelu u kontejner
+            setLogTable(idServisa);
 
-            this.Content = new ScrollView { Content = stackLayoutVertical };
+
+            StackLayout kontejnerZaNazivServisaIrefresh = new StackLayout()
+            {
+                Orientation = StackOrientation.Horizontal,
+                HorizontalOptions = LayoutOptions.Center
+            };
+            kontejnerZaNazivServisaIrefresh.Children.Add(lblNazivServisa);
+            kontejnerZaNazivServisaIrefresh.Children.Add(btnRefresh);
+
+            //stackLayoutVertical.Children.Add(lblNazivServisa);
+            //stackLayoutVertical.Children.Add(lblStatusServisa);
+            //stackLayoutVertical.Children.Add(btnRefresh);
+            stackLayoutVertical.Children.Add(kontejnerZaNazivServisaIrefresh);
+            stackLayoutVertical.Children.Add(lblLogInfo);
+            stackLayoutVertical.Children.Add(naziviKolonaKontejner);
+
+
+            scrollTabelaLog = new ScrollView { Content = tabelaZaLog};
+
+            //Ubacivanje prazne tabele koja ce biti kasnije uklonjena i zamenjena novom ukoliko postoje logovi z aservis, ukoliko ne postoje ostace prazna
+            stackLayoutVertical.Children.Add(scrollTabelaLog);
+
+            this.Content = stackLayoutVertical ;
         }
 
 
         public async void refreshServiceStatus()
         {
-            lblStatusServisa.Text = "Loading...";
-            lblStatusServisa.BackgroundColor = Color.FromHex("#000000");  //zelena   
+            //lblStatusServisa.Text = "Loading...";
+            lblNazivServisa.BackgroundColor = Color.FromHex("#000000");  //zelena   
 
-            string url = "https://kovacevicm.com/api/";
+            string url = "http://172.24.2.51:5000/api/servicestatus?id=" +idServisaProsledjivacZaMetoduRefresh;
             JsonValue jsonValue = await FetchServiceStatus(url);
 
-            string status = jsonValue["status"];
+            string status = jsonValue.ToString();
+            char statusPrvaCifra = status[0];
 
-            if (status.Equals("ok"))
+            if (statusPrvaCifra.Equals('2'))
             {
-                lblStatusServisa.Text = "Active";
-                lblStatusServisa.BackgroundColor = Color.FromHex("#00ff00");  //zelena    
+                //lblStatusServisa.Text = "Active";
+                lblNazivServisa.BackgroundColor = Color.FromHex("#00ff00");  //zelena    
             }
             else
             {
-                lblStatusServisa.Text = "Not Active";
-                lblStatusServisa.BackgroundColor = Color.FromHex("#ff0000");  //crvena
+                //lblStatusServisa.Text = "Not Active";
+                lblNazivServisa.BackgroundColor = Color.FromHex("#ff0000");  //crvena
             }
         }
 
@@ -136,5 +197,59 @@ namespace IPTXamarinForms
                 }
             }
         }
+
+
+
+
+
+
+        public async void setLogTable(int serviceID)
+        {
+            string url = "http://172.24.2.51:5000/api/servicelog?id=" + serviceID;
+            string jsonString = await JsonFunctions.GetJson(url);
+            List<ServiceLogModel> logList = JsonConvert.DeserializeObject<List<ServiceLogModel>>(jsonString);
+
+
+            //Rucno pravljenje tabele posto i Xamarin forms nepostoji TableView sa vise kolona
+            foreach (var log in logList)
+            {
+                var tabelaHorizontal = new StackLayout()
+                {
+                    Orientation = StackOrientation.Horizontal,
+                };
+
+
+                Label lblVreme = new Label
+                {
+                    Text = log.LogDate.ToString(),
+                    WidthRequest = 120
+                };
+                Label lblGreskaOpis = new Label
+                {
+                    Text = log.StatusDescription.ToString(),
+                    WidthRequest = 280
+                };
+                Label lblGreskaError = new Label
+                {
+                    Text = log.Error,
+                    WidthRequest = 280
+                };
+
+
+                tabelaHorizontal.Children.Add(lblVreme);
+                tabelaHorizontal.Children.Add(lblGreskaOpis);
+                tabelaHorizontal.Children.Add(lblGreskaError);
+
+
+
+                tabelaZaLog.Children.Add(tabelaHorizontal);
+
+                //Prvo mora da ukloni praznu tabelu koja je na pocetku napravljena zbog toga sto neki servis ima logove a neki nema
+                stackLayoutVertical.Children.Remove(scrollTabelaLog);
+                stackLayoutVertical.Children.Add(scrollTabelaLog);
+            }
+
+        }
+
     }
 }
