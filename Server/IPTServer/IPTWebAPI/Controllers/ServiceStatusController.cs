@@ -20,7 +20,7 @@ namespace IPTWebAPI.Controllers
                 //string rezultat = entities.Database.SqlQuery<string>("GetServiceUrl @id", param1).ToString();
                 var url = (from c in entities.ClientServices
                            where c.ID == id
-                           select c.URL).Single();
+                           select c.URL).FirstOrDefault();
 
                 return WebCommunication.GetStatusCode(url);
             }
