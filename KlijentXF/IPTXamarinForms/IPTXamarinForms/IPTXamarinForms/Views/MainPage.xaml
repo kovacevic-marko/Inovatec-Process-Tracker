@@ -4,12 +4,19 @@
              xmlns:local="clr-namespace:IPTXamarinForms"
              x:Class="IPTXamarinForms.MainPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Clents loading..."
-                FontSize="20"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <ActivityIndicator IsRunning="True"></ActivityIndicator>
+        <StackLayout BackgroundColor="Indigo">
+
+            <ListView  x:Name="listClient" BackgroundColor="Indigo"  ItemTapped="listClient_ItemTapped" SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid HorizontalOptions="Center" BackgroundColor="Indigo">
+                                <Label x:Name="lbl" Text="{Binding ClientName}" FontFamily="Papyrus" TextColor="Azure" FontSize="36" BackgroundColor="Indigo"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
