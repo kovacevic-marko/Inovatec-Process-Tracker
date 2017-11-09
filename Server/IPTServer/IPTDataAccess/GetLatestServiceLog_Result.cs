@@ -10,9 +10,8 @@
 namespace IPTDataAccess
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class ServiceLog
+    public partial class GetLatestServiceLog_Result
     {
         public int LogID { get; set; }
         public int ClientServiceID { get; set; }
@@ -21,7 +20,5 @@ namespace IPTDataAccess
         public Nullable<int> StatusCode { get; set; }
         public string StatusDescription { get; set; }
         public string Error { get; set; }
-    
-        public virtual ClientService ClientService { get; set; }
     }
 }

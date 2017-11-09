@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Inovatec-Laptop-01\Desktop\Inovatec-Process-Tracker\Server\IPTServer\IPTDataAccess\IPTDataModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\nduki\source\repos\Inovatec-Process-Tracker\Server\IPTServer\IPTDataAccess\IPTDataModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

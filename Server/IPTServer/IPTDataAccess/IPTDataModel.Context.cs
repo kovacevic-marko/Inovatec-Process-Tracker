@@ -58,5 +58,14 @@ namespace IPTDataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetServiceLog_Result>("GetServiceLog", idParameter);
         }
+    
+        public virtual ObjectResult<GetLatestServiceLog_Result> GetLatestServiceLog(Nullable<int> clientServiceID)
+        {
+            var clientServiceIDParameter = clientServiceID.HasValue ?
+                new ObjectParameter("ClientServiceID", clientServiceID) :
+                new ObjectParameter("ClientServiceID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetLatestServiceLog_Result>("GetLatestServiceLog", clientServiceIDParameter);
+        }
     }
 }

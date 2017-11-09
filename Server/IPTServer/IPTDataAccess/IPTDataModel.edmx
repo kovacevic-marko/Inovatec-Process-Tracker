@@ -34,7 +34,8 @@
           </Key>
           <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ClientServiceID" Type="int" Nullable="false" />
-          <Property Name="LogDate" Type="datetime" Nullable="false" />
+          <Property Name="OfflineFrom" Type="datetime" Nullable="false" />
+          <Property Name="OfflineTo" Type="datetime" />
           <Property Name="StatusCode" Type="int" />
           <Property Name="StatusDescription" Type="nvarchar" MaxLength="50" />
           <Property Name="Error" Type="nvarchar(max)" />
@@ -75,6 +76,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetLatestServiceLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientServiceID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetServiceLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
@@ -106,99 +110,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="IPTDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Client">
-          <Key>
-            <PropertyRef Name="ClientID" />
-          </Key>
-          <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="ClientServices" Relationship="Self.FK_ClientService_Client" FromRole="Client" ToRole="ClientService" />
-        </EntityType>
-        <EntityType Name="ClientService">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientID" Type="Int32" Nullable="false" />
-          <Property Name="ServiceID" Type="Int32" Nullable="false" />
-          <Property Name="URL" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Client" Relationship="Self.FK_ClientService_Client" FromRole="ClientService" ToRole="Client" />
-          <NavigationProperty Name="Service" Relationship="Self.FK_ClientService_Service" FromRole="ClientService" ToRole="Service" />
-          <NavigationProperty Name="ServiceLogs" Relationship="Self.FK_ServiceLog_ClientService" FromRole="ClientService" ToRole="ServiceLog" />
-        </EntityType>
-        <EntityType Name="Service">
-          <Key>
-            <PropertyRef Name="ServiceID" />
-          </Key>
-          <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="ClientServices" Relationship="Self.FK_ClientService_Service" FromRole="Service" ToRole="ClientService" />
-        </EntityType>
-        <EntityType Name="ServiceLog">
-          <Key>
-            <PropertyRef Name="LogID" />
-          </Key>
-          <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientServiceID" Type="Int32" Nullable="false" />
-          <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="StatusCode" Type="Int32" />
-          <Property Name="StatusDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Error" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ClientService" Relationship="Self.FK_ServiceLog_ClientService" FromRole="ServiceLog" ToRole="ClientService" />
-        </EntityType>
-        <Association Name="FK_ClientService_Client">
-          <End Role="Client" Type="Self.Client" Multiplicity="1" />
-          <End Role="ClientService" Type="Self.ClientService" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientID" />
-            </Principal>
-            <Dependent Role="ClientService">
-              <PropertyRef Name="ClientID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClientService_Service">
-          <End Role="Service" Type="Self.Service" Multiplicity="1" />
-          <End Role="ClientService" Type="Self.ClientService" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Service">
-              <PropertyRef Name="ServiceID" />
-            </Principal>
-            <Dependent Role="ClientService">
-              <PropertyRef Name="ServiceID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ServiceLog_ClientService">
-          <End Role="ClientService" Type="Self.ClientService" Multiplicity="1" />
-          <End Role="ServiceLog" Type="Self.ServiceLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClientService">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ServiceLog">
-              <PropertyRef Name="ClientServiceID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="IPTDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Clients" EntityType="Self.Client" />
-          <EntitySet Name="ClientServices" EntityType="Self.ClientService" />
-          <EntitySet Name="Services" EntityType="Self.Service" />
-          <EntitySet Name="ServiceLogs" EntityType="Self.ServiceLog" />
-          <AssociationSet Name="FK_ClientService_Client" Association="Self.FK_ClientService_Client">
-            <End Role="Client" EntitySet="Clients" />
-            <End Role="ClientService" EntitySet="ClientServices" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClientService_Service" Association="Self.FK_ClientService_Service">
-            <End Role="Service" EntitySet="Services" />
-            <End Role="ClientService" EntitySet="ClientServices" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceLog_ClientService" Association="Self.FK_ServiceLog_ClientService">
-            <End Role="ClientService" EntitySet="ClientServices" />
-            <End Role="ServiceLog" EntitySet="ServiceLogs" />
-          </AssociationSet>
           <FunctionImport Name="GetServicesForClientID" ReturnType="Collection(IPTDBModel.GetServicesForClientID_Result)">
           <Parameter Name="ClientID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -206,8 +118,27 @@
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetServiceLog" ReturnType="Collection(IPTDBModel.GetServiceLog_Result)">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetLatestServiceLog" ReturnType="Collection(IPTDBModel.GetLatestServiceLog_Result)">
+          <Parameter Name="ClientServiceID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Clients" EntityType="IPTDBModel.Client" />
+          <EntitySet Name="ClientServices" EntityType="IPTDBModel.ClientService" />
+          <EntitySet Name="Services" EntityType="IPTDBModel.Service" />
+          <EntitySet Name="ServiceLogs" EntityType="IPTDBModel.ServiceLog" />
+          <AssociationSet Name="FK_ClientService_Client" Association="IPTDBModel.FK_ClientService_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="ClientService" EntitySet="ClientServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientService_Service" Association="IPTDBModel.FK_ClientService_Service">
+            <End Role="Service" EntitySet="Services" />
+            <End Role="ClientService" EntitySet="ClientServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceLog_ClientService" Association="IPTDBModel.FK_ServiceLog_ClientService">
+            <End Role="ClientService" EntitySet="ClientServices" />
+            <End Role="ServiceLog" EntitySet="ServiceLogs" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetServicesForClientID_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -223,50 +154,98 @@
           <Property Type="String" Name="StatusDescription" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Error" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="GetLatestServiceLog_Result">
+          <Property Type="Int32" Name="LogID" Nullable="false" />
+          <Property Type="Int32" Name="ClientServiceID" Nullable="false" />
+          <Property Type="DateTime" Name="OfflineFrom" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="OfflineTo" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="StatusCode" Nullable="true" />
+          <Property Type="String" Name="StatusDescription" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Error" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClientServices" Relationship="IPTDBModel.FK_ClientService_Client" FromRole="Client" ToRole="ClientService" />
+        </EntityType>
+        <EntityType Name="ClientService">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <Property Name="ServiceID" Type="Int32" Nullable="false" />
+          <Property Name="URL" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Client" Relationship="IPTDBModel.FK_ClientService_Client" FromRole="ClientService" ToRole="Client" />
+          <NavigationProperty Name="Service" Relationship="IPTDBModel.FK_ClientService_Service" FromRole="ClientService" ToRole="Service" />
+          <NavigationProperty Name="ServiceLogs" Relationship="IPTDBModel.FK_ServiceLog_ClientService" FromRole="ClientService" ToRole="ServiceLog" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClientServices" Relationship="IPTDBModel.FK_ClientService_Service" FromRole="Service" ToRole="ClientService" />
+        </EntityType>
+        <EntityType Name="ServiceLog">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientServiceID" Type="Int32" Nullable="false" />
+          <Property Name="OfflineFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OfflineTo" Type="DateTime" Precision="3" />
+          <Property Name="StatusCode" Type="Int32" />
+          <Property Name="StatusDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Error" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClientService" Relationship="IPTDBModel.FK_ServiceLog_ClientService" FromRole="ServiceLog" ToRole="ClientService" />
+        </EntityType>
+        <Association Name="FK_ClientService_Client">
+          <End Type="IPTDBModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="IPTDBModel.ClientService" Role="ClientService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="ClientService">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientService_Service">
+          <End Type="IPTDBModel.Service" Role="Service" Multiplicity="1" />
+          <End Type="IPTDBModel.ClientService" Role="ClientService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="ClientService">
+              <PropertyRef Name="ServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceLog_ClientService">
+          <End Type="IPTDBModel.ClientService" Role="ClientService" Multiplicity="1" />
+          <End Type="IPTDBModel.ServiceLog" Role="ServiceLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientService">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ServiceLog">
+              <PropertyRef Name="ClientServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="IPTDBModelStoreContainer" CdmEntityContainer="IPTDBEntities">
-          <EntitySetMapping Name="Clients">
-            <EntityTypeMapping TypeName="IPTDBModel.Client">
-              <MappingFragment StoreEntitySet="Client">
-                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
-                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ClientServices">
-            <EntityTypeMapping TypeName="IPTDBModel.ClientService">
-              <MappingFragment StoreEntitySet="ClientService">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
-                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
-                <ScalarProperty Name="URL" ColumnName="URL" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Services">
-            <EntityTypeMapping TypeName="IPTDBModel.Service">
-              <MappingFragment StoreEntitySet="Service">
-                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
-                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ServiceLogs">
-            <EntityTypeMapping TypeName="IPTDBModel.ServiceLog">
-              <MappingFragment StoreEntitySet="ServiceLog">
-                <ScalarProperty Name="LogID" ColumnName="LogID" />
-                <ScalarProperty Name="ClientServiceID" ColumnName="ClientServiceID" />
-                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
-                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
-                <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
-                <ScalarProperty Name="Error" ColumnName="Error" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetServicesForClientID" FunctionName="IPTDBModel.Store.GetServicesForClientID">
             <ResultMapping>
               <ComplexTypeMapping TypeName="IPTDBModel.GetServicesForClientID_Result">
@@ -290,6 +269,58 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetLatestServiceLog" FunctionName="IPTDBModel.Store.GetLatestServiceLog">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IPTDBModel.GetLatestServiceLog_Result">
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="ClientServiceID" ColumnName="ClientServiceID" />
+                <ScalarProperty Name="OfflineFrom" ColumnName="OfflineFrom" />
+                <ScalarProperty Name="OfflineTo" ColumnName="OfflineTo" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
+                <ScalarProperty Name="Error" ColumnName="Error" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="IPTDBModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientServices">
+            <EntityTypeMapping TypeName="IPTDBModel.ClientService">
+              <MappingFragment StoreEntitySet="ClientService">
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="IPTDBModel.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceLogs">
+            <EntityTypeMapping TypeName="IPTDBModel.ServiceLog">
+              <MappingFragment StoreEntitySet="ServiceLog">
+                <ScalarProperty Name="Error" ColumnName="Error" />
+                <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="OfflineTo" ColumnName="OfflineTo" />
+                <ScalarProperty Name="OfflineFrom" ColumnName="OfflineFrom" />
+                <ScalarProperty Name="ClientServiceID" ColumnName="ClientServiceID" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

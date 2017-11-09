@@ -10,7 +10,7 @@ namespace IPTSakupljac
 {
     class Sakupljanje
     {
-        private IPTDBEntities db;
+        //private IPTDBEntities db;
         private int interval;
         private Timer timer;
 
@@ -22,7 +22,7 @@ namespace IPTSakupljac
 
         private void Init()
         {
-            db = new IPTDBEntities();
+            //db = new IPTDBEntities();
             timer = new Timer(interval);
             timer.Start();
             timer.Elapsed += ProveraStanjaSvihServisa;
@@ -33,13 +33,19 @@ namespace IPTSakupljac
             try
             {
                 timer.Stop();
-                Task.Factory.StartNew(() => 
+                Task.Factory.StartNew(() =>
                 {
                     List<Task> taskovi = new List<Task>();
-                    foreach (var ClientService in db.ClientServices.ToList())
+                    List<ClientService> listClientServices;
+                    using (var db = new IPTDBEntities())
                     {
-                        taskovi.Add(Task.Factory.StartNew( () => 
+                        listClientServices = db.ClientServices.ToList();
+                    }
+                    foreach (var ClientService in listClientServices)
+                    {
+                        taskovi.Add(Task.Factory.StartNew(() =>
                         {
+                            // Provera statusa servisa
                             string error = null;
                             int? statusCode = null;
                             string statusDescription = null;
@@ -59,19 +65,63 @@ namespace IPTSakupljac
                                 error = ex.Message;
                             }
 
-                            ServiceLog noviLog = new ServiceLog
+                            // Dovlacenje poslednjeg loga iz baze
+                            ServiceLog poslednjiLog = null;
+                            using (var db = new IPTDBEntities())
                             {
-                                ClientServiceID = ClientService.ID,
-                                LogDate = DateTime.Now,
-                                StatusCode = statusCode,
-                                StatusDescription = statusDescription,
-                                Error = error
-                            };
+                                var log = db.GetLatestServiceLog(ClientService.ID).FirstOrDefault();
+                                if (log != null)
+                                {
+                                    poslednjiLog = new ServiceLog
+                                    {
+                                        LogID = log.LogID,
+                                        ClientServiceID = log.ClientServiceID,
+                                        OfflineFrom = log.OfflineFrom,
+                                        OfflineTo = log.OfflineTo,
+                                        StatusCode = log.StatusCode,
+                                        StatusDescription = log.StatusDescription,
+                                        Error = log.Error
+                                    };
+                                }
+                            }
 
-                            if (error != null)
+                            // Slucaj kada je servis aktivan, StatusCode pocinje cifrom 2
+                            if (statusCode != null && statusCode.ToString().StartsWith("2"))
                             {
-                                db.ServiceLogs.Add(noviLog);
-                                db.SaveChanges();
+                                if (poslednjiLog != null && poslednjiLog.OfflineTo == null)
+                                {
+                                    using (var db = new IPTDBEntities())
+                                    {
+                                        db.ServiceLogs.Attach(poslednjiLog);
+                                        poslednjiLog.OfflineTo = DateTime.Now;
+                                        db.SaveChanges();
+                                    }
+                                }
+                            }
+                            // Svi ostali slucajevi - servis nije aktivan
+                            else
+                            {
+                                // Novi log se kreira ako nema poslednjeg loga ili 
+                                // ako poslednji log ima vreme zavrsetka offline perioda
+                                if (poslednjiLog == null || poslednjiLog.OfflineTo != null)
+                                {
+                                    ServiceLog noviLog = new ServiceLog
+                                    {
+                                        ClientServiceID = ClientService.ID,
+                                        OfflineFrom = DateTime.Now,
+                                        OfflineTo = null,
+                                        StatusCode = statusCode,
+                                        StatusDescription = statusDescription,
+                                        Error = error
+                                    };
+                                    using (var db = new IPTDBEntities())
+                                    {
+                                        db.ServiceLogs.Add(noviLog);
+                                        db.SaveChanges();
+                                    }
+
+                                    // OVDE DODATI SLANJE EMAIL-A
+                                }
                             }
                         }));
                     }
