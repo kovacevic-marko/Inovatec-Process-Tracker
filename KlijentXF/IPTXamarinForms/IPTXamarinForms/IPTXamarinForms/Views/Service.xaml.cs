@@ -87,9 +87,15 @@ namespace IPTXamarinForms
 
 
             //TABELA
-            Label lblVremeNASLOV = new Label
+            Label lblOfflineFromNASLOV = new Label
             {
-                Text = "Vreme",
+                Text = "Offline from",
+                WidthRequest = 120,
+                FontAttributes = FontAttributes.Bold
+            };
+            Label lblOfflineToNASLOV = new Label
+            {
+                Text = "Offline to",
                 WidthRequest = 120,
                 FontAttributes = FontAttributes.Bold
             };
@@ -106,21 +112,24 @@ namespace IPTXamarinForms
                 FontAttributes = FontAttributes.Bold
             };
 
+
+
             StackLayout naziviKolonaKontejner = new StackLayout()
             {
                 Orientation = StackOrientation.Horizontal,
             };
-            naziviKolonaKontejner.Children.Add(lblVremeNASLOV);
+            naziviKolonaKontejner.Children.Add(lblOfflineFromNASLOV);
+            naziviKolonaKontejner.Children.Add(lblOfflineToNASLOV);
             naziviKolonaKontejner.Children.Add(lblGreskaOpisNASLOV);
             naziviKolonaKontejner.Children.Add(lblGreskaErrorNASLOV);
 
-            
+
 
             tabelaZaLog = new StackLayout()
             {
                 Orientation = StackOrientation.Vertical,
             };
-           // tabelaZaLog.Children.Add(naziviKolonaKontejner);
+            // tabelaZaLog.Children.Add(naziviKolonaKontejner);
 
 
             //Pozivanje metode koja ce popuniti i postaviti tabelu u kontejner
@@ -143,12 +152,12 @@ namespace IPTXamarinForms
             stackLayoutVertical.Children.Add(naziviKolonaKontejner);
 
 
-            scrollTabelaLog = new ScrollView { Content = tabelaZaLog};
+            scrollTabelaLog = new ScrollView { Content = tabelaZaLog };
 
             //Ubacivanje prazne tabele koja ce biti kasnije uklonjena i zamenjena novom ukoliko postoje logovi z aservis, ukoliko ne postoje ostace prazna
             stackLayoutVertical.Children.Add(scrollTabelaLog);
 
-            this.Content = stackLayoutVertical ;
+            this.Content = stackLayoutVertical;
         }
 
 
@@ -157,7 +166,7 @@ namespace IPTXamarinForms
             //lblStatusServisa.Text = "Loading...";
             lblNazivServisa.BackgroundColor = Color.FromHex("#000000");  //zelena   
 
-            string url = "http://172.24.2.51:5000/api/servicestatus?id=" +idServisaProsledjivacZaMetoduRefresh;
+            string url = "http://172.24.2.51:5000/api/servicestatus?id=" + idServisaProsledjivacZaMetoduRefresh;
             JsonValue jsonValue = await FetchServiceStatus(url);
 
             string status = jsonValue.ToString();
@@ -219,9 +228,14 @@ namespace IPTXamarinForms
                 };
 
 
-                Label lblVreme = new Label
+                Label lblOfflineFrom = new Label
                 {
-                    Text = log.LogDate.ToString(),
+                    Text = log.OfflineFrom.ToString(),
+                    WidthRequest = 120
+                };
+                Label lblOfflineTo = new Label
+                {
+                    Text = log.OfflineTo.ToString(),
                     WidthRequest = 120
                 };
                 Label lblGreskaOpis = new Label
@@ -236,7 +250,8 @@ namespace IPTXamarinForms
                 };
 
 
-                tabelaHorizontal.Children.Add(lblVreme);
+                tabelaHorizontal.Children.Add(lblOfflineFrom);
+                tabelaHorizontal.Children.Add(lblOfflineTo);
                 tabelaHorizontal.Children.Add(lblGreskaOpis);
                 tabelaHorizontal.Children.Add(lblGreskaError);
 

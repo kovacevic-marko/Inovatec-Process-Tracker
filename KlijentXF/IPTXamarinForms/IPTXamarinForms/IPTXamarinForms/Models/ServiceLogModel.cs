@@ -10,7 +10,8 @@ namespace IPTXamarinForms.Models
     {
         public int LogID { get; set; }
         public int ClientServiceID { get; set; }
-        public DateTime LogDate { get; set; }
+        public DateTime OfflineFrom { get; set; }
+        public string OfflineTo { get; set; }
         public int StatusCode { get; set; }
         public string StatusDescription { get; set; }
         public string Error { get; set; }
