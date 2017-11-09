@@ -101,14 +101,33 @@ namespace IPTSakupljac
                             // Svi ostali slucajevi - servis nije aktivan
                             else
                             {
-                                // Novi log se kreira ako nema poslednjeg loga ili 
-                                // ako poslednji log ima vreme zavrsetka offline perioda
+                                DateTime dateTime = DateTime.Now;
+                                // Ako se razlog neaktivnosti servisa promenio,
+                                // interval neaktivnosti se zatvara i
+                                // zapocinje novi neaktivni interval od istog trenutka
+                                if (poslednjiLog != null &&
+                                        (poslednjiLog.StatusCode != statusCode ||
+                                        poslednjiLog.StatusDescription != statusDescription ||
+                                        poslednjiLog.Error != error)
+                                   )
+                                {
+                                    using (var db = new IPTDBEntities())
+                                    {
+                                        db.ServiceLogs.Attach(poslednjiLog);
+                                        poslednjiLog.OfflineTo = dateTime;
+                                        db.SaveChanges();
+                                    }
+
+                                }
+                                // Novi log se kreira ako nema poslednjeg loga, 
+                                // ako poslednji log ima vreme zavrsetka offline perioda ili
+                                // ako se razlog neaktivnosti servisa promenio
                                 if (poslednjiLog == null || poslednjiLog.OfflineTo != null)
                                 {
                                     ServiceLog noviLog = new ServiceLog
                                     {
                                         ClientServiceID = ClientService.ID,
-                                        OfflineFrom = DateTime.Now,
+                                        OfflineFrom = dateTime,
                                         OfflineTo = null,
                                         StatusCode = statusCode,
                                         StatusDescription = statusDescription,
