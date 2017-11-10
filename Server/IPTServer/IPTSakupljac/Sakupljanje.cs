@@ -1,6 +1,7 @@
 ﻿using IPTDataAccess;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -52,6 +53,7 @@ namespace IPTSakupljac
                             try
                             {
                                 var request = (HttpWebRequest)WebRequest.Create(ClientService.URL);
+                                request.Timeout = Properties.Settings.Default.WebRequestTimeout;
                                 var response = (HttpWebResponse)request.GetResponse();
                                 statusCode = (int)response.StatusCode;
                                 statusDescription = response.StatusDescription;
@@ -149,7 +151,19 @@ namespace IPTSakupljac
             }
             catch (Exception ex)
             {
-                throw;
+                //throw;
+                string sSource;
+                string sLog;
+                string sEvent;
+
+                sSource = "IPTSakupljacService";
+                sLog = "Application";
+                sEvent = ex.Message;
+
+                if (!EventLog.SourceExists(sSource))
+                    EventLog.CreateEventSource(sSource, sLog);
+
+                EventLog.WriteEntry(sSource, sEvent);
             }
             finally
             {

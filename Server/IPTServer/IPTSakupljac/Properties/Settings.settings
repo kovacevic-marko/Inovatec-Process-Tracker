@@ -3,7 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="TimerInterval" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">10000</Value>
+      <Value Profile="(Default)">60000</Value>
+    </Setting>
+    <Setting Name="WebRequestTimeout" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">30000</Value>
     </Setting>
   </Settings>
 </SettingsFile>
