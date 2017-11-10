@@ -21,6 +21,25 @@
           <Property Name="ServiceID" Type="int" Nullable="false" />
           <Property Name="URL" Type="nvarchar" MaxLength="1000" Nullable="false" />
         </EntityType>
+        <EntityType Name="EmailNotifications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MailedTo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="IsSent" Type="bit" Nullable="false" />
+          <Property Name="SentOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmailNotificationSubscription">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsOn" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Service">
           <Key>
             <PropertyRef Name="ServiceID" />
@@ -91,6 +110,8 @@
         <EntityContainer Name="IPTDBModelStoreContainer">
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClientService" EntityType="Self.ClientService" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailNotifications" EntityType="Self.EmailNotifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailNotificationSubscription" EntityType="Self.EmailNotificationSubscription" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceLog" EntityType="Self.ServiceLog" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_ClientService_Client" Association="Self.FK_ClientService_Client">
@@ -139,6 +160,8 @@
             <End Role="ClientService" EntitySet="ClientServices" />
             <End Role="ServiceLog" EntitySet="ServiceLogs" />
           </AssociationSet>
+          <EntitySet Name="EmailNotifications" EntityType="IPTDBModel.EmailNotification" />
+          <EntitySet Name="EmailNotificationSubscriptions" EntityType="IPTDBModel.EmailNotificationSubscription" />
         </EntityContainer>
         <ComplexType Name="GetServicesForClientID_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -240,6 +263,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="EmailNotification">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MailedTo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsSent" Type="Boolean" Nullable="false" />
+          <Property Name="SentOn" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="EmailNotificationSubscription">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsOn" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -318,6 +360,27 @@
                 <ScalarProperty Name="OfflineFrom" ColumnName="OfflineFrom" />
                 <ScalarProperty Name="ClientServiceID" ColumnName="ClientServiceID" />
                 <ScalarProperty Name="LogID" ColumnName="LogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailNotifications">
+            <EntityTypeMapping TypeName="IPTDBModel.EmailNotification">
+              <MappingFragment StoreEntitySet="EmailNotifications">
+                <ScalarProperty Name="SentOn" ColumnName="SentOn" />
+                <ScalarProperty Name="IsSent" ColumnName="IsSent" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="MailedTo" ColumnName="MailedTo" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailNotificationSubscriptions">
+            <EntityTypeMapping TypeName="IPTDBModel.EmailNotificationSubscription">
+              <MappingFragment StoreEntitySet="EmailNotificationSubscription">
+                <ScalarProperty Name="IsOn" ColumnName="IsOn" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

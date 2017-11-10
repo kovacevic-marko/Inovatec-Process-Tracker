@@ -55,6 +55,12 @@
     <Compile Include="ClientService.cs">
       <DependentUpon>IPTDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EmailNotification.cs">
+      <DependentUpon>IPTDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmailNotificationSubscription.cs">
+      <DependentUpon>IPTDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetLatestServiceLog_Result.cs">
       <DependentUpon>IPTDataModel.tt</DependentUpon>
     </Compile>
