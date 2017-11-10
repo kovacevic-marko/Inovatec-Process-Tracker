@@ -148,7 +148,15 @@ namespace IPTSakupljac
                                     // OVDE DODATI SLANJE EMAIL-A
                                     using (IPTDBEntities entities = new IPTDBEntities())
                                     {
+                                        //ovim saljem notifikaciju svim pretplacenim adresama
+                                        //var emails = from em in entities.EmailNotificationSubscriptions
+                                        //             select em.Email;
+
+                                        //ovim saljemo mail samo korisnicima koji su pretplaceni na trenutni servis
                                         var emails = from em in entities.EmailNotificationSubscriptions
+                                                     join es in entities.EmailServices
+                                                     on em.ID equals es.EmailSubscriptionId
+                                                     where em.IsOn == true
                                                      select em.Email;
 
                                         MailMessage message = new MailMessage();

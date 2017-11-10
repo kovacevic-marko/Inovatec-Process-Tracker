@@ -61,6 +61,9 @@
     <Compile Include="EmailNotificationSubscription.cs">
       <DependentUpon>IPTDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EmailService.cs">
+      <DependentUpon>IPTDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetEMailNotificationMessageService_Result.cs">
       <DependentUpon>IPTDataModel.tt</DependentUpon>
     </Compile>

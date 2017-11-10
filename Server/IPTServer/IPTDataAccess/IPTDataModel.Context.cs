@@ -33,6 +33,7 @@ namespace IPTDataAccess
         public virtual DbSet<ServiceLog> ServiceLogs { get; set; }
         public virtual DbSet<EmailNotification> EmailNotifications { get; set; }
         public virtual DbSet<EmailNotificationSubscription> EmailNotificationSubscriptions { get; set; }
+        public virtual DbSet<EmailService> EmailServices { get; set; }
     
         public virtual ObjectResult<GetServicesForClientID_Result> GetServicesForClientID(Nullable<int> clientID)
         {

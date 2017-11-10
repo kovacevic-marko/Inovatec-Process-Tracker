@@ -14,8 +14,17 @@ namespace IPTDataAccess
     
     public partial class EmailNotificationSubscription
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public EmailNotificationSubscription()
+        {
+            this.EmailServices = new HashSet<EmailService>();
+        }
+    
         public int ID { get; set; }
         public string Email { get; set; }
         public bool IsOn { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmailService> EmailServices { get; set; }
     }
 }
