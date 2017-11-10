@@ -54,6 +54,9 @@
     <Compile Include="Views\Service.xaml.cs">
       <DependentUpon>Service.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ServiceEmailSubscription.xaml.cs">
+      <DependentUpon>ServiceEmailSubscription.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ServiceInfo.xaml.cs">
       <DependentUpon>ServiceInfo.xaml</DependentUpon>
     </Compile>
@@ -118,6 +121,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Service.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ServiceEmailSubscription.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

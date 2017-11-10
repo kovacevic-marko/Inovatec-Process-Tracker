@@ -1,4 +1,5 @@
 ﻿using IPTXamarinForms.Models;
+using IPTXamarinForms.Views;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace IPTXamarinForms
     {
         //Label lblStatusServisa;
         Button btnRefresh;
-        StackLayout stackLayoutVertical;
+        StackLayout stackLayoutVerticalROOT;
         StackLayout tabelaZaLog;
         Label lblNazivServisa;
         ScrollView scrollTabelaLog;
@@ -34,7 +35,7 @@ namespace IPTXamarinForms
 
             InitializeComponent();
 
-            stackLayoutVertical = new StackLayout()
+            stackLayoutVerticalROOT = new StackLayout()
             {
                 Orientation = StackOrientation.Vertical,
             };
@@ -144,20 +145,24 @@ namespace IPTXamarinForms
             kontejnerZaNazivServisaIrefresh.Children.Add(lblNazivServisa);
             kontejnerZaNazivServisaIrefresh.Children.Add(btnRefresh);
 
-            //stackLayoutVertical.Children.Add(lblNazivServisa);
-            //stackLayoutVertical.Children.Add(lblStatusServisa);
-            //stackLayoutVertical.Children.Add(btnRefresh);
-            stackLayoutVertical.Children.Add(kontejnerZaNazivServisaIrefresh);
-            stackLayoutVertical.Children.Add(lblLogInfo);
-            stackLayoutVertical.Children.Add(naziviKolonaKontejner);
+            Button btnRedirektEmailSubscription = new Button
+            {
+                Text = "Email Subscription"
+            };
+            btnRedirektEmailSubscription.Clicked += (sender, args) => { Navigation.PushAsync(new ServiceEmailSubscription()); };
+
+            stackLayoutVerticalROOT.Children.Add(btnRedirektEmailSubscription);
+            stackLayoutVerticalROOT.Children.Add(kontejnerZaNazivServisaIrefresh);
+            stackLayoutVerticalROOT.Children.Add(lblLogInfo);
+            stackLayoutVerticalROOT.Children.Add(naziviKolonaKontejner);
 
 
             scrollTabelaLog = new ScrollView { Content = tabelaZaLog };
 
             //Ubacivanje prazne tabele koja ce biti kasnije uklonjena i zamenjena novom ukoliko postoje logovi z aservis, ukoliko ne postoje ostace prazna
-            stackLayoutVertical.Children.Add(scrollTabelaLog);
+            stackLayoutVerticalROOT.Children.Add(scrollTabelaLog);
 
-            this.Content = stackLayoutVertical;
+            this.Content = stackLayoutVerticalROOT;
         }
 
 
@@ -240,7 +245,7 @@ namespace IPTXamarinForms
                 };
                 Label lblGreskaOpis = new Label
                 {
-                    Text = log.StatusDescription.ToString(),
+                    Text = log.StatusDescription,
                     WidthRequest = 280
                 };
                 Label lblGreskaError = new Label
@@ -260,8 +265,8 @@ namespace IPTXamarinForms
                 tabelaZaLog.Children.Add(tabelaHorizontal);
 
                 //Prvo mora da ukloni praznu tabelu koja je na pocetku napravljena zbog toga sto neki servis ima logove a neki nema
-                stackLayoutVertical.Children.Remove(scrollTabelaLog);
-                stackLayoutVertical.Children.Add(scrollTabelaLog);
+                stackLayoutVerticalROOT.Children.Remove(scrollTabelaLog);
+                stackLayoutVerticalROOT.Children.Add(scrollTabelaLog);
             }
 
         }
