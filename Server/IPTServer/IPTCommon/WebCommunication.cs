@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using IPTDataAccess;
 
 namespace IPTCommon
 {
@@ -29,6 +31,25 @@ namespace IPTCommon
             }
 
             return statusCode;
+        }
+
+        public static void SendEmail(MailMessage mailMessage, IPTDBEntities entities, EmailNotification notification)
+        {
+            SmtpClient smtpClient = new SmtpClient();
+
+            Task task = Task.Factory.StartNew(() =>
+            {
+                mailMessage.From = new MailAddress("iptservicespraksa@gmail.com");
+                mailMessage.Subject = "Servis promena statusa obavestenje";
+
+
+                smtpClient.Send(mailMessage);
+                notification.IsSent = true;
+                notification.SentOn = DateTime.Now;
+                entities.SaveChanges();
+            }
+            );
+
         }
     }
 }

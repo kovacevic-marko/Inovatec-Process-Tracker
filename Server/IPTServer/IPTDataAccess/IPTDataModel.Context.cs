@@ -69,5 +69,23 @@ namespace IPTDataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetLatestServiceLog_Result>("GetLatestServiceLog", clientServiceIDParameter);
         }
+    
+        public virtual ObjectResult<GetEMailNotificationMessageService_Result> GetEMailNotificationMessageService(Nullable<int> clientServiceID)
+        {
+            var clientServiceIDParameter = clientServiceID.HasValue ?
+                new ObjectParameter("ClientServiceID", clientServiceID) :
+                new ObjectParameter("ClientServiceID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEMailNotificationMessageService_Result>("GetEMailNotificationMessageService", clientServiceIDParameter);
+        }
+    
+        public virtual int InsertEmail(string email)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("email", email) :
+                new ObjectParameter("email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertEmail", emailParameter);
+        }
     }
 }

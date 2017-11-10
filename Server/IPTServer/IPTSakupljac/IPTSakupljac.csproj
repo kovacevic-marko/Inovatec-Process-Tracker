@@ -93,6 +93,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IPTCommon\IPTCommon.csproj">
+      <Project>{f8737e90-8023-4249-a983-8ff0cac9bc93}</Project>
+      <Name>IPTCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IPTDataAccess\IPTDataAccess.csproj">
       <Project>{9008cc08-5911-48b7-b89c-17491023a8da}</Project>
       <Name>IPTDataAccess</Name>

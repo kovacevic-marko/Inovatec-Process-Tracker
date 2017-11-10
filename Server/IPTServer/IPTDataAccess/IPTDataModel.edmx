@@ -30,7 +30,7 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="Message" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="IsSent" Type="bit" Nullable="false" />
-          <Property Name="SentOn" Type="datetime" Nullable="false" />
+          <Property Name="SentOn" Type="datetime" />
         </EntityType>
         <EntityType Name="EmailNotificationSubscription">
           <Key>
@@ -95,6 +95,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetEMailNotificationMessageService" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientServiceID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetLatestServiceLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ClientServiceID" Type="int" Mode="In" />
         </Function>
@@ -106,6 +109,9 @@
         </Function>
         <Function Name="GetServiceUrl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="nvarchar(max)" Mode="In" />
         </Function>
         <EntityContainer Name="IPTDBModelStoreContainer">
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
@@ -162,6 +168,12 @@
           </AssociationSet>
           <EntitySet Name="EmailNotifications" EntityType="IPTDBModel.EmailNotification" />
           <EntitySet Name="EmailNotificationSubscriptions" EntityType="IPTDBModel.EmailNotificationSubscription" />
+          <FunctionImport Name="GetEMailNotificationMessageService" ReturnType="Collection(IPTDBModel.GetEMailNotificationMessageService_Result)">
+          <Parameter Name="ClientServiceID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertEmail">
+          <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetServicesForClientID_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -272,7 +284,7 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Message" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="IsSent" Type="Boolean" Nullable="false" />
-          <Property Name="SentOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SentOn" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="EmailNotificationSubscription">
           <Key>
@@ -282,6 +294,10 @@
           <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsOn" Type="Boolean" Nullable="false" />
         </EntityType>
+        <ComplexType Name="GetEMailNotificationMessageService_Result">
+          <Property Type="Int32" Name="ServiceID" Nullable="false" />
+          <Property Type="String" Name="ServiceName" Nullable="false" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -384,6 +400,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetEMailNotificationMessageService" FunctionName="IPTDBModel.Store.GetEMailNotificationMessageService">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IPTDBModel.GetEMailNotificationMessageService_Result">
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertEmail" FunctionName="IPTDBModel.Store.InsertEmail" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

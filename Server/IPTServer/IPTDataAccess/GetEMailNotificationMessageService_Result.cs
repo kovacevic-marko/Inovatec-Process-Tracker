@@ -10,15 +10,10 @@
 namespace IPTDataAccess
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class EmailNotification
+    public partial class GetEMailNotificationMessageService_Result
     {
-        public int id { get; set; }
-        public string MailedTo { get; set; }
-        public System.DateTime CreatedOn { get; set; }
-        public string Message { get; set; }
-        public bool IsSent { get; set; }
-        public Nullable<System.DateTime> SentOn { get; set; }
+        public int ServiceID { get; set; }
+        public string ServiceName { get; set; }
     }
 }
