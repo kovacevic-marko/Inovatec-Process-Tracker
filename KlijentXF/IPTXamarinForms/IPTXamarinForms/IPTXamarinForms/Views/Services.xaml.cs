@@ -75,6 +75,7 @@ namespace IPTXamarinForms
             foreach (var service in listServices)
             {
                 // Ovde umesto nove labele treba dodati novi ListView (ili slicno) item.
+                
                 var btn = new Button
                 {
                     Text = service.ServiceName,

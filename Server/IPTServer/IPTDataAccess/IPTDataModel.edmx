@@ -149,10 +149,13 @@
         <Function Name="InsertEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="nvarchar(max)" Mode="In" />
         </Function>
+<<<<<<< HEAD
         <Function Name="InsertSubscribedService" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ClientServiceID" Type="int" Mode="In" />
           <Parameter Name="EmailSubscriptionID" Type="int" Mode="In" />
         </Function>
+=======
+>>>>>>> 50712bfc3fdb462a4d7e1a900bbb9a4f1ce7de8e
         <Function Name="UpdateInsertEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Email" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="IsOn" Type="bit" Mode="In" />
@@ -236,6 +239,7 @@
             <End Role="EmailNotificationSubscription" EntitySet="EmailNotificationSubscriptions" />
             <End Role="EmailService" EntitySet="EmailServices" />
           </AssociationSet>
+<<<<<<< HEAD
           <AssociationSet Name="FK_EmailServices_ClientService1" Association="IPTDBModel.FK_EmailServices_ClientService1">
             <End Role="ClientService" EntitySet="ClientServices" />
             <End Role="EmailService" EntitySet="EmailServices" />
@@ -248,11 +252,17 @@
             <Parameter Name="ClientServiceID" Mode="In" Type="Int32" />
             <Parameter Name="EmailSubscriptionID" Mode="In" Type="Int32" />
           </FunctionImport>
+=======
+>>>>>>> 50712bfc3fdb462a4d7e1a900bbb9a4f1ce7de8e
           <FunctionImport Name="UpdateInsertEmail">
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="IsOn" Mode="In" Type="Boolean" />
           </FunctionImport>
+<<<<<<< HEAD
         </EntityContainer>
+=======
+          </EntityContainer>
+>>>>>>> 50712bfc3fdb462a4d7e1a900bbb9a4f1ce7de8e
         <ComplexType Name="GetServicesForClientID_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="Int32" Name="ServiceID" Nullable="false" />
@@ -384,7 +394,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceId" Type="Int32" Nullable="false" />
+          <Property Name="ClientServiceID" Type="Int32" Nullable="false" />
           <Property Name="EmailSubscriptionId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ClientService" Relationship="IPTDBModel.FK_EmailServices_ClientService" FromRole="EmailService" ToRole="ClientService" />
           <NavigationProperty Name="EmailNotificationSubscription" Relationship="IPTDBModel.FK_EmailServices_EmailNotificationSubscription" FromRole="EmailService" ToRole="EmailNotificationSubscription" />
@@ -399,7 +409,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="EmailService">
-              <PropertyRef Name="ServiceId" />
+              <PropertyRef Name="ClientServiceID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -415,6 +425,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <Association Name="FK_EmailServices_ClientService1">
           <End Type="IPTDBModel.ClientService" Role="ClientService" Multiplicity="1" />
           <End Type="IPTDBModel.EmailService" Role="EmailService" Multiplicity="*" />
@@ -428,6 +439,9 @@
           </ReferentialConstraint>
         </Association>
       </Schema>
+=======
+        </Schema>
+>>>>>>> 50712bfc3fdb462a4d7e1a900bbb9a4f1ce7de8e
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -543,12 +557,19 @@
               <MappingFragment StoreEntitySet="EmailServices">
                 <ScalarProperty Name="ClientServiceID" ColumnName="ClientServiceID" />
                 <ScalarProperty Name="EmailSubscriptionId" ColumnName="EmailSubscriptionId" />
+<<<<<<< HEAD
+=======
+                <ScalarProperty Name="ClientServiceID" ColumnName="ClientServiceID" />
+>>>>>>> 50712bfc3fdb462a4d7e1a900bbb9a4f1ce7de8e
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+<<<<<<< HEAD
           <FunctionImportMapping FunctionImportName="DeleteSubscribedService" FunctionName="IPTDBModel.Store.DeleteSubscribedService" />
           <FunctionImportMapping FunctionImportName="InsertSubscribedService" FunctionName="IPTDBModel.Store.InsertSubscribedService" />
+=======
+>>>>>>> 50712bfc3fdb462a4d7e1a900bbb9a4f1ce7de8e
           <FunctionImportMapping FunctionImportName="UpdateInsertEmail" FunctionName="IPTDBModel.Store.UpdateInsertEmail" />
         </EntityContainerMapping>
       </Mapping>

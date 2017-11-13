@@ -4,9 +4,22 @@
              x:Class="IPTXamarinForms.Client">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
+            <!--<Label Text="Welcome to Xamarin.Forms!"
                 VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                HorizontalOptions="CenterAndExpand" />-->
+
+            <ListView  x:Name="listClient" BackgroundColor="Indigo" ItemTapped="listClient_ItemTapped"  SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid HorizontalOptions="Center" BackgroundColor="Indigo">
+                                <Label x:Name="lbl" Text="{Binding}" FontFamily="Papyrus" TextColor="Azure" FontSize="36" BackgroundColor="Indigo"/>
+                                
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

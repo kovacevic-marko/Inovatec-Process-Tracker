@@ -89,6 +89,7 @@ namespace IPTDataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertEmail", emailParameter);
         }
     
+<<<<<<< HEAD
         public virtual int DeleteSubscribedService(Nullable<int> clientServiceID, Nullable<int> emailSubscriptionID)
         {
             var clientServiceIDParameter = clientServiceID.HasValue ?
@@ -115,6 +116,8 @@ namespace IPTDataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertSubscribedService", clientServiceIDParameter, emailSubscriptionIDParameter);
         }
     
+=======
+>>>>>>> 50712bfc3fdb462a4d7e1a900bbb9a4f1ce7de8e
         public virtual int UpdateInsertEmail(string email, Nullable<bool> isOn)
         {
             var emailParameter = email != null ?
