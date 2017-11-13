@@ -97,6 +97,10 @@
       <Project>{f8737e90-8023-4249-a983-8ff0cac9bc93}</Project>
       <Name>IPTCommon</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IPTDataAccess\IPTDataAccess.csproj">
+      <Project>{789f48dd-67d1-43bf-9436-21e0879c3377}</Project>
+      <Name>IPTDataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
