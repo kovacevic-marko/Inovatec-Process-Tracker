@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="IPTXamarinForms.Services">
     <ContentPage.Content>
-        <StackLayout x:Name="lytStackLayout">
+        <StackLayout x:Name="lytStackLayout" Orientation="Vertical">
             <Button x:Name="btnRefresh" Text="Refresh"  Clicked="btnRefresh_Clicked" />
             <Label x:Name="lblStatus" Text="Services"
                 FontSize="24"

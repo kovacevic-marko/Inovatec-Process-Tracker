@@ -53,7 +53,7 @@ namespace IPTXamarinForms.Views
             rootKontejner.Children.Add(switcherIsOn);
             rootKontejner.Children.Add(btnSacuvaj);
 
-            this.Content = rootKontejner;
+            this.Content = new ScrollView { Content = rootKontejner };
         }
 
 
