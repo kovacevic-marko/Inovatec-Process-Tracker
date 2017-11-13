@@ -88,5 +88,44 @@ namespace IPTDataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertEmail", emailParameter);
         }
+    
+        public virtual int DeleteSubscribedService(Nullable<int> clientServiceID, Nullable<int> emailSubscriptionID)
+        {
+            var clientServiceIDParameter = clientServiceID.HasValue ?
+                new ObjectParameter("ClientServiceID", clientServiceID) :
+                new ObjectParameter("ClientServiceID", typeof(int));
+    
+            var emailSubscriptionIDParameter = emailSubscriptionID.HasValue ?
+                new ObjectParameter("EmailSubscriptionID", emailSubscriptionID) :
+                new ObjectParameter("EmailSubscriptionID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteSubscribedService", clientServiceIDParameter, emailSubscriptionIDParameter);
+        }
+    
+        public virtual int InsertSubscribedService(Nullable<int> clientServiceID, Nullable<int> emailSubscriptionID)
+        {
+            var clientServiceIDParameter = clientServiceID.HasValue ?
+                new ObjectParameter("ClientServiceID", clientServiceID) :
+                new ObjectParameter("ClientServiceID", typeof(int));
+    
+            var emailSubscriptionIDParameter = emailSubscriptionID.HasValue ?
+                new ObjectParameter("EmailSubscriptionID", emailSubscriptionID) :
+                new ObjectParameter("EmailSubscriptionID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertSubscribedService", clientServiceIDParameter, emailSubscriptionIDParameter);
+        }
+    
+        public virtual int UpdateInsertEmail(string email, Nullable<bool> isOn)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var isOnParameter = isOn.HasValue ?
+                new ObjectParameter("IsOn", isOn) :
+                new ObjectParameter("IsOn", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateInsertEmail", emailParameter, isOnParameter);
+        }
     }
 }

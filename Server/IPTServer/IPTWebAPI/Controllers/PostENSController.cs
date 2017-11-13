@@ -1,39 +1,49 @@
 ﻿using IPTDataAccess;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using IPTCommon;
-using System.Data.SqlClient;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
+using Newtonsoft.Json.Linq;
 
 public class PostENSController : ApiController
 {
-            [System.Web.Http.HttpPost]
-            public void Post([FromBody] EmailNotificationSubscription email)
+    [System.Web.Http.HttpPost]
+    public void Post([FromBody] string receivedString)
+    {
+        try
+        {
+            using (IPTDBEntities entities = new IPTDBEntities())
             {
-                try
+                JObject json = JObject.Parse(receivedString);
+                string Email = (string)json["Email"];
+                bool IsOn = (bool)json["IsOn"];
+
+                int EmailID = entities.UpdateInsertEmail(Email, IsOn);
+                entities.SaveChanges();
+
+
+                int status = 500;
+                foreach (var service in json["Services"])
                 {
-                    using (IPTDBEntities entities = new IPTDBEntities())
+                    if ((bool)service["IsOn"])
                     {
-
-                //entities.InsertEmail(email);
-                entities.EmailNotificationSubscriptions.Add(email);
-
+                        status = entities.InsertSubscribedService((int)service["ClientServiceID"], EmailID);
                         entities.SaveChanges();
-
-                        //var message = Request.CreateErrorResponse(HttpStatusCode.Created, email);
-                        //message.Headers.Location = new Uri(Request.RequestUri + email.id.ToString());
-                        //return message;
+                    }
+                    else
+                    {
+                        status = entities.DeleteSubscribedService((int)service["ClientServiceID"], EmailID);
+                        entities.SaveChanges();
                     }
                 }
-                catch (Exception ex)
-                {
-                    //return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
-                }
+
+                //var message = Request.CreateErrorResponse(HttpStatusCode.Created, email);
+                //message.Headers.Location = new Uri(Request.RequestUri + email.id.ToString());
+                //return message;
             }
         }
+        catch (Exception ex)
+        {
+            //return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+        }
+    }
+}
 

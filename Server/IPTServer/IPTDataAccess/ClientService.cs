@@ -19,6 +19,7 @@ namespace IPTDataAccess
         {
             this.ServiceLogs = new HashSet<ServiceLog>();
             this.EmailServices = new HashSet<EmailService>();
+            this.EmailServices1 = new HashSet<EmailService>();
         }
     
         public int ID { get; set; }
@@ -32,5 +33,7 @@ namespace IPTDataAccess
         public virtual ICollection<ServiceLog> ServiceLogs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmailService> EmailServices { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmailService> EmailServices1 { get; set; }
     }
 }
