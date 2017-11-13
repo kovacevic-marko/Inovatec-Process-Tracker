@@ -51,14 +51,14 @@
     <Compile Include="WebCommunication.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IPTDataAccess\IPTDataAccess.csproj">
-      <Project>{9008cc08-5911-48b7-b89c-17491023a8da}</Project>
-      <Name>IPTDataAccess</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IPTDataAccess\IPTDataAccess.csproj">
+      <Project>{789f48dd-67d1-43bf-9436-21e0879c3377}</Project>
+      <Name>IPTDataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

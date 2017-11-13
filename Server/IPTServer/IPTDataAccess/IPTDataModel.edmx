@@ -45,7 +45,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceId" Type="int" Nullable="false" />
+          <Property Name="ClientServiceID" Type="int" Nullable="false" />
           <Property Name="EmailSubscriptionId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Service">
@@ -99,7 +99,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="EmailServices">
-              <PropertyRef Name="ServiceId" />
+              <PropertyRef Name="ClientServiceID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -127,6 +127,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DeleteSubscribedService" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientServiceID" Type="int" Mode="In" />
+          <Parameter Name="EmailSubscriptionID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetEMailNotificationMessageService" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ClientServiceID" Type="int" Mode="In" />
         </Function>
@@ -144,6 +148,14 @@
         </Function>
         <Function Name="InsertEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="InsertSubscribedService" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientServiceID" Type="int" Mode="In" />
+          <Parameter Name="EmailSubscriptionID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateInsertEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="IsOn" Type="bit" Mode="In" />
         </Function>
         <EntityContainer Name="IPTDBModelStoreContainer">
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
@@ -178,83 +190,13 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="IPTDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="IPTDBEntities" annotation:LazyLoadingEnabled="true">
-          <FunctionImport Name="GetServicesForClientID" ReturnType="Collection(IPTDBModel.GetServicesForClientID_Result)">
-          <Parameter Name="ClientID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetServiceUrl" ReturnType="Collection(String)">
-          <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetServiceLog" ReturnType="Collection(IPTDBModel.GetServiceLog_Result)">
-          <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetLatestServiceLog" ReturnType="Collection(IPTDBModel.GetLatestServiceLog_Result)">
-          <Parameter Name="ClientServiceID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="Clients" EntityType="IPTDBModel.Client" />
-          <EntitySet Name="ClientServices" EntityType="IPTDBModel.ClientService" />
-          <EntitySet Name="Services" EntityType="IPTDBModel.Service" />
-          <EntitySet Name="ServiceLogs" EntityType="IPTDBModel.ServiceLog" />
-          <AssociationSet Name="FK_ClientService_Client" Association="IPTDBModel.FK_ClientService_Client">
-            <End Role="Client" EntitySet="Clients" />
-            <End Role="ClientService" EntitySet="ClientServices" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClientService_Service" Association="IPTDBModel.FK_ClientService_Service">
-            <End Role="Service" EntitySet="Services" />
-            <End Role="ClientService" EntitySet="ClientServices" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceLog_ClientService" Association="IPTDBModel.FK_ServiceLog_ClientService">
-            <End Role="ClientService" EntitySet="ClientServices" />
-            <End Role="ServiceLog" EntitySet="ServiceLogs" />
-          </AssociationSet>
-          <EntitySet Name="EmailNotifications" EntityType="IPTDBModel.EmailNotification" />
-          <EntitySet Name="EmailNotificationSubscriptions" EntityType="IPTDBModel.EmailNotificationSubscription" />
-          <FunctionImport Name="GetEMailNotificationMessageService" ReturnType="Collection(IPTDBModel.GetEMailNotificationMessageService_Result)">
-          <Parameter Name="ClientServiceID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="InsertEmail">
-          <Parameter Name="email" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="EmailServices" EntityType="IPTDBModel.EmailService" />
-          <AssociationSet Name="FK_EmailServices_ClientService" Association="IPTDBModel.FK_EmailServices_ClientService">
-            <End Role="ClientService" EntitySet="ClientServices" />
-            <End Role="EmailService" EntitySet="EmailServices" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmailServices_EmailNotificationSubscription" Association="IPTDBModel.FK_EmailServices_EmailNotificationSubscription">
-            <End Role="EmailNotificationSubscription" EntitySet="EmailNotificationSubscriptions" />
-            <End Role="EmailService" EntitySet="EmailServices" />
-          </AssociationSet>
-        </EntityContainer>
-        <ComplexType Name="GetServicesForClientID_Result">
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="Int32" Name="ServiceID" Nullable="false" />
-          <Property Type="String" Name="URL" Nullable="false" MaxLength="1000" />
-          <Property Type="String" Name="ServiceName" Nullable="false" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="GetServiceLog_Result">
-          <Property Type="Int32" Name="LogID" Nullable="false" />
-          <Property Type="Int32" Name="ClientServiceID" Nullable="false" />
-          <Property Type="DateTime" Name="LogDate" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="StatusCode" Nullable="true" />
-          <Property Type="String" Name="StatusDescription" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Error" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetLatestServiceLog_Result">
-          <Property Type="Int32" Name="LogID" Nullable="false" />
-          <Property Type="Int32" Name="ClientServiceID" Nullable="false" />
-          <Property Type="DateTime" Name="OfflineFrom" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="OfflineTo" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="StatusCode" Nullable="true" />
-          <Property Type="String" Name="StatusDescription" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Error" Nullable="true" />
-        </ComplexType>
         <EntityType Name="Client">
           <Key>
             <PropertyRef Name="ClientID" />
           </Key>
           <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ClientServices" Relationship="IPTDBModel.FK_ClientService_Client" FromRole="Client" ToRole="ClientService" />
+          <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ClientServices" Relationship="Self.FK_ClientService_Client" FromRole="Client" ToRole="ClientService" />
         </EntityType>
         <EntityType Name="ClientService">
           <Key>
@@ -263,19 +205,49 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ClientID" Type="Int32" Nullable="false" />
           <Property Name="ServiceID" Type="Int32" Nullable="false" />
-          <Property Name="URL" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Client" Relationship="IPTDBModel.FK_ClientService_Client" FromRole="ClientService" ToRole="Client" />
-          <NavigationProperty Name="Service" Relationship="IPTDBModel.FK_ClientService_Service" FromRole="ClientService" ToRole="Service" />
-          <NavigationProperty Name="ServiceLogs" Relationship="IPTDBModel.FK_ServiceLog_ClientService" FromRole="ClientService" ToRole="ServiceLog" />
-          <NavigationProperty Name="EmailServices" Relationship="IPTDBModel.FK_EmailServices_ClientService" FromRole="ClientService" ToRole="EmailService" />
+          <Property Name="URL" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_ClientService_Client" FromRole="ClientService" ToRole="Client" />
+          <NavigationProperty Name="Service" Relationship="Self.FK_ClientService_Service" FromRole="ClientService" ToRole="Service" />
+          <NavigationProperty Name="EmailServices" Relationship="Self.FK_EmailServices_ClientService" FromRole="ClientService" ToRole="EmailServices" />
+          <NavigationProperty Name="ServiceLogs" Relationship="Self.FK_ServiceLog_ClientService" FromRole="ClientService" ToRole="ServiceLog" />
+        </EntityType>
+        <EntityType Name="EmailNotification">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MailedTo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsSent" Type="Boolean" Nullable="false" />
+          <Property Name="SentOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="EmailNotificationSubscription">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsOn" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EmailServices" Relationship="Self.FK_EmailServices_EmailNotificationSubscription" FromRole="EmailNotificationSubscription" ToRole="EmailServices" />
+        </EntityType>
+        <EntityType Name="EmailService">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientServiceID" Type="Int32" Nullable="false" />
+          <Property Name="EmailSubscriptionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ClientService" Relationship="Self.FK_EmailServices_ClientService" FromRole="EmailServices" ToRole="ClientService" />
+          <NavigationProperty Name="EmailNotificationSubscription" Relationship="Self.FK_EmailServices_EmailNotificationSubscription" FromRole="EmailServices" ToRole="EmailNotificationSubscription" />
         </EntityType>
         <EntityType Name="Service">
           <Key>
             <PropertyRef Name="ServiceID" />
           </Key>
           <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ClientServices" Relationship="IPTDBModel.FK_ClientService_Service" FromRole="Service" ToRole="ClientService" />
+          <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ClientServices" Relationship="Self.FK_ClientService_Service" FromRole="Service" ToRole="ClientService" />
         </EntityType>
         <EntityType Name="ServiceLog">
           <Key>
@@ -288,11 +260,11 @@
           <Property Name="StatusCode" Type="Int32" />
           <Property Name="StatusDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Error" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ClientService" Relationship="IPTDBModel.FK_ServiceLog_ClientService" FromRole="ServiceLog" ToRole="ClientService" />
+          <NavigationProperty Name="ClientService" Relationship="Self.FK_ServiceLog_ClientService" FromRole="ServiceLog" ToRole="ClientService" />
         </EntityType>
         <Association Name="FK_ClientService_Client">
-          <End Type="IPTDBModel.Client" Role="Client" Multiplicity="1" />
-          <End Type="IPTDBModel.ClientService" Role="ClientService" Multiplicity="*" />
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="ClientService" Type="Self.ClientService" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Client">
               <PropertyRef Name="ClientID" />
@@ -303,8 +275,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ClientService_Service">
-          <End Type="IPTDBModel.Service" Role="Service" Multiplicity="1" />
-          <End Type="IPTDBModel.ClientService" Role="ClientService" Multiplicity="*" />
+          <End Role="Service" Type="Self.Service" Multiplicity="1" />
+          <End Role="ClientService" Type="Self.ClientService" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Service">
               <PropertyRef Name="ServiceID" />
@@ -314,9 +286,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmailServices_ClientService">
+          <End Role="ClientService" Type="Self.ClientService" Multiplicity="1" />
+          <End Role="EmailServices" Type="Self.EmailService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientService">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmailServices">
+              <PropertyRef Name="ClientServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ServiceLog_ClientService">
-          <End Type="IPTDBModel.ClientService" Role="ClientService" Multiplicity="1" />
-          <End Type="IPTDBModel.ServiceLog" Role="ServiceLog" Multiplicity="*" />
+          <End Role="ClientService" Type="Self.ClientService" Multiplicity="1" />
+          <End Role="ServiceLog" Type="Self.ServiceLog" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ClientService">
               <PropertyRef Name="ID" />
@@ -326,90 +310,186 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="EmailNotification">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MailedTo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Message" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="IsSent" Type="Boolean" Nullable="false" />
-          <Property Name="SentOn" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="EmailNotificationSubscription">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsOn" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="EmailServices" Relationship="IPTDBModel.FK_EmailServices_EmailNotificationSubscription" FromRole="EmailNotificationSubscription" ToRole="EmailService" />
-        </EntityType>
-        <ComplexType Name="GetEMailNotificationMessageService_Result">
-          <Property Type="Int32" Name="ServiceID" Nullable="false" />
-          <Property Type="String" Name="ServiceName" Nullable="false" MaxLength="50" />
-        </ComplexType>
-        <EntityType Name="EmailService">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceId" Type="Int32" Nullable="false" />
-          <Property Name="EmailSubscriptionId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ClientService" Relationship="IPTDBModel.FK_EmailServices_ClientService" FromRole="EmailService" ToRole="ClientService" />
-          <NavigationProperty Name="EmailNotificationSubscription" Relationship="IPTDBModel.FK_EmailServices_EmailNotificationSubscription" FromRole="EmailService" ToRole="EmailNotificationSubscription" />
-        </EntityType>
-        <Association Name="FK_EmailServices_ClientService">
-          <End Type="IPTDBModel.ClientService" Role="ClientService" Multiplicity="1" />
-          <End Type="IPTDBModel.EmailService" Role="EmailService" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClientService">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="EmailService">
-              <PropertyRef Name="ServiceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EmailServices_EmailNotificationSubscription">
-          <End Type="IPTDBModel.EmailNotificationSubscription" Role="EmailNotificationSubscription" Multiplicity="1" />
-          <End Type="IPTDBModel.EmailService" Role="EmailService" Multiplicity="*" />
+          <End Role="EmailNotificationSubscription" Type="Self.EmailNotificationSubscription" Multiplicity="1" />
+          <End Role="EmailServices" Type="Self.EmailService" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EmailNotificationSubscription">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="EmailService">
+            <Dependent Role="EmailServices">
               <PropertyRef Name="EmailSubscriptionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="IPTDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="ClientServices" EntityType="Self.ClientService" />
+          <EntitySet Name="EmailNotifications" EntityType="Self.EmailNotification" />
+          <EntitySet Name="EmailNotificationSubscriptions" EntityType="Self.EmailNotificationSubscription" />
+          <EntitySet Name="EmailServices" EntityType="Self.EmailService" />
+          <EntitySet Name="Services" EntityType="Self.Service" />
+          <EntitySet Name="ServiceLogs" EntityType="Self.ServiceLog" />
+          <AssociationSet Name="FK_ClientService_Client" Association="Self.FK_ClientService_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="ClientService" EntitySet="ClientServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientService_Service" Association="Self.FK_ClientService_Service">
+            <End Role="Service" EntitySet="Services" />
+            <End Role="ClientService" EntitySet="ClientServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmailServices_ClientService" Association="Self.FK_EmailServices_ClientService">
+            <End Role="ClientService" EntitySet="ClientServices" />
+            <End Role="EmailServices" EntitySet="EmailServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceLog_ClientService" Association="Self.FK_ServiceLog_ClientService">
+            <End Role="ClientService" EntitySet="ClientServices" />
+            <End Role="ServiceLog" EntitySet="ServiceLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmailServices_EmailNotificationSubscription" Association="Self.FK_EmailServices_EmailNotificationSubscription">
+            <End Role="EmailNotificationSubscription" EntitySet="EmailNotificationSubscriptions" />
+            <End Role="EmailServices" EntitySet="EmailServices" />
+          </AssociationSet>
+          <FunctionImport Name="DeleteSubscribedService">
+            <Parameter Name="ClientServiceID" Mode="In" Type="Int32" />
+            <Parameter Name="EmailSubscriptionID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetEMailNotificationMessageService" ReturnType="Collection(IPTDBModel.GetEMailNotificationMessageService_Result)">
+          <Parameter Name="ClientServiceID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetLatestServiceLog" ReturnType="Collection(IPTDBModel.GetLatestServiceLog_Result)">
+          <Parameter Name="ClientServiceID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetServiceLog" ReturnType="Collection(IPTDBModel.GetServiceLog_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetServicesForClientID" ReturnType="Collection(IPTDBModel.GetServicesForClientID_Result)">
+          <Parameter Name="ClientID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetServiceUrl" ReturnType="Collection(String)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertEmail">
+          <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertSubscribedService">
+            <Parameter Name="ClientServiceID" Mode="In" Type="Int32" />
+            <Parameter Name="EmailSubscriptionID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateInsertEmail">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="IsOn" Mode="In" Type="Boolean" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetEMailNotificationMessageService_Result">
+          <Property Type="Int32" Name="ServiceID" Nullable="false" />
+          <Property Type="String" Name="ServiceName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetLatestServiceLog_Result">
+          <Property Type="Int32" Name="LogID" Nullable="false" />
+          <Property Type="Int32" Name="ClientServiceID" Nullable="false" />
+          <Property Type="DateTime" Name="OfflineFrom" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="OfflineTo" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="StatusCode" Nullable="true" />
+          <Property Type="String" Name="StatusDescription" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Error" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetServiceLog_Result">
+          <Property Type="Int32" Name="LogID" Nullable="false" />
+          <Property Type="Int32" Name="ClientServiceID" Nullable="false" />
+          <Property Type="DateTime" Name="OfflineFrom" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="OfflineTo" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="StatusCode" Nullable="true" />
+          <Property Type="String" Name="StatusDescription" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Error" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetServicesForClientID_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="ServiceID" Nullable="false" />
+          <Property Type="String" Name="URL" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="ServiceName" Nullable="false" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="IPTDBModelStoreContainer" CdmEntityContainer="IPTDBEntities">
-          <FunctionImportMapping FunctionImportName="GetServicesForClientID" FunctionName="IPTDBModel.Store.GetServicesForClientID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="IPTDBModel.GetServicesForClientID_Result">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="IPTDBModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientServices">
+            <EntityTypeMapping TypeName="IPTDBModel.ClientService">
+              <MappingFragment StoreEntitySet="ClientService">
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
                 <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
                 <ScalarProperty Name="URL" ColumnName="URL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailNotifications">
+            <EntityTypeMapping TypeName="IPTDBModel.EmailNotification">
+              <MappingFragment StoreEntitySet="EmailNotifications">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="MailedTo" ColumnName="MailedTo" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="IsSent" ColumnName="IsSent" />
+                <ScalarProperty Name="SentOn" ColumnName="SentOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailNotificationSubscriptions">
+            <EntityTypeMapping TypeName="IPTDBModel.EmailNotificationSubscription">
+              <MappingFragment StoreEntitySet="EmailNotificationSubscription">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IsOn" ColumnName="IsOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailServices">
+            <EntityTypeMapping TypeName="IPTDBModel.EmailService">
+              <MappingFragment StoreEntitySet="EmailServices">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ClientServiceID" ColumnName="ClientServiceID" />
+                <ScalarProperty Name="EmailSubscriptionId" ColumnName="EmailSubscriptionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="IPTDBModel.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
                 <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetServiceUrl" FunctionName="IPTDBModel.Store.GetServiceUrl" />
-          <FunctionImportMapping FunctionImportName="GetServiceLog" FunctionName="IPTDBModel.Store.GetServiceLog">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="IPTDBModel.GetServiceLog_Result">
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceLogs">
+            <EntityTypeMapping TypeName="IPTDBModel.ServiceLog">
+              <MappingFragment StoreEntitySet="ServiceLog">
                 <ScalarProperty Name="LogID" ColumnName="LogID" />
                 <ScalarProperty Name="ClientServiceID" ColumnName="ClientServiceID" />
-                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="OfflineFrom" ColumnName="OfflineFrom" />
+                <ScalarProperty Name="OfflineTo" ColumnName="OfflineTo" />
                 <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
                 <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
                 <ScalarProperty Name="Error" ColumnName="Error" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteSubscribedService" FunctionName="IPTDBModel.Store.DeleteSubscribedService" />
+          <FunctionImportMapping FunctionImportName="GetEMailNotificationMessageService" FunctionName="IPTDBModel.Store.GetEMailNotificationMessageService">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IPTDBModel.GetEMailNotificationMessageService_Result">
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -426,84 +506,33 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Clients">
-            <EntityTypeMapping TypeName="IPTDBModel.Client">
-              <MappingFragment StoreEntitySet="Client">
-                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
-                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ClientServices">
-            <EntityTypeMapping TypeName="IPTDBModel.ClientService">
-              <MappingFragment StoreEntitySet="ClientService">
-                <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
-                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Services">
-            <EntityTypeMapping TypeName="IPTDBModel.Service">
-              <MappingFragment StoreEntitySet="Service">
-                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
-                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ServiceLogs">
-            <EntityTypeMapping TypeName="IPTDBModel.ServiceLog">
-              <MappingFragment StoreEntitySet="ServiceLog">
-                <ScalarProperty Name="Error" ColumnName="Error" />
-                <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
-                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
-                <ScalarProperty Name="OfflineTo" ColumnName="OfflineTo" />
-                <ScalarProperty Name="OfflineFrom" ColumnName="OfflineFrom" />
-                <ScalarProperty Name="ClientServiceID" ColumnName="ClientServiceID" />
-                <ScalarProperty Name="LogID" ColumnName="LogID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EmailNotifications">
-            <EntityTypeMapping TypeName="IPTDBModel.EmailNotification">
-              <MappingFragment StoreEntitySet="EmailNotifications">
-                <ScalarProperty Name="SentOn" ColumnName="SentOn" />
-                <ScalarProperty Name="IsSent" ColumnName="IsSent" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="MailedTo" ColumnName="MailedTo" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EmailNotificationSubscriptions">
-            <EntityTypeMapping TypeName="IPTDBModel.EmailNotificationSubscription">
-              <MappingFragment StoreEntitySet="EmailNotificationSubscription">
-                <ScalarProperty Name="IsOn" ColumnName="IsOn" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetEMailNotificationMessageService" FunctionName="IPTDBModel.Store.GetEMailNotificationMessageService">
+          <FunctionImportMapping FunctionImportName="GetServiceLog" FunctionName="IPTDBModel.Store.GetServiceLog">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="IPTDBModel.GetEMailNotificationMessageService_Result">
+              <ComplexTypeMapping TypeName="IPTDBModel.GetServiceLog_Result">
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="ClientServiceID" ColumnName="ClientServiceID" />
+                <ScalarProperty Name="OfflineFrom" ColumnName="OfflineFrom" />
+                <ScalarProperty Name="OfflineTo" ColumnName="OfflineTo" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
+                <ScalarProperty Name="Error" ColumnName="Error" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetServicesForClientID" FunctionName="IPTDBModel.Store.GetServicesForClientID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IPTDBModel.GetServicesForClientID_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
                 <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetServiceUrl" FunctionName="IPTDBModel.Store.GetServiceUrl" />
           <FunctionImportMapping FunctionImportName="InsertEmail" FunctionName="IPTDBModel.Store.InsertEmail" />
-          <EntitySetMapping Name="EmailServices">
-            <EntityTypeMapping TypeName="IPTDBModel.EmailService">
-              <MappingFragment StoreEntitySet="EmailServices">
-                <ScalarProperty Name="EmailSubscriptionId" ColumnName="EmailSubscriptionId" />
-                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="InsertSubscribedService" FunctionName="IPTDBModel.Store.InsertSubscribedService" />
+          <FunctionImportMapping FunctionImportName="UpdateInsertEmail" FunctionName="IPTDBModel.Store.UpdateInsertEmail" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

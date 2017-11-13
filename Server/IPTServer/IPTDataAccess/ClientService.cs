@@ -17,8 +17,8 @@ namespace IPTDataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ClientService()
         {
-            this.ServiceLogs = new HashSet<ServiceLog>();
             this.EmailServices = new HashSet<EmailService>();
+            this.ServiceLogs = new HashSet<ServiceLog>();
         }
     
         public int ID { get; set; }
@@ -29,8 +29,8 @@ namespace IPTDataAccess
         public virtual Client Client { get; set; }
         public virtual Service Service { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ServiceLog> ServiceLogs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmailService> EmailServices { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ServiceLog> ServiceLogs { get; set; }
     }
 }

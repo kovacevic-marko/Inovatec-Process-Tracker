@@ -15,8 +15,8 @@ namespace IPTDataAccess
     {
         public int LogID { get; set; }
         public int ClientServiceID { get; set; }
-        public DateTime OfflineFrom { get; set; }
-        public Nullable<DateTime> OfflineTo { get; set; }
+        public System.DateTime OfflineFrom { get; set; }
+        public Nullable<System.DateTime> OfflineTo { get; set; }
         public Nullable<int> StatusCode { get; set; }
         public string StatusDescription { get; set; }
         public string Error { get; set; }
