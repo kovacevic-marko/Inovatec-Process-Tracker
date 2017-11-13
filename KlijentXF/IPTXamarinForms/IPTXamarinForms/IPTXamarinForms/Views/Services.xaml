@@ -9,6 +9,9 @@
                 FontSize="24"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+
+           
+
             <ActivityIndicator x:Name="activityIndicatorProveraServisa"></ActivityIndicator>
         </StackLayout>
     </ContentPage.Content>

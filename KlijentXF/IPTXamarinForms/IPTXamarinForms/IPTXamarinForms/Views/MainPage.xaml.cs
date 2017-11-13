@@ -55,6 +55,7 @@ namespace IPTXamarinForms
             m = (ClientModel)((ListView)sender).SelectedItem;
             //DisplayAlert("Item Selected", m.ClientName + " id= " + m.ClientID, "Ok");
             Navigation.PushAsync(new Client(m.ClientID,m.ClientName));
+            listClient.SelectedItem = false;
         }
 
       
