@@ -12,22 +12,12 @@ public class PostENSController : ApiController
         {
             using (IPTDBEntities entities = new IPTDBEntities())
             {
-<<<<<<< HEAD
                 JObject json = JObject.Parse(receivedString);
                 string Email = (string)json["Email"];
                 bool IsOn = (bool)json["IsOn"];
 
                 int EmailID = entities.UpdateInsertEmail(Email, IsOn);
                 entities.SaveChanges();
-=======
-                try
-                {
-                    using (IPTDBEntities entities = new IPTDBEntities())
-                    {
-                //entities.InsertEmail(email);
-                entities.UpdateInsertEmail(email.Email, email.IsOn);
->>>>>>> 50712bfc3fdb462a4d7e1a900bbb9a4f1ce7de8e
-
 
                 int status = 500;
                 foreach (var service in json["Services"])

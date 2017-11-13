@@ -29,11 +29,51 @@ namespace IPTDataAccess
     
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<ClientService> ClientServices { get; set; }
-        public virtual DbSet<Service> Services { get; set; }
-        public virtual DbSet<ServiceLog> ServiceLogs { get; set; }
         public virtual DbSet<EmailNotification> EmailNotifications { get; set; }
         public virtual DbSet<EmailNotificationSubscription> EmailNotificationSubscriptions { get; set; }
         public virtual DbSet<EmailService> EmailServices { get; set; }
+        public virtual DbSet<Service> Services { get; set; }
+        public virtual DbSet<ServiceLog> ServiceLogs { get; set; }
+    
+        public virtual int DeleteSubscribedService(Nullable<int> clientServiceID, Nullable<int> emailSubscriptionID)
+        {
+            var clientServiceIDParameter = clientServiceID.HasValue ?
+                new ObjectParameter("ClientServiceID", clientServiceID) :
+                new ObjectParameter("ClientServiceID", typeof(int));
+    
+            var emailSubscriptionIDParameter = emailSubscriptionID.HasValue ?
+                new ObjectParameter("EmailSubscriptionID", emailSubscriptionID) :
+                new ObjectParameter("EmailSubscriptionID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteSubscribedService", clientServiceIDParameter, emailSubscriptionIDParameter);
+        }
+    
+        public virtual ObjectResult<GetEMailNotificationMessageService_Result> GetEMailNotificationMessageService(Nullable<int> clientServiceID)
+        {
+            var clientServiceIDParameter = clientServiceID.HasValue ?
+                new ObjectParameter("ClientServiceID", clientServiceID) :
+                new ObjectParameter("ClientServiceID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEMailNotificationMessageService_Result>("GetEMailNotificationMessageService", clientServiceIDParameter);
+        }
+    
+        public virtual ObjectResult<GetLatestServiceLog_Result> GetLatestServiceLog(Nullable<int> clientServiceID)
+        {
+            var clientServiceIDParameter = clientServiceID.HasValue ?
+                new ObjectParameter("ClientServiceID", clientServiceID) :
+                new ObjectParameter("ClientServiceID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetLatestServiceLog_Result>("GetLatestServiceLog", clientServiceIDParameter);
+        }
+    
+        public virtual ObjectResult<GetServiceLog_Result> GetServiceLog(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetServiceLog_Result>("GetServiceLog", idParameter);
+        }
     
         public virtual ObjectResult<GetServicesForClientID_Result> GetServicesForClientID(Nullable<int> clientID)
         {
@@ -53,33 +93,6 @@ namespace IPTDataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetServiceUrl", idParameter);
         }
     
-        public virtual ObjectResult<GetServiceLog_Result> GetServiceLog(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetServiceLog_Result>("GetServiceLog", idParameter);
-        }
-    
-        public virtual ObjectResult<GetLatestServiceLog_Result> GetLatestServiceLog(Nullable<int> clientServiceID)
-        {
-            var clientServiceIDParameter = clientServiceID.HasValue ?
-                new ObjectParameter("ClientServiceID", clientServiceID) :
-                new ObjectParameter("ClientServiceID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetLatestServiceLog_Result>("GetLatestServiceLog", clientServiceIDParameter);
-        }
-    
-        public virtual ObjectResult<GetEMailNotificationMessageService_Result> GetEMailNotificationMessageService(Nullable<int> clientServiceID)
-        {
-            var clientServiceIDParameter = clientServiceID.HasValue ?
-                new ObjectParameter("ClientServiceID", clientServiceID) :
-                new ObjectParameter("ClientServiceID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEMailNotificationMessageService_Result>("GetEMailNotificationMessageService", clientServiceIDParameter);
-        }
-    
         public virtual int InsertEmail(string email)
         {
             var emailParameter = email != null ?
@@ -87,20 +100,6 @@ namespace IPTDataAccess
                 new ObjectParameter("email", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertEmail", emailParameter);
-        }
-    
-<<<<<<< HEAD
-        public virtual int DeleteSubscribedService(Nullable<int> clientServiceID, Nullable<int> emailSubscriptionID)
-        {
-            var clientServiceIDParameter = clientServiceID.HasValue ?
-                new ObjectParameter("ClientServiceID", clientServiceID) :
-                new ObjectParameter("ClientServiceID", typeof(int));
-    
-            var emailSubscriptionIDParameter = emailSubscriptionID.HasValue ?
-                new ObjectParameter("EmailSubscriptionID", emailSubscriptionID) :
-                new ObjectParameter("EmailSubscriptionID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteSubscribedService", clientServiceIDParameter, emailSubscriptionIDParameter);
         }
     
         public virtual int InsertSubscribedService(Nullable<int> clientServiceID, Nullable<int> emailSubscriptionID)
@@ -116,8 +115,6 @@ namespace IPTDataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertSubscribedService", clientServiceIDParameter, emailSubscriptionIDParameter);
         }
     
-=======
->>>>>>> 50712bfc3fdb462a4d7e1a900bbb9a4f1ce7de8e
         public virtual int UpdateInsertEmail(string email, Nullable<bool> isOn)
         {
             var emailParameter = email != null ?

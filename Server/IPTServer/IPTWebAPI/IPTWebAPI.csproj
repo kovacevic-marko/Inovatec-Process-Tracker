@@ -272,7 +272,7 @@
       <Name>IPTCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\IPTDataAccess\IPTDataAccess.csproj">
-      <Project>{9008cc08-5911-48b7-b89c-17491023a8da}</Project>
+      <Project>{789F48DD-67D1-43BF-9436-21E0879C3377}</Project>
       <Name>IPTDataAccess</Name>
     </ProjectReference>
   </ItemGroup>

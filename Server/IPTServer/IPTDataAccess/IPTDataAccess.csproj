@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9008CC08-5911-48B7-B89C-17491023A8DA}</ProjectGuid>
+    <ProjectGuid>{789F48DD-67D1-43BF-9436-21E0879C3377}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>IPTDataAccess</RootNamespace>

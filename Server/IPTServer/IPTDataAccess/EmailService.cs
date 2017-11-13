@@ -17,10 +17,8 @@ namespace IPTDataAccess
         public int id { get; set; }
         public int ClientServiceID { get; set; }
         public int EmailSubscriptionId { get; set; }
-        public int ClientServiceID { get; set; }
     
         public virtual ClientService ClientService { get; set; }
         public virtual EmailNotificationSubscription EmailNotificationSubscription { get; set; }
-        public virtual ClientService ClientService1 { get; set; }
     }
 }
