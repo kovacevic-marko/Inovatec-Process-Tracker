@@ -46,7 +46,8 @@ namespace IPTXamarinForms.Views
                 Text = "Sacuvaj"
             };
 
-            btnSacuvaj.Clicked += (sender, args) => { sacuvajIzmeneAsync("1.1.1.1.1", entryEmail.ToString(), switcherIsOn.IsEnabled); };
+            
+            btnSacuvaj.Clicked += (sender, args) => { postreqAsync(entryEmail.Text, switcherIsOn.IsToggled); };
 
             rootKontejner.Children.Add(entryEmail);
             rootKontejner.Children.Add(switcherIsOn);
@@ -56,16 +57,24 @@ namespace IPTXamarinForms.Views
         }
 
 
-        public async Task sacuvajIzmeneAsync(string url, string email, bool ison)
+        public async void postreqAsync(string email, bool ison)
         {
-            var client = new HttpClient();
-            var content = new StringContent(
-                JsonConvert.SerializeObject(new { Email = email, IsOn = ison }));
-            var result = await client.PostAsync(url, content).ConfigureAwait(false);
-            if (result.IsSuccessStatusCode)
+            string ukljucen = ison.ToString();
+            HttpClient client = new HttpClient();
+
+            var values = new Dictionary<string, string>
             {
-                var tokenJson = await result.Content.ReadAsStringAsync();
-            }
+               { "email", email },
+               { "ison", ukljucen }
+            };
+
+            var content = new FormUrlEncodedContent(values);
+
+            var response = await client.PostAsync("http://172.24.2.51:5000/api/postens", content);
+
+            var responseString = await response.Content.ReadAsStringAsync();
         }
+
+
     }
 }
