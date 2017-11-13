@@ -12,6 +12,11 @@
         <AssociationConnector Association="IPTDBModel.FK_ClientService_Client" />
         <AssociationConnector Association="IPTDBModel.FK_ClientService_Service" />
         <AssociationConnector Association="IPTDBModel.FK_ServiceLog_ClientService" />
+        <EntityTypeShape EntityType="IPTDBModel.EmailNotification" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="IPTDBModel.EmailNotificationSubscription" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="IPTDBModel.EmailService" Width="1.5" PointX="7.625" PointY="2.75" />
+        <AssociationConnector Association="IPTDBModel.FK_EmailServices_ClientService" />
+        <AssociationConnector Association="IPTDBModel.FK_EmailServices_EmailNotificationSubscription" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

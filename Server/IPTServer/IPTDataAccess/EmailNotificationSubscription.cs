@@ -12,24 +12,18 @@ namespace IPTDataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class ClientService
+    public partial class EmailNotificationSubscription
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ClientService()
+        public EmailNotificationSubscription()
         {
-            this.ServiceLogs = new HashSet<ServiceLog>();
             this.EmailServices = new HashSet<EmailService>();
         }
     
         public int ID { get; set; }
-        public int ClientID { get; set; }
-        public int ServiceID { get; set; }
-        public string URL { get; set; }
+        public string Email { get; set; }
+        public bool IsOn { get; set; }
     
-        public virtual Client Client { get; set; }
-        public virtual Service Service { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ServiceLog> ServiceLogs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmailService> EmailServices { get; set; }
     }
