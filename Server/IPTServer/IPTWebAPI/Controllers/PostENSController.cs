@@ -19,9 +19,8 @@ public class PostENSController : ApiController
                 {
                     using (IPTDBEntities entities = new IPTDBEntities())
                     {
-
                 //entities.InsertEmail(email);
-                entities.EmailNotificationSubscriptions.Add(email);
+                entities.UpdateInsertEmail(email.Email, email.IsOn);
 
                         entities.SaveChanges();
 

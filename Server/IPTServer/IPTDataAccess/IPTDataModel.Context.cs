@@ -88,5 +88,18 @@ namespace IPTDataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertEmail", emailParameter);
         }
+    
+        public virtual int UpdateInsertEmail(string email, Nullable<bool> isOn)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var isOnParameter = isOn.HasValue ?
+                new ObjectParameter("IsOn", isOn) :
+                new ObjectParameter("IsOn", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateInsertEmail", emailParameter, isOnParameter);
+        }
     }
 }

@@ -45,7 +45,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceId" Type="int" Nullable="false" />
+          <Property Name="ClientServiceID" Type="int" Nullable="false" />
           <Property Name="EmailSubscriptionId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Service">
@@ -99,7 +99,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="EmailServices">
-              <PropertyRef Name="ServiceId" />
+              <PropertyRef Name="ClientServiceID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -144,6 +144,10 @@
         </Function>
         <Function Name="InsertEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="UpdateInsertEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="IsOn" Type="bit" Mode="In" />
         </Function>
         <EntityContainer Name="IPTDBModelStoreContainer">
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
@@ -224,7 +228,11 @@
             <End Role="EmailNotificationSubscription" EntitySet="EmailNotificationSubscriptions" />
             <End Role="EmailService" EntitySet="EmailServices" />
           </AssociationSet>
-        </EntityContainer>
+          <FunctionImport Name="UpdateInsertEmail">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="IsOn" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          </EntityContainer>
         <ComplexType Name="GetServicesForClientID_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="Int32" Name="ServiceID" Nullable="false" />
@@ -355,7 +363,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceId" Type="Int32" Nullable="false" />
+          <Property Name="ClientServiceID" Type="Int32" Nullable="false" />
           <Property Name="EmailSubscriptionId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ClientService" Relationship="IPTDBModel.FK_EmailServices_ClientService" FromRole="EmailService" ToRole="ClientService" />
           <NavigationProperty Name="EmailNotificationSubscription" Relationship="IPTDBModel.FK_EmailServices_EmailNotificationSubscription" FromRole="EmailService" ToRole="EmailNotificationSubscription" />
@@ -368,7 +376,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="EmailService">
-              <PropertyRef Name="ServiceId" />
+              <PropertyRef Name="ClientServiceID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -384,7 +392,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -499,11 +507,12 @@
             <EntityTypeMapping TypeName="IPTDBModel.EmailService">
               <MappingFragment StoreEntitySet="EmailServices">
                 <ScalarProperty Name="EmailSubscriptionId" ColumnName="EmailSubscriptionId" />
-                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="ClientServiceID" ColumnName="ClientServiceID" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UpdateInsertEmail" FunctionName="IPTDBModel.Store.UpdateInsertEmail" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

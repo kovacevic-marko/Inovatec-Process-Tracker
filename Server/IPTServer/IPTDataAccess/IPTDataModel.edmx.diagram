@@ -17,7 +17,7 @@
         <EntityTypeShape EntityType="IPTDBModel.EmailService" Width="1.5" PointX="7.625" PointY="2.75" />
         <AssociationConnector Association="IPTDBModel.FK_EmailServices_ClientService" />
         <AssociationConnector Association="IPTDBModel.FK_EmailServices_EmailNotificationSubscription" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

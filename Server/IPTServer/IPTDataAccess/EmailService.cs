@@ -15,7 +15,7 @@ namespace IPTDataAccess
     public partial class EmailService
     {
         public int id { get; set; }
-        public int ServiceId { get; set; }
+        public int ClientServiceID { get; set; }
         public int EmailSubscriptionId { get; set; }
     
         public virtual ClientService ClientService { get; set; }
