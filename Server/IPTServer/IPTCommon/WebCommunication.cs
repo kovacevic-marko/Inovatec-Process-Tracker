@@ -33,7 +33,7 @@ namespace IPTCommon
             return statusCode;
         }
 
-        public static void SendEmail(MailMessage mailMessage, IPTDBEntities entities, EmailNotification notification)
+        public static void SendEmail(MailMessage mailMessage, EmailNotification notification)
         {
             SmtpClient smtpClient = new SmtpClient();
 
@@ -44,9 +44,14 @@ namespace IPTCommon
 
 
                 smtpClient.Send(mailMessage);
-                notification.IsSent = true;
-                notification.SentOn = DateTime.Now;
-                entities.SaveChanges();
+                using (IPTDBEntities entities = new IPTDBEntities())
+                {
+                    entities.EmailNotifications.Attach(notification);
+                    notification.IsSent = true;
+                    notification.SentOn = DateTime.Now;
+                    entities.SaveChanges();
+                }
+                
             }
             );
 

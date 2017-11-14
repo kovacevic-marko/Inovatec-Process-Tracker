@@ -82,12 +82,12 @@ namespace IPTXamarinForms
                 };
 
                 // Ovde umesto nove labele treba dodati novi ListView (ili slicno) item.
-<<<<<<< HEAD
-                var btnServis = new Button
-=======
+
+                var btnServis = new Button { };
+ 
                 
                 var btn = new Button
->>>>>>> d5026ccf15bf6b1b07a0cb4fa07a94de2b4fa4ec
+ 
                 {
                     Text = service.ServiceName,
                     FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
