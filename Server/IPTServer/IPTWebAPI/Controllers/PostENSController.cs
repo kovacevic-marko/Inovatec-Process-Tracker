@@ -2,47 +2,79 @@
 using System;
 using System.Web.Http;
 using Newtonsoft.Json.Linq;
+using System.Net;
+using System.Net.Http;
 
 public class PostENSController : ApiController
 {
     [System.Web.Http.HttpPost]
-    public void Post([FromBody] string receivedString)
+    public HttpResponseMessage Post()
     {
-        try
+        int status = 500; // internal server error
+        HttpContent requestContent = Request.Content;
+        string jsonContent = requestContent.ReadAsStringAsync().Result;
+        if (jsonContent != null)
         {
-            using (IPTDBEntities entities = new IPTDBEntities())
+            try
             {
-                JObject json = JObject.Parse(receivedString);
-                string Email = (string)json["Email"];
-                bool IsOn = (bool)json["IsOn"];
-
-                int EmailID = entities.UpdateInsertEmail(Email, IsOn);
-                entities.SaveChanges();
-
-                int status = 500;
-                foreach (var service in json["Services"])
+                using (IPTDBEntities entities = new IPTDBEntities())
                 {
-                    if ((bool)service["IsOn"])
+                    if (entities != null)
                     {
-                        status = entities.InsertSubscribedService((int)service["ClientServiceID"], EmailID);
-                        entities.SaveChanges();
+                        JObject json = JObject.Parse(jsonContent);
+                        if (json != null)
+                        {
+                            try
+                            {
+                                string Email = (string)json["Email"];
+                                bool IsOn = (bool)json["IsOn"];
+                                int ClientServiceID = (int)json["Service"];
+                                bool SubscribeToService = (bool)json["SubscribeToService"];
+
+
+                                // BUG BUG BUG
+                                // Vraceni ID je uvek 1 a procedura pokrenuta u SQL Management Studiu
+                                // vraca pravi EmailID
+                                int EmailID = (int)entities.UpdateInsertEmail(Email, IsOn);
+                                entities.SaveChanges();
+
+                                if (SubscribeToService)
+                                {
+                                    status = entities.InsertSubscribedService(ClientServiceID, EmailID);
+                                    entities.SaveChanges();
+                                }
+                                else
+                                {
+                                    status = entities.DeleteSubscribedService(ClientServiceID, EmailID);
+                                    entities.SaveChanges();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                status = 400; // bad request
+                            }
+                        }
+                        else
+                            status = 400; // bad request
                     }
                     else
-                    {
-                        status = entities.DeleteSubscribedService((int)service["ClientServiceID"], EmailID);
-                        entities.SaveChanges();
-                    }
+                        status = 500; // internal server error
                 }
+            }
+            catch (Exception ex)
+            {
+                status = 500; // internal server error
 
-                //var message = Request.CreateErrorResponse(HttpStatusCode.Created, email);
-                //message.Headers.Location = new Uri(Request.RequestUri + email.id.ToString());
-                //return message;
             }
         }
-        catch (Exception ex)
-        {
-            //return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
-        }
+        else
+            status = 400; // bad request
+        
+        return Request.CreateResponse((HttpStatusCode)status);
+        //var message = Request.CreateErrorResponse(HttpStatusCode.Created, email);
+        //message.Headers.Location = new Uri(Request.RequestUri + email.id.ToString());
+        //return message;
+        //return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
     }
 }
 
