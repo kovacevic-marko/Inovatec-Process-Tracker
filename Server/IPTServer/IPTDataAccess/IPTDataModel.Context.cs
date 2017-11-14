@@ -115,7 +115,7 @@ namespace IPTDataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertSubscribedService", clientServiceIDParameter, emailSubscriptionIDParameter);
         }
     
-        public virtual int UpdateInsertEmail(string email, Nullable<bool> isOn)
+        public virtual int UpdateInsertEmail(string email, Nullable<bool> isOn, ObjectParameter emailID)
         {
             var emailParameter = email != null ?
                 new ObjectParameter("Email", email) :
@@ -125,7 +125,7 @@ namespace IPTDataAccess
                 new ObjectParameter("IsOn", isOn) :
                 new ObjectParameter("IsOn", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateInsertEmail", emailParameter, isOnParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateInsertEmail", emailParameter, isOnParameter, emailID);
         }
     }
 }

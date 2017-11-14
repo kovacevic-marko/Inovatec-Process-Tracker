@@ -4,6 +4,8 @@ using System.Web.Http;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Data.SqlClient;
+using System.Data.Entity.Core.Objects;
 
 public class PostENSController : ApiController
 {
@@ -32,20 +34,24 @@ public class PostENSController : ApiController
                                 bool SubscribeToService = (bool)json["SubscribeToService"];
 
 
+
+
                                 // BUG BUG BUG
                                 // Vraceni ID je uvek 1 a procedura pokrenuta u SQL Management Studiu
                                 // vraca pravi EmailID
-                                int EmailID = (int)entities.UpdateInsertEmail(Email, IsOn);
+                                
+                                ObjectParameter output = new ObjectParameter("EmailID",typeof(int));
+                                entities.UpdateInsertEmail(Email, IsOn,output);
                                 entities.SaveChanges();
 
                                 if (SubscribeToService)
                                 {
-                                    status = entities.InsertSubscribedService(ClientServiceID, EmailID);
+                                    status = entities.InsertSubscribedService(ClientServiceID, (int)output.Value);
                                     entities.SaveChanges();
                                 }
                                 else
                                 {
-                                    status = entities.DeleteSubscribedService(ClientServiceID, EmailID);
+                                    status = entities.DeleteSubscribedService(ClientServiceID, (int)output.Value);
                                     entities.SaveChanges();
                                 }
                             }
