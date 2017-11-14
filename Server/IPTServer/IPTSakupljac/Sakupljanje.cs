@@ -187,7 +187,7 @@ namespace IPTSakupljac
                                         entities.EmailNotifications.Add(notification);
                                         entities.SaveChanges();
 
-                                        WebCommunication.SendEmail(message, entities, notification);
+                                        WebCommunication.SendEmail(message, notification);
 
 
                                     }
