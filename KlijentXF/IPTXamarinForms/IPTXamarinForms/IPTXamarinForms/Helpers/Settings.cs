@@ -36,22 +36,22 @@ namespace IPTXamarinForms.Helpers
 	        }
 	    }
 
-        //LastUsedUrl
+     //   //LastUsedUrl
 
-        private const string LastUsedUrl = "settings_key_url";
-	    private static readonly string LastUsedDefault = string.Empty;
+     //   private const string WebAPIUrl = "settings_key_url";
+	    //private static readonly string WebAPIUrlDefault = string.Empty;
 
-	    public static string UrlSettings
-	    {
-	        get
-	        {
-	            return AppSettings.GetValueOrDefault(LastUsedUrl, LastUsedDefault);
-	        }
-	        set
-	        {
-	            AppSettings.AddOrUpdateValue(LastUsedUrl, value);
-	        }
-	    }
+	    //public static string UrlSettings
+	    //{
+	    //    get
+	    //    {
+	    //        return AppSettings.GetValueOrDefault(WebAPIUrl, WebAPIUrlDefault);
+	    //    }
+	    //    set
+	    //    {
+	    //        AppSettings.AddOrUpdateValue(WebAPIUrl, value);
+	    //    }
+	    //}
 
 
 

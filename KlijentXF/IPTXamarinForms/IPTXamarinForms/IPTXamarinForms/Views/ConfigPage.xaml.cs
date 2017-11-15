@@ -9,32 +9,63 @@ using Xamarin.Forms.Xaml;
 
 namespace IPTXamarinForms.Views
 {
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ConfigPage : ContentPage
     {
-        
+        Entry entryUrl;
 
         public ConfigPage()
         {
+            InitializeComponent();
 
-           InitializeComponent();
- 
+            entryUrl = new Entry
+            {
+                HorizontalOptions = LayoutOptions.Center,
+                Placeholder = Application.Current.Properties.ContainsKey("WebAPIUrl") ?
+                    Application.Current.Properties["WebAPIUrl"].ToString() :
+                    "http://"
+            };
+
+            StackLayout stackLayout = new StackLayout()
+            {
+                Orientation = StackOrientation.Vertical,
+            };
+
+            Button btnSave = new Button
+            {
+                Text = "Save",
+                HorizontalOptions = LayoutOptions.Center
+            };
+
+            Button btnDone = new Button
+            {
+                Text = "Done",
+                HorizontalOptions = LayoutOptions.Center
+            };
+
+            btnSave.Clicked += (sender, args) => { UpdateUrlAsync(entryUrl.Text); };
+            btnDone.Clicked += (sender, args) => {  Navigation.PushAsync(new WelcomePage());};
+
+            stackLayout.Children.Add(entryUrl);
+            stackLayout.Children.Add(btnSave);
+            stackLayout.Children.Add(btnDone);
+
+            this.Content = stackLayout;
         }
 
-        private void BtnSave_OnClicked(object sender, EventArgs e)
+        public async void UpdateUrlAsync(string url)
         {
-            Helpers.Settings.UrlSettings = editField.Text;
-        }
+            if (Application.Current.Properties.ContainsKey("WebAPIUrl"))
+            {
+                Application.Current.Properties["WebAPIUrl"] = url;
+            }
+            else
+            {
+                Application.Current.Properties.Add("WebAPIUrl", url);
+            }
 
-        private void BtnGet_OnClicked(object sender, EventArgs e)
-        {
-            DisplayAlert("Current Value:", Helpers.Settings.UrlSettings, "OK");
-        }
-
-        private void BtnDone_OnClicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new TestPage());
-           
+            await Application.Current.SavePropertiesAsync();
         }
     }
 }

@@ -28,22 +28,23 @@ namespace IPTXamarinForms
             
 
            InitializeComponent();
-            // Check is the app running for the first time
+
+            // Check if the app running for the first time
             if (IsFirstTime == "yes")
             {
                 // if this is the first time, set it to "No" and load the
-                // Main Page ,which will show at the first time use
+                // ConfigPage ,which will show at the first time use
                 IsFirstTime = "no";
-                MainPage = new NavigationPage(new ConfigPage());
+                MainPage = new NavigationPage (new ConfigPage());
             }
             else
             {
                 // If this is not the first time,
-                // Go to the Settings page
-                MainPage = new NavigationPage(new ConfigPage());
+                // Go to the Main page
+                MainPage = new NavigationPage (new WelcomePage());
             }
 
-
+            
 
         }
 
