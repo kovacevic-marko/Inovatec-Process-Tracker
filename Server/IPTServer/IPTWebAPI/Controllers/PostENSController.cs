@@ -32,13 +32,6 @@ public class PostENSController : ApiController
                                 bool IsOn = (bool)json["IsOn"];
                                 int ClientServiceID = (int)json["Service"];
                                 bool SubscribeToService = (bool)json["SubscribeToService"];
-
-
-
-
-                                // BUG BUG BUG
-                                // Vraceni ID je uvek 1 a procedura pokrenuta u SQL Management Studiu
-                                // vraca pravi EmailID
                                 
                                 ObjectParameter output = new ObjectParameter("EmailID",typeof(int));
                                 entities.UpdateInsertEmail(Email, IsOn,output);
@@ -46,13 +39,15 @@ public class PostENSController : ApiController
 
                                 if (SubscribeToService)
                                 {
-                                    status = entities.InsertSubscribedService(ClientServiceID, (int)output.Value);
+                                    entities.InsertSubscribedService(ClientServiceID, (int)output.Value);
                                     entities.SaveChanges();
+                                    status = 200; // success
                                 }
                                 else
                                 {
-                                    status = entities.DeleteSubscribedService(ClientServiceID, (int)output.Value);
+                                    entities.DeleteSubscribedService(ClientServiceID, (int)output.Value);
                                     entities.SaveChanges();
+                                    status = 200; // success
                                 }
                             }
                             catch (Exception ex)
@@ -70,7 +65,6 @@ public class PostENSController : ApiController
             catch (Exception ex)
             {
                 status = 500; // internal server error
-
             }
         }
         else
