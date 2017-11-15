@@ -159,35 +159,40 @@ namespace IPTSakupljac
                                                      where em.IsOn == true
                                                      select em.Email;
 
-                                        MailMessage message = new MailMessage();
-
-
-                                        //nastavi
-                                        foreach (var item in emails)
+                                        if (emails != null)
                                         {
-                                            message.To.Add(new MailAddress(item.ToString()));
+                                            MailMessage message = new MailMessage();
+
+
+                                            //nastavi
+                                            foreach (var item in emails)
+                                            {
+                                                message.To.Add(new MailAddress(item.ToString()));
+                                            }
+
+                                            //dovlacenje informacija o servisu za koji saljemo izvestaj
+                                            //var servis= entities.Database.SqlQuery<Get>("GetServiceLog @id", param1).ToList();
+                                            SqlParameter param1 = new SqlParameter("@ClientServiceID", noviLog.ClientServiceID);
+                                            var servis = entities.Database.SqlQuery<GetEMailNotificationMessageService_Result>("GetEMailNotificationMessageService @ClientServiceID", param1).FirstOrDefault();
+
+                                            message.Body = "Servis: " + servis.ServiceName + " error: " + noviLog.Error;
+
+
+                                            EmailNotification notification = new EmailNotification
+                                            {
+                                                MailedTo = message.To.ToString(),
+                                                CreatedOn = noviLog.OfflineFrom,
+                                                Message = message.Body.ToString(),
+                                                IsSent = false,
+                                                SentOn = null
+                                            };
+                                            entities.EmailNotifications.Add(notification);
+                                            entities.SaveChanges();
+
+                                            WebCommunication.SendEmail(message, notification);
+
                                         }
 
-                                        //dovlacenje informacija o servisu za koji saljemo izvestaj
-                                        //var servis= entities.Database.SqlQuery<Get>("GetServiceLog @id", param1).ToList();
-                                        SqlParameter param1 = new SqlParameter("@ClientServiceID", noviLog.ClientServiceID);
-                                        var servis = entities.Database.SqlQuery<GetEMailNotificationMessageService_Result>("GetEMailNotificationMessageService @ClientServiceID", param1).FirstOrDefault();
-
-                                        message.Body = "Servis: " + servis.ServiceName + " error: " + noviLog.Error;
-
-
-                                        EmailNotification notification = new EmailNotification
-                                        {
-                                            MailedTo = message.To.ToString(),
-                                            CreatedOn = noviLog.OfflineFrom,
-                                            Message = message.Body.ToString(),
-                                            IsSent = false,
-                                            SentOn = null
-                                        };
-                                        entities.EmailNotifications.Add(notification);
-                                        entities.SaveChanges();
-
-                                        WebCommunication.SendEmail(message, entities, notification);
 
 
                                     }

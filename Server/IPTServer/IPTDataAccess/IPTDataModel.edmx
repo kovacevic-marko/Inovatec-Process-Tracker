@@ -156,6 +156,7 @@
         <Function Name="UpdateInsertEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Email" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="IsOn" Type="bit" Mode="In" />
+          <Parameter Name="EmailID" Type="int" Mode="InOut" />
         </Function>
         <EntityContainer Name="IPTDBModelStoreContainer">
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
@@ -379,6 +380,7 @@
           <FunctionImport Name="UpdateInsertEmail">
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="IsOn" Mode="In" Type="Boolean" />
+            <Parameter Name="EmailID" Mode="InOut" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEMailNotificationMessageService_Result">
