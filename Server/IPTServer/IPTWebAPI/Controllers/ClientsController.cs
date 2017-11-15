@@ -14,7 +14,7 @@ namespace IPTWebAPI.Controllers
         {
             using (IPTDBEntities entities = new IPTDBEntities())
             {
-                entities.Configuration.ProxyCreationEnabled = false;
+                entities.Configuration.ProxyCreationEnabled = false;                
                 return entities.Clients.ToList();
             }
         }
