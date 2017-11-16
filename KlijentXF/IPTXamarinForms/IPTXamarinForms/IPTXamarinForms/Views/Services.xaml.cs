@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Json;
 using System.Linq;
@@ -84,10 +85,10 @@ namespace IPTXamarinForms
                 // Ovde umesto nove labele treba dodati novi ListView (ili slicno) item.
 
                 var btnServis = new Button { };
- 
-                
+
+
                 var btn = new Button
- 
+
                 {
                     Text = service.ServiceName,
                     FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
@@ -104,7 +105,7 @@ namespace IPTXamarinForms
                 };
                 switcherIsOn.Toggled += (sender, args) => { postreqAsync(service.ClientServiceID, switcherIsOn.IsToggled); };
 
-                    lytStackLayout.Children.Add(btnServis);
+                lytStackLayout.Children.Add(btnServis);
                 lytStackLayout.Children.Add(switcherIsOn);
 
                 // Povlacenje statusa pojedinacnog servisa
@@ -230,19 +231,24 @@ namespace IPTXamarinForms
         {
             string clientServiceIDString = clientServiceID.ToString();
             string ukljucenString = isOn.ToString();
-            HttpClient client = new HttpClient();
 
-            var values = new Dictionary<string, string>
-            {
-               { "ClientServiceID", clientServiceIDString },
-               { "IsOn", ukljucenString }
-            };
+            Task.Run(async () => {
 
-            var content = new FormUrlEncodedContent(values);
 
-            var response = await client.PostAsync("OVDE IDE URI", content);
+                HttpClient client = new HttpClient();
 
-            var responseString = await response.Content.ReadAsStringAsync();
+                var values = new Dictionary<string, string>
+                {
+                   { "ClientServiceID", clientServiceIDString },
+                   { "IsOn", ukljucenString }
+                };
+
+                var content = new FormUrlEncodedContent(values);
+
+                var response = await client.PostAsync("http://172.24.2.51:5000/api/postens", content);
+
+                var responseString = await response.Content.ReadAsStringAsync();
+            });
         }
     }
 }
