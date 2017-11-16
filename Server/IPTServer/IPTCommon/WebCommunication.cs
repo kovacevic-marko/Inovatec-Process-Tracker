@@ -6,6 +6,8 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using IPTDataAccess;
+using System.IO;
+using System.Configuration;
 
 namespace IPTCommon
 {
@@ -33,6 +35,36 @@ namespace IPTCommon
             return statusCode;
         }
 
+
+        public static string GetApplicationInfo(string URL)
+        {
+            string app = null;
+            try
+            {
+                string user = ConfigurationManager.AppSettings["Username"];
+                string pass = ConfigurationManager.AppSettings["Password"];
+                var request = (HttpWebRequest)WebRequest.Create(URL);
+                request.Credentials = new System.Net.NetworkCredential(user, pass);
+                var response = (HttpWebResponse)request.GetResponse();                
+                using (Stream stream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                    app = reader.ReadToEnd();                    
+                }
+
+            }
+            catch (WebException)
+            {
+                app = "webException uhvacen";
+            }
+            catch (Exception)
+            {
+                //app = "Neki drugi exception";
+                throw;
+            }
+            return app;
+        }
+
         public static void SendEmail(MailMessage mailMessage, EmailNotification notification)
         {
             SmtpClient smtpClient = new SmtpClient();
@@ -51,7 +83,7 @@ namespace IPTCommon
                     notification.SentOn = DateTime.Now;
                     entities.SaveChanges();
                 }
-                
+
             }
             );
 

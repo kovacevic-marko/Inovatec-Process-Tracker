@@ -13,7 +13,7 @@
                     <DataTemplate>
                         <ViewCell>
                             <Grid HorizontalOptions="Center" BackgroundColor="Indigo">
-                                <Label x:Name="lbl" Text="{Binding}" FontFamily="Papyrus" TextColor="Azure" FontSize="36" BackgroundColor="Indigo"/>
+                                <Label x:Name="lbl" Text="{Binding Name}" FontFamily="Papyrus" TextColor="Azure" FontSize="36" BackgroundColor="Indigo"/>
                                 
                             </Grid>
                         </ViewCell>

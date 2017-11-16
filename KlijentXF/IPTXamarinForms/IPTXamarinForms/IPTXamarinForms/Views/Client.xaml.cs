@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IPTXamarinForms.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,8 +30,9 @@ namespace IPTXamarinForms
             {
                 Orientation = StackOrientation.Vertical,
             };
-            List<string> lista = new List<string>();
-            lista.Add("Servisi");
+            List<ChoseItemModel> lista = new List<ChoseItemModel>();
+            lista.Add(new ChoseItemModel("Services", ItemType.services));
+            lista.Add(new ChoseItemModel("Applications", ItemType.applications));
             //Button btnServices = new Button
             //{
             //    Text = "Services",
@@ -59,7 +61,16 @@ namespace IPTXamarinForms
 
         private void listClient_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            Navigation.PushAsync(new Services(newClientId));
+            ChoseItemModel model = new ChoseItemModel();
+            model=(ChoseItemModel)((ListView)sender).SelectedItem;
+            if (model.Type==ItemType.services)
+            {
+                Navigation.PushAsync(new Services(newClientId));
+            }
+            else
+            {
+                Navigation.PushAsync(new Services(newClientId));
+            }
             listClient.SelectedItem = false;
         }
     }

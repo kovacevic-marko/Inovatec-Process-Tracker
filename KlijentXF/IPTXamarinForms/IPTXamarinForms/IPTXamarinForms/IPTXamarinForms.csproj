@@ -39,6 +39,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Models\ChoseItemModel.cs" />
     <Compile Include="Models\ServiceLogModel.cs" />
     <Compile Include="Views\Applications.xaml.cs">
       <DependentUpon>Applications.xaml</DependentUpon>
