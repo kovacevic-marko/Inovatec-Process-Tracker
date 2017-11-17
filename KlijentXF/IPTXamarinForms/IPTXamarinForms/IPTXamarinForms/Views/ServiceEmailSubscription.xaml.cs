@@ -10,6 +10,7 @@ using System.Net;
 using System.Collections.Specialized;
 using System.Net.Http;
 using Newtonsoft.Json;
+using IPTXamarinForms.Helpers;
 
 namespace IPTXamarinForms.Views
 {
@@ -70,7 +71,9 @@ namespace IPTXamarinForms.Views
 
             var content = new FormUrlEncodedContent(values);
 
-            var response = await client.PostAsync("http://172.24.2.51:5000/api/postens", content);
+            string url = Settings.WebApiUrl;
+            url = string.Format("{0}{1}postens", url, url.EndsWith("/") ? string.Empty : "/");
+            var response = await client.PostAsync(url, content);
 
             var responseString = await response.Content.ReadAsStringAsync();
         }

@@ -1,4 +1,5 @@
-﻿using IPTXamarinForms.Models;
+﻿using IPTXamarinForms.Helpers;
+using IPTXamarinForms.Models;
 using IPTXamarinForms.Views;
 using Newtonsoft.Json;
 using System;
@@ -171,7 +172,8 @@ namespace IPTXamarinForms
             //lblStatusServisa.Text = "Loading...";
             lblNazivServisa.BackgroundColor = Color.FromHex("#000000");  //zelena   
 
-            string url = "http://172.24.2.51:5000/api/servicestatus?id=" + idServisaProsledjivacZaMetoduRefresh;
+            string url = Settings.WebApiUrl;
+            url = string.Format("{0}{1}servicestatus?id={2}", url, url.EndsWith("/") ? string.Empty : "/", idServisaProsledjivacZaMetoduRefresh);
             JsonValue jsonValue = await FetchServiceStatus(url);
 
             string status = jsonValue.ToString();
@@ -219,7 +221,8 @@ namespace IPTXamarinForms
 
         public async void setLogTable(int serviceID)
         {
-            string url = "http://172.24.2.51:5000/api/servicelog?id=" + serviceID;
+            string url = Settings.WebApiUrl;
+            url = string.Format("{0}{1}servicelog?id={2}", url, url.EndsWith("/") ? string.Empty : "/", serviceID);
             string jsonString = await JsonFunctions.GetJson(url);
             List<ServiceLogModel> logList = JsonConvert.DeserializeObject<List<ServiceLogModel>>(jsonString);
 
