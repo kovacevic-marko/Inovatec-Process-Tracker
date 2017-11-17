@@ -9,10 +9,7 @@
                 FontSize="24"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-
-           
-
-            <ActivityIndicator x:Name="activityIndicatorProveraServisa"></ActivityIndicator>
+            <ActivityIndicator x:Name="activityIndicatorProveraServisa" IsRunning="{Binding IsBusy}"></ActivityIndicator>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

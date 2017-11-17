@@ -12,9 +12,16 @@ namespace IPTXamarinForms
     {
         public static async Task<string> GetJson(string url)
         {
-            var request = (HttpWebRequest)WebRequest.Create(new Uri(url));
-            var response = (HttpWebResponse)await request.GetResponseAsync();
-            return new StreamReader(response.GetResponseStream()).ReadToEnd();
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create(new Uri(url));
+                var response = (HttpWebResponse)await request.GetResponseAsync();
+                return new StreamReader(response.GetResponseStream()).ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                return "Error";
+            }
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using IPTXamarinForms.Helpers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,38 +25,39 @@ namespace IPTXamarinForms
         private List<ServiceModel> listServices = new List<ServiceModel>();
         private int ClientID;
 
-        private bool busy = false;
+        //private bool busy = false;
 
-        public new bool IsBusy
-        {
-            get { return busy; }
-            set
-            {
-                if (busy == value)
-                    return;
+        //public new bool IsBusy
+        //{
+        //    get { return busy; }
+        //    set
+        //    {
+        //        if (busy == value)
+        //            return;
 
-                busy = value;
-                OnPropertyChanged("IsBusy");
-            }
-        }
+        //        busy = value;
+        //        OnPropertyChanged("IsBusy");
+        //    }
+        //}
 
         public Services(int ClientID)
         {
             InitializeComponent();
 
+            activityIndicatorProveraServisa.BindingContext = this.IsBusy;
             this.ClientID = ClientID;
             LoadServices(ClientID);
+
         }
 
         private async void LoadServices(int ClientID)
         {
             IsBusy = true;
-            activityIndicatorProveraServisa.IsRunning = IsBusy;
-            activityIndicatorProveraServisa.IsVisible = IsBusy;
             lblStatus.Text = "Getting list of client's services...";
 
             // Povlacenje liste servisa zadatog klijenta
-            string url = "http://172.24.2.51:5000/api/clientservice?ClientID=" + ClientID;
+            string url = Settings.WebApiUrl;
+            url = string.Format("{0}{1}clientservice?ClientID={2}", url, url.EndsWith("/") ? string.Empty : "/", ClientID);
             string jsonString = await JsonFunctions.GetJson(url);
             listServices = JsonConvert.DeserializeObject<List<ServiceModel>>(jsonString);
 
@@ -63,16 +65,11 @@ namespace IPTXamarinForms
 
             lblStatus.Text = "Statusi servisa ucitani";
             IsBusy = false;
-            activityIndicatorProveraServisa.IsRunning = IsBusy;
-            activityIndicatorProveraServisa.IsVisible = IsBusy;
         }
 
         private void RefreshServices()
         {
             IsBusy = true;
-            activityIndicatorProveraServisa.IsRunning = IsBusy;
-            activityIndicatorProveraServisa.IsVisible = IsBusy;
-
 
             lblStatus.Text = "Getting status for each service...";
             foreach (var service in listServices)
@@ -85,10 +82,8 @@ namespace IPTXamarinForms
                 // Ovde umesto nove labele treba dodati novi ListView (ili slicno) item.
 
                 var btnServis = new Button { };
-
-
+                
                 var btn = new Button
-
                 {
                     Text = service.ServiceName,
                     FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
@@ -110,7 +105,8 @@ namespace IPTXamarinForms
 
                 // Povlacenje statusa pojedinacnog servisa
                 Task.Run(async () => {
-                    string serviceUrl = "http://172.24.2.51:5000/api/ServiceStatus?ID=" + service.ClientServiceID;
+                    string serviceUrl = Settings.WebApiUrl;
+                    serviceUrl = string.Format("{0}{1}ServiceStatus?ID={2}", serviceUrl, serviceUrl.EndsWith("/") ? string.Empty : "/", service.ClientServiceID);
                     string jsonServiceStatus = await JsonFunctions.GetJson(serviceUrl);
 
                     Device.BeginInvokeOnMainThread(() => {
@@ -131,8 +127,6 @@ namespace IPTXamarinForms
 
             lblStatus.Text = "Servisi";
             IsBusy = false;
-            activityIndicatorProveraServisa.IsRunning = IsBusy;
-            activityIndicatorProveraServisa.IsVisible = IsBusy;
         }
 
         //public async void ServicesAsync(int ClientID)
@@ -245,7 +239,9 @@ namespace IPTXamarinForms
 
                 var content = new FormUrlEncodedContent(values);
 
-                var response = await client.PostAsync("http://172.24.2.51:5000/api/postens", content);
+                string responseURL = Settings.WebApiUrl;
+                responseURL = string.Format("{0}{1}postENS", responseURL, responseURL.EndsWith("/") ? string.Empty : "/");
+                var response = await client.PostAsync(responseURL, content);
 
                 var responseString = await response.Content.ReadAsStringAsync();
             });

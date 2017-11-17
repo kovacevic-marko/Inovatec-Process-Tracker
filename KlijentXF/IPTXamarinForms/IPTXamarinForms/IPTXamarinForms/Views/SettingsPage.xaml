@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IPTXamarinForms.Views.SettingsPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Enter WebAPI URL:" HorizontalOptions="Center" />
+            <Entry x:Name="entryURL" Placeholder="http://path.to/your/api/" />
+            <Button x:Name="btnSaveURL" Text="Save" Pressed="btnSaveURL_Pressed" />
+            <Label Text="Enter email address:" HorizontalOptions="Center" />
+            <Entry x:Name="entryEmail" Placeholder="example@email.com" />
+            <Switch x:Name="switchEmail" IsToggled="False" />
+            <Button x:Name="btnSaveEmail" Text="Save" Pressed="btnSaveEmail_Pressed" />
+            <Button x:Name="btnDone" Text="Done" Pressed="btnDone_Pressed" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

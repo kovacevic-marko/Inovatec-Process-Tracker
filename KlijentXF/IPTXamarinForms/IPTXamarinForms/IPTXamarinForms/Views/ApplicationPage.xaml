@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IPTXamarinForms.Views.ApplicationPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry x:Name="entryApplicationNumber" Placeholder="1234567890ASDFGHJKL" ></Entry>
+            <Button x:Name="btnShowApplication" Text="Show application" Pressed="BtnShowApplication_Pressed" ></Button>
+            <Label x:Name="lblStatus" ></Label>
+            <ActivityIndicator IsEnabled="{Binding Source=IsBusy}" IsRunning="{Binding Source=IsBusy}" ></ActivityIndicator>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

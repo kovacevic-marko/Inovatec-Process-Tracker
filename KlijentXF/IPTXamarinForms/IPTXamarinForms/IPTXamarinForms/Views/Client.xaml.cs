@@ -1,4 +1,5 @@
 ﻿using IPTXamarinForms.Models;
+using IPTXamarinForms.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,8 +55,6 @@ namespace IPTXamarinForms
             listClient.ItemsSource = lista;
             stackLayoutVertical.Children.Add(listClient);
             
-            
-
             this.Content = new ScrollView { Content = stackLayoutVertical };
         }
 
@@ -67,9 +66,9 @@ namespace IPTXamarinForms
             {
                 Navigation.PushAsync(new Services(newClientId));
             }
-            else
+            else if (model.Type==ItemType.applications)
             {
-                Navigation.PushAsync(new Services(newClientId));
+                Navigation.PushAsync(new ApplicationPage());
             }
             listClient.SelectedItem = false;
         }
