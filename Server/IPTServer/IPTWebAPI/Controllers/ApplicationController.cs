@@ -10,9 +10,9 @@ namespace IPTWebAPI.Controllers
 {
     public class ApplicationController : ApiController
     {
-        public Object Get(string url)
+        public Object Get(string appId)
         {
-            return WebCommunication.GetApplicationInfo(url);
+            return WebCommunication.GetApplicationInfo(appId);
         }
     }
 }

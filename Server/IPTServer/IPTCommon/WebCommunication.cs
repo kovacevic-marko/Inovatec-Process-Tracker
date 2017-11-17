@@ -36,15 +36,17 @@ namespace IPTCommon
         }
 
 
-        public static string GetApplicationInfo(string URL)
+        public static string GetApplicationInfo(string appId)
         {
             string app = null;
             try
             {
                 string user = ConfigurationManager.AppSettings["Username"];
                 string pass = ConfigurationManager.AppSettings["Password"];
+                string url = ConfigurationManager.AppSettings["url"];
+                string URL = "http://172.24.2.51:" + appId;
                 var request = (HttpWebRequest)WebRequest.Create(URL);
-                request.Credentials = new System.Net.NetworkCredential(user, pass);
+               // request.Credentials = new NetworkCredential(user, pass);
                 var response = (HttpWebResponse)request.GetResponse();                
                 using (Stream stream = response.GetResponseStream())
                 {
