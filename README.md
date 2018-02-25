@@ -1,15 +1,65 @@
 # Inovatec-Process-Tracker
 
-Spoljna adresa SQL servera: 82.117.213.126,1434
-Spoljna adresa WepApi-a: 82.117.213.126:8081
-Unutrasnja adresa: 172.24.2.51
+The goal of the project is Services and Applications monitoring. When a service go down, it is recorded in the database(MS SQL Server) and the email is automatically sent to the user. The user can subscribe or unsubscribe for receiving emails when server go down, also he can choose which services they want to track. All service information and history is displayed to the user via the mobile application. 
 
-Svi Activity su smesteni u root/Activities osim Main Activity-ja koji je smesten u root folderu
-Gledajte da vam Activities i Layouts budu istog naziva zbog preglednosti.
-Kada pravite Activity i Layout neka vam u nazivu fajla bude putanja koja se odvaja sa donjom crtom posto folder layouts ne sme
-da ima subfoldere.
-Primer za naziv layout-a koji prikazuje kalendar za biranje datuma za prikazivanje informacija: 
-    Services_Service1_ServiceInfo  --> U main layout-u se kline na dugme "Services" pa onda na dugme "Service1" pa se klikne
-    na "ServicInfo"
-    
-    
+## Components of system
+
+<b>
+<p align="center"><img src="https://raw.githubusercontent.com/kovacevic-marko/Inovatec-Process-Tracker/master/Pictures/1.jpg" /></p>
+
+Server:
+<ul>
+    <li>Database (Microsoft SQL Server)</li>
+    <li>Data access (Entity Framework)</li>
+    <li>Data collector (Windows service)</li>
+    <li>Web API (ASP.NET)</li>
+</ul> 
+
+Client:
+<ul>
+    <li>Android and iOS mobile application (Xamarin Forms(</li>
+</ul>
+
+## Relational model of database
+
+<p align="center"><img src="https://raw.githubusercontent.com/kovacevic-marko/Inovatec-Process-Tracker/master/Pictures/2.jpg" /></p>
+
+## Client application
+
+## 1. Homepage
+<p align="center"><img src="https://raw.githubusercontent.com/kovacevic-marko/Inovatec-Process-Tracker/master/Pictures/3.jpg" /></p>
+On this page user choose to manage settings of applications or to show clients.
+
+## 2. Settings
+<p align="center"><img src="https://raw.githubusercontent.com/kovacevic-marko/Inovatec-Process-Tracker/master/Pictures/4.jpg" /></p>
+On this page user:
+<ul>
+    <li>Manage WebAPI URL</li>
+    <li>Enter his email adress for subscrition on email notification service</li>
+    <li>Enable or disable receiving emails when service or application go down</li>
+</ul>
+
+## 3. List of clients
+<p align="center"><img src="https://raw.githubusercontent.com/kovacevic-marko/Inovatec-Process-Tracker/master/Pictures/5.jpg" /></p>
+On this page user choose for which client want to see services and applications.
+
+## 3.1 Services or applications
+<p align="center"><img src="https://raw.githubusercontent.com/kovacevic-marko/Inovatec-Process-Tracker/master/Pictures/6.jpg" /></p>
+On this application user choose services or applications
+
+## 4. List of services
+<p align="center"><img src="https://raw.githubusercontent.com/kovacevic-marko/Inovatec-Process-Tracker/master/Pictures/7.jpg" /></p>
+On this page user:
+<ul>
+    <li>See all services for his client</li>
+    <li>See service status for all services</li>
+    <li>Enable or disable receiving emails for specific service</li>
+</ul>
+
+## 4.1 Service history
+<p align="center"><img src="https://raw.githubusercontent.com/kovacevic-marko/Inovatec-Process-Tracker/master/Pictures/8.jpg" /></p>
+On this page user see currently service status and log history for this service.
+
+
+<br><br><br>
+Release date: November 2017.
